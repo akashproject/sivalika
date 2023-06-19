@@ -51,94 +51,94 @@
 							<label for="amenities" class="col-sm-3 text-right control-label col-form-label">Amenities</label>
 							<div class="col-sm-9">
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="24X7 Security" checked> 24X7 Security
+									<input type="checkbox" name="amenities[]" value="24X7 Security" {{ (in_array("24X7 Security",  $hotel->amenities))?'checked' : '' }} > 24X7 Security
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="WiFi" checked> WiFi
+									<input type="checkbox" name="amenities[]" value="WiFi" {{ (in_array("WiFi",  $hotel->amenities))?'checked' : '' }}> WiFi
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="Lift" checked> Lift
+									<input type="checkbox" name="amenities[]" value="Lift" {{ (in_array("Lift",  $hotel->amenities))?'checked' : '' }}> Lift
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="Parking" checked> Parking
+									<input type="checkbox" name="amenities[]" value="Parking" {{ (in_array("Parking",  $hotel->amenities))?'checked' : '' }}> Parking
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="Laundry Service" checked> Laundry Service
+									<input type="checkbox" name="amenities[]" value="Laundry Service" {{ (in_array("Laundry Service",  $hotel->amenities))?'checked' : '' }}> Laundry Service
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="Wardrobe" checked> Wardrobe
+									<input type="checkbox" name="amenities[]" value="Wardrobe" {{ (in_array("Wardrobe",  $hotel->amenities))?'checked' : '' }}> Wardrobe
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="Mineral Water Bottle" checked> Mineral Water Bottle
+									<input type="checkbox" name="amenities[]" value="Mineral Water Bottle" {{ (in_array("Mineral Water Bottle",  $hotel->amenities))?'checked' : '' }}> Mineral Water Bottle
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="Daily Housekeeping" checked> Daily Housekeeping
+									<input type="checkbox" name="amenities[]" value="Daily Housekeeping" {{ (in_array("Daily Housekeeping",  $hotel->amenities))?'checked' : '' }}> Daily Housekeeping
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="Free Toiletries" checked> Free Toiletries
+									<input type="checkbox" name="amenities[]" value="Free Toiletries" {{ (in_array("Free Toiletries",  $hotel->amenities))?'checked' : '' }}> Free Toiletries
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="LCD TV" checked> LCD TV
+									<input type="checkbox" name="amenities[]" value="LCD TV" {{ (in_array("LCD TV",  $hotel->amenities))?'checked' : '' }}> LCD TV
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="Clean Towels" checked> Clean Towels
+									<input type="checkbox" name="amenities[]" value="Clean Towels" {{ (in_array("Clean Towels",  $hotel->amenities))?'checked' : '' }}> Clean Towels
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="Clean Linen" checked> Clean Linen
+									<input type="checkbox" name="amenities[]" value="Clean Linen" {{ (in_array("Clean Linen",  $hotel->amenities))?'checked' : '' }}> Clean Linen
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="Toilet Paper" checked> Toilet Paper
+									<input type="checkbox" name="amenities[]" value="Toilet Paper" {{ (in_array("Toilet Paper",  $hotel->amenities))?'checked' : '' }}> Toilet Paper
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="Wake-Up Service" checked> Wake-Up Service
+									<input type="checkbox" name="amenities[]" value="Wake-Up Service" {{ (in_array("Wake-Up Service",  $hotel->amenities))?'checked' : '' }}> Wake-Up Service
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="DTH Channels" checked> DTH Channels
+									<input type="checkbox" name="amenities[]" value="DTH Channels" {{ (in_array("DTH Channels",  $hotel->amenities))?'checked' : '' }}> DTH Channels
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="Tile/Marble floor" checked> Tile/Marble floor
+									<input type="checkbox" name="amenities[]" value="Tile/Marble floor" {{ (in_array("Tile/Marble floor",  $hotel->amenities))?'checked' : '' }}> Tile/Marble floor
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="24-Hour Front Desk" checked> 24-Hour Front Desk
+									<input type="checkbox" name="amenities[]" value="24-Hour Front Desk" {{ (in_array("24-Hour Front Desk",  $hotel->amenities))?'checked' : '' }}> 24-Hour Front Desk
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="Card Payment" checked> Card Payment
+									<input type="checkbox" name="amenities[]" value="Card Payment" {{ (in_array("Card Payment",  $hotel->amenities))?'checked' : '' }}> Card Payment
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="Fire NOC" checked> Fire NOC
+									<input type="checkbox" name="amenities[]" value="Fire NOC" {{ (in_array("Fire NOC",  $hotel->amenities))?'checked' : '' }}> Fire NOC
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="Fire Extinguishers" checked> Fire Extinguishers
+									<input type="checkbox" name="amenities[]" value="Fire Extinguishers" {{ (in_array("Fire Extinguishers",  $hotel->amenities))?'checked' : '' }}> Fire Extinguishers
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="In-House Kitchen" checked> In-House Kitchen
+									<input type="checkbox" name="amenities[]" value="In-House Kitchen" {{ (in_array("In-House Kitchen",  $hotel->amenities))?'checked' : '' }}> In-House Kitchen
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="Smoke Detectors" checked> Smoke Detectors
+									<input type="checkbox" name="amenities[]" value="Smoke Detectors" {{ (in_array("Smoke Detectors",  $hotel->amenities))?'checked' : '' }}> Smoke Detectors
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="Fire Exit" checked> Fire Exit
+									<input type="checkbox" name="amenities[]" value="Fire Exit" {{ (in_array("Fire Exit",  $hotel->amenities))?'checked' : '' }}> Fire Exit
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="Fire Hose Reels" checked> Fire Hose Reels
+									<input type="checkbox" name="amenities[]" value="Fire Hose Reels" {{ (in_array("Fire Hose Reels",  $hotel->amenities))?'checked' : '' }}> Fire Hose Reels
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="FHRAI Certification" checked> FHRAI Certification
+									<input type="checkbox" name="amenities[]" value="FHRAI Certification" {{ (in_array("FHRAI Certification",  $hotel->amenities))?'checked' : '' }}> FHRAI Certification
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="FSSAI Licence" checked> FSSAI Licence
+									<input type="checkbox" name="amenities[]" value="FSSAI Licence" {{ (in_array("FSSAI Licence",  $hotel->amenities))?'checked' : '' }}> FSSAI Licence
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="Security Guard" checked> Security Guard
+									<input type="checkbox" name="amenities[]" value="Security Guard" {{ (in_array("Security Guard",  $hotel->amenities))?'checked' : '' }}> Security Guard
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="Electric Kettle (On Request)" checked> Electric Kettle (On Request)
+									<input type="checkbox" name="amenities[]" value="Electric Kettle (On Request)" {{ (in_array("Electric Kettle (On Request)",  $hotel->amenities))?'checked' : '' }}> Electric Kettle (On Request)
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="Pickup & Drop (Chargeable)" checked> Pickup & Drop (Chargeable)
+									<input type="checkbox" name="amenities[]" value="Pickup & Drop (Chargeable)" {{ (in_array("Pickup & Drop (Chargeable)",  $hotel->amenities))?'checked' : '' }}> Pickup & Drop (Chargeable)
 								</span>
 								<span class="amenities" >
-									<input type="checkbox" name="amenities[]" value="Breakfast (Buffet)" checked> Breakfast (Buffet)
+									<input type="checkbox" name="amenities[]" value="Breakfast (Buffet)" {{ (in_array("Breakfast (Buffet)",  $hotel->amenities))?'checked' : '' }}> Breakfast (Buffet)
 								</span>
 							</div>
 						</div>

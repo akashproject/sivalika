@@ -40,6 +40,7 @@ class HotelController extends Controller
     {
         try {
             $hotel = Hotel::findorFail($id);
+            $hotel->amenities = json_decode($hotel->amenities);
             $states = State::all();
             $cities = City::where('state_id', $hotel->state_id)->orderBy('name', 'asc')->get();
             return view('hotels.show',compact('hotel','states','cities'));
