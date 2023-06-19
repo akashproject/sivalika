@@ -34,8 +34,8 @@
 								<td>
 
 									<a href="{{ url('hotels') }}/{{ $value->slug }}" class="btn btn-success btn-lg">View</a>
-									<a href="{{ url('view-center') }}/{{ $value->id }}" class="btn btn-primary btn-lg">Edit</a>
-									<a href="{{ url('delete-center') }}/{{ $value->id }}" class="btn btn-danger btn-lg" onclick="return confirm('Are you sure?')"; >Delete </a>
+									<a href="{{ url('view-hotel') }}/{{ $value->id }}" class="btn btn-primary btn-lg">Edit</a>
+									<a href="{{ url('delete-hotel') }}/{{ $value->id }}" class="btn btn-danger btn-lg" onclick="return confirm('Are you sure?')"; >Delete </a>
 								</td>
 							</tr>
 							@endforeach							

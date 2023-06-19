@@ -41,7 +41,7 @@ class HotelController extends Controller
         try {
             $hotel = Hotel::findorFail($id);
             $states = State::all();
-            $cities = City::where('state_id', $center->state_id)->orderBy('name', 'asc')->get();
+            $cities = City::where('state_id', $hotel->state_id)->orderBy('name', 'asc')->get();
             return view('hotels.show',compact('hotel','states','cities'));
         } catch(\Illuminate\Database\QueryException $e){
         }        
@@ -55,6 +55,9 @@ class HotelController extends Controller
                 'slug' => 'required',
                 'description' => 'required',
             ]);
+
+            $data['amenities'] = json_encode($data['amenities']);
+
            
             if($data['hotel_id'] <= 0){
                 Hotel::create($data);

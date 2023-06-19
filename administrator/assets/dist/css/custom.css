@@ -14917,3 +14917,8 @@ File: scss
 table#zero_config tr td:last-child {
   width: 280px;
 }
+.amenities {
+    width: 32%;
+    display: inline-block;
+    height: 41px;
+}
