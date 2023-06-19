@@ -36,6 +36,7 @@ DROP TABLE IF EXISTS `cities`;
 CREATE TABLE `cities` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
   `districtid` int(11) NOT NULL,
   `state_id` int(11) NOT NULL,
   `description` varchar(255) NOT NULL,
@@ -83,6 +84,48 @@ CREATE TABLE `faqs` (
   `answer` longtext NOT NULL,
   `model` varchar(255) DEFAULT NULL,
   `model_id` varchar(255) DEFAULT NULL,
+  `status` enum('0','1') NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `gallery`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `gallery` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `hotel_id` int(11) NOT NULL,
+  `image_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `hotels`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `hotels` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `featured_image` varchar(255) DEFAULT NULL,
+  `excerpt` text DEFAULT NULL,
+  `description` text NOT NULL,
+  `amenities` text DEFAULT NULL,
+  `gmap` text DEFAULT NULL,
+  `lat` varchar(50) DEFAULT NULL,
+  `lng` varchar(50) DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `state_id` int(11) DEFAULT NULL,
+  `city_id` int(11) DEFAULT NULL,
+  `meta_description` text DEFAULT NULL,
+  `schema` text DEFAULT NULL,
+  `robots` varchar(150) NOT NULL DEFAULT 'index, follow',
+  `canonical` varchar(255) DEFAULT NULL,
+  `utm_campaign` varchar(100) NOT NULL DEFAULT 'Google-Organic',
+  `utm_source` varchar(100) NOT NULL DEFAULT 'SEO',
   `status` enum('0','1') NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -208,6 +251,7 @@ DROP TABLE IF EXISTS `states`;
 CREATE TABLE `states` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
   `state_description` varchar(255) NOT NULL,
   `status` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -251,3 +295,5 @@ INSERT INTO `migrations` VALUES (10,'2023_01_17_103910_create_faqs_table',1);
 INSERT INTO `migrations` VALUES (11,'2023_01_24_101839_create_media_table',1);
 INSERT INTO `migrations` VALUES (12,'2023_03_14_110002_create_contacts_table',1);
 INSERT INTO `migrations` VALUES (13,'2023_04_22_064246_create_adpages_table',1);
+INSERT INTO `migrations` VALUES (14,'2023_02_20_123712_create_gallery_table',2);
+INSERT INTO `migrations` VALUES (15,'2023_06_19_083624_create_hotels_table',2);
