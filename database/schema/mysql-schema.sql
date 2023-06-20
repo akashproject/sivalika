@@ -245,6 +245,7 @@ CREATE TABLE `rooms` (
   `room_count` int(11) DEFAULT NULL,
   `amenities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `featured_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('0','1') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -314,4 +315,4 @@ INSERT INTO `migrations` VALUES (12,'2023_03_14_110002_create_contacts_table',1)
 INSERT INTO `migrations` VALUES (13,'2023_04_22_064246_create_adpages_table',1);
 INSERT INTO `migrations` VALUES (14,'2023_02_20_123712_create_gallery_table',2);
 INSERT INTO `migrations` VALUES (15,'2023_06_19_083624_create_hotels_table',2);
-INSERT INTO `migrations` VALUES (16,'2023_06_20_101838_create_rooms_table',3);
+INSERT INTO `migrations` VALUES (17,'2023_06_20_101838_create_rooms_table',3);
