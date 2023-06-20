@@ -15,6 +15,14 @@ class MediaController extends Controller
     public $_statusOK = 200;
     public $_statusErr = 500;
     private $counter = 1;
+    private $mediaPath;
+    private $date;
+
+    public function __construct()
+    {
+        $this->date = date("Y-m-d");
+        $this->mediaPath = dirname(dirname(dirname(dirname(__DIR__)))).'/public/upload/'.$this->date;
+    }
 
     public function index()
     {
@@ -50,7 +58,6 @@ class MediaController extends Controller
             ]); 
             
             $fileData = $request->file('file');
-            $today = date("Y-m-d");
             $fileDataArray = array(
                 'name' => current(explode('.',$request->file->getClientOriginalName())),
                 'type' => $request->file->getMimeType(),
@@ -59,15 +66,14 @@ class MediaController extends Controller
                 'description' => "",
                 'extension' => $request->file->extension(),
                 'size' => number_format((float)($request->file->getSize()/1024), 2, '.', ''),
-                'path' => config('constant.relativeMediaPath').'/'.$today,
+                'path' => config('constant.relativeMediaPath').'/'.$this->date,
             );
 
+           // echo dirname(dirname(dirname(dirname(__DIR__)))).'/public/upload/'.$this->date; exit;
             
             $fileName = $this->rename(str_replace(" ","-",strtolower($request->file->getClientOriginalName())));
-            
-            $folder = public_path('upload/'.$today);
-            if(!File::exists($folder)) {
-                File::makeDirectory($folder, 0777, true); //creates directory
+            if(!File::exists($this->mediaPath)) {
+                File::makeDirectory($this->mediaPath, 0777, true); //creates directory
             }
 
             $imageType = array("jpeg","png","jpg","jfif","webp");
@@ -77,10 +83,10 @@ class MediaController extends Controller
                 if($image->width() >= 768){
                     $this->resizeMobile('profile',$fileName,$request);
                 }
-                $image->resize(120, 120)->save(public_path('upload/'.date("Y-m-d")).'/'."thumb_".$fileName);
+                $image->resize(120, 120)->save($this->mediaPath.'/'."thumb_".$fileName);
             }
 
-            if(!$request->file('file')->move(public_path('upload/'.date("Y-m-d")),$fileName)){
+            if(!$request->file('file')->move($this->mediaPath,$fileName)){
                 return false;
             }
             
@@ -112,12 +118,12 @@ class MediaController extends Controller
         
         $image->resize($width, $width, function ($constraint) {
             $constraint->aspectRatio();
-        })->save(public_path('upload/'.date("Y-m-d")).'/'."mobile_".$fileName);
+        })->save($this->mediaPath.'/'."mobile_".$fileName);
     }
 
     public function rename($filename){
         
-        if(!file_exists(public_path('upload/'.date("Y-m-d")).'/'.$filename)){
+        if(!file_exists($this->mediaPath.'/'.$filename)){
             return $filename;
         } else {
             if($this->counter > 1){

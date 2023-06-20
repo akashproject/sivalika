@@ -15,8 +15,7 @@ class HotelController extends Controller
     public $_statusOK = 200;
     public $_statusErr = 500;
 
-    public function index()
-    {
+    public function index() {
         try {
             $hotels = Hotel::all();
             return view('hotels.index',compact('hotels'));
@@ -36,8 +35,7 @@ class HotelController extends Controller
         
     }
 
-    public function show($id)
-    {
+    public function show($id) {
         try {
             $hotel = Hotel::findorFail($id);
             $hotel->amenities = json_decode($hotel->amenities);
@@ -78,6 +76,11 @@ class HotelController extends Controller
         return redirect()->back()->with('message', 'Hotel deleted successfully!');
     }
 
+    //Add Rooms
+    public function room() {
+        
+    }
+
     public function getCitiesByStateId(Request $request){
         try {
             $data = $request->all();
@@ -90,10 +93,11 @@ class HotelController extends Controller
 
     public function gallery($id){
         try {
-            $gallery = DB::table('gallery')->where("center_id",$id)->get();
+            $gallery = DB::table('gallery')->where("hotel_id",$id)->get();
            
-            return view('administrator.centers.gallery',compact('gallery','id'));       
+            return view('hotels.gallery',compact('gallery','id'));       
         } catch(\Illuminate\Database\QueryException $e){
+            var_dump($e);
         }     
     }
 
@@ -140,7 +144,9 @@ class HotelController extends Controller
                 'path' => config('constant.relativeMediaPath').'/'.$today,
             );  
 
-            Media::create($fileArray);
+            $media = Media::create($fileArray);
+            
+
             return response()->json($fileArray,$this->_statusOK);
             //return redirect()->back()->with('message', 'Page updated successfully!');
         } catch(\Illuminate\Database\QueryException $e){

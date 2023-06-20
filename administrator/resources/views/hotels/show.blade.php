@@ -166,12 +166,12 @@
 								<input type="text" class="form-control" name="lng" id="lng" placeholder="Enter Longitude Here"  value="{{ $hotel->lng }}">
 							</div>
 						</div>
-						
+
 						<div class="form-group row">
-							<label for="no_of_module" class="col-sm-3 text-left control-label col-form-label">Gallery</label>
+							<label for="no_of_module" class="col-sm-3 text-right control-label col-form-label">Rooms</label>
 							<div class="col-sm-9">
-								<a href="{{ url('gallery') }}/{{ $hotel->id }}" class="btn btn-primary">
-									Gallery Detail
+								<a href="{{ url('rooms') }}/{{ $hotel->id }}" class="btn btn-primary">
+									Add Rooms
 								</a>								
 							</div>
 						</div>
@@ -208,6 +208,14 @@
 									<option value="1" {{ ( $hotel->status ==  '1' )? 'selected' : '' }} > Publish</option>
 									<option value="0" {{ ( $hotel->status ==  '0' )? 'selected' : '' }}> Private </option>
 								<select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="no_of_module" class="col-sm-3 text-right control-label col-form-label">Gallery</label>
+							<div class="col-sm-9">
+								<a href="{{ url('gallery') }}/{{ $hotel->id }}" class="btn btn-primary">
+									Gallery Detail
+								</a>								
 							</div>
 						</div>
 						<div class="form-group row">

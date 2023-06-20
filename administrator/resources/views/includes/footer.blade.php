@@ -23,6 +23,9 @@
 								<option value="7"> Documents </option>
 							</select>
 						</div>
+						<div class="col-sm-6">
+							<button class="btn btn-primary text-white open-popup-link">Bulk Select</button>
+						</div>
 					</div>
 				</div>
 				<div class="col-md-6">
