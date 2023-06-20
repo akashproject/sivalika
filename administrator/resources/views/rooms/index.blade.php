@@ -26,6 +26,7 @@
 								<th>Size</th>
 								<th>Maximum Person</th>
 								<th>Room Count</th>
+								<th>Cost Per Night</th>
 								<th>Options</th>
 							</tr>
 						</thead>
@@ -37,6 +38,7 @@
 								<td>{{ $value->size }}</td>													
 								<td>{{ $value->person }}</td>													
 								<td>{{ $value->room_count }}</td>													
+								<td>Rs. {{ $value->cost }}/-</td>													
 								<td>
 									<a href="{{ url('view-room') }}/{{ $value->id }}" class="btn btn-primary btn-lg">Edit</a>
 									<a href="{{ url('delete-room') }}/{{ $value->id }}" class="btn btn-danger btn-lg" onclick="return confirm('Are you sure?')"; >Delete </a>

@@ -89,6 +89,12 @@
 								<input type="text" class="form-control" name="room_count" id="room_count" placeholder="Enter Number of Room" value="{{ $room->room_count }}">
 							</div>
 						</div>
+						<div class="form-group row">
+							<label for="cost" class="col-sm-3 text-right control-label col-form-label"> Cost Per Night</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="cost" id="cost" placeholder="Enter Cost Per Night" value="{{ $room->cost }}" >
+							</div>
+						</div>
 					</div>
 					<div class="col-md-5">
 						<div class="form-group row">
