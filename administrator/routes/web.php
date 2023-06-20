@@ -42,8 +42,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/get-city-by-state-id', [App\Http\Controllers\HotelController::class, 'getCitiesByStateId'])->name('get-city-by-state-id');
     
     //Add Rooms
-    Route::get('/rooms/{hotel_id}', [App\Http\Controllers\HotelController::class, 'room'])->name('admin-room');
-    Route::post('/save-room', [App\Http\Controllers\HotelController::class, 'saveRoom'])->name('admin-save-room');
+    Route::get('/rooms/{hotel_id}', [App\Http\Controllers\RoomController::class, 'index'])->name('hotels');
+    Route::get('/add-room/{hotel_id}', [App\Http\Controllers\RoomController::class, 'Add'])->name('add-room');
+    Route::get('/view-room/{id}', [App\Http\Controllers\RoomController::class, 'show'])->name('view-room');
+    Route::post('/save-room', [App\Http\Controllers\RoomController::class, 'save'])->name('save-room');
+    Route::get('/delete-room/{id}', [App\Http\Controllers\RoomController::class, 'delete'])->name('delete-room');
     
     //Add Gallery
     Route::get('/gallery/{hotel_id}', [App\Http\Controllers\HotelController::class, 'gallery'])->name('admin-gallery');

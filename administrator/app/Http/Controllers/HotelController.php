@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Hotel;
+use App\Models\Room;
 use App\Models\State;
 use App\Models\City;
 use App\Models\Gallery;
@@ -75,12 +76,7 @@ class HotelController extends Controller
         $course->delete();
         return redirect()->back()->with('message', 'Hotel deleted successfully!');
     }
-
-    //Add Rooms
-    public function room() {
-        
-    }
-
+    
     public function getCitiesByStateId(Request $request){
         try {
             $data = $request->all();

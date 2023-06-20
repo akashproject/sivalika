@@ -12,7 +12,9 @@
 
 			<div class="card-body">
 
-				<h5 class="card-title"> Datatable</h5>
+				<h5 class="card-title">
+					<a href="{{ url('add-room/'.$hotel_id) }}" class="btn btn-primary"> Add New Room </a>
+				</h5>
 
 				<div class="table-responsive">
 
@@ -21,19 +23,21 @@
 						<thead>
 							<tr>
 								<th>Name</th>
-								<th>Slug</th>
+								<th>Size</th>
+								<th>Maximum Person</th>
+								<th>Room Count</th>
 								<th>Options</th>
 							</tr>
 						</thead>
 
 						<tbody>
 							@foreach ($rooms as $value)
-							<tr>
+							<tr>												
 								<td>{{ $value->name }}</td>													
-								<td>{{ $value->slug }}</td>													
+								<td>{{ $value->size }}</td>													
+								<td>{{ $value->person }}</td>													
+								<td>{{ $value->room_count }}</td>													
 								<td>
-
-									<a href="{{ url('rooms') }}/{{ $value->slug }}" class="btn btn-success btn-lg">View</a>
 									<a href="{{ url('view-room') }}/{{ $value->id }}" class="btn btn-primary btn-lg">Edit</a>
 									<a href="{{ url('delete-room') }}/{{ $value->id }}" class="btn btn-danger btn-lg" onclick="return confirm('Are you sure?')"; >Delete </a>
 								</td>

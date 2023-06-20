@@ -16,20 +16,20 @@ class RoomController extends Controller
     public $_statusOK = 200;
     public $_statusErr = 500;
 
-    public function index() {
+    public function index($hotel_id) {
         try {
-            $rooms = Room::all();
-            return view('rooms.index',compact('rooms'));
+            
+            $rooms = Room::where("hotel_id",$hotel_id)->get();
+            return view('rooms.index',compact('rooms','hotel_id'));
 
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
         }        
     }
 
-    public function add() {
+    public function add($hotel_id) {
         try {
-            $states = State::all();
-            return view('rooms.add',compact('states'));
+            return view('rooms.add',compact('hotel_id'));
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
         }
@@ -51,9 +51,8 @@ class RoomController extends Controller
         try {
             $data = $request->all();
             $validatedData = $request->validate([
-                'title' => 'required',
-                'slug' => 'required',
-                'description' => 'required',
+                'name' => 'required',
+                'status' => 'required',
             ]);
 
             $data['amenities'] = json_encode($data['amenities']);
