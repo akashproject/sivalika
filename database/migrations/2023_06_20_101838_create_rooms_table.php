@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer("room_count")->nullable();
             $table->text('amenities')->nullable();
             $table->string('featured_image')->nullable();
+            $table->enum('status', ['0', '1'])->default('1');
             $table->timestamps();
         });
     }
