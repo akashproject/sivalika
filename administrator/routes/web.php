@@ -26,6 +26,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', [App\Http\Controllers\IndexController::class, 'index'])->name('dashboard');
     Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
     
+    //Customers
+    Route::get('/customers', [App\Http\Controllers\CustomerController::class, 'index'])->name('customers');
+    Route::get('/add-customer', [App\Http\Controllers\CustomerController::class, 'Add'])->name('add-customer');
+    Route::get('/view-customer/{id}', [App\Http\Controllers\CustomerController::class, 'show'])->name('view-customer');
+    Route::post('/save-customer', [App\Http\Controllers\CustomerController::class, 'save'])->name('save-customer');
+    Route::get('/deactivate-customer/{id}', [App\Http\Controllers\CustomerController::class, 'delete'])->name('delete-room');
+
     //Page
     Route::get('/pages', [App\Http\Controllers\PageController::class, 'index'])->name('pages');
     Route::get('/add-page', [App\Http\Controllers\PageController::class, 'Add'])->name('add-page');
@@ -47,6 +54,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/view-room/{id}', [App\Http\Controllers\RoomController::class, 'show'])->name('view-room');
     Route::post('/save-room', [App\Http\Controllers\RoomController::class, 'save'])->name('save-room');
     Route::get('/delete-room/{id}', [App\Http\Controllers\RoomController::class, 'delete'])->name('delete-room');
+
+    //Add Bookings
+    Route::get('/bookings', [App\Http\Controllers\BookingController::class, 'index'])->name('bookings');
+    Route::get('/add-booking', [App\Http\Controllers\BookingController::class, 'Add'])->name('add-booking');
+    Route::get('/view-booking/{id}', [App\Http\Controllers\BookingController::class, 'show'])->name('view-booking');
+    Route::post('/save-booking', [App\Http\Controllers\BookingController::class, 'save'])->name('save-booking');
+    Route::get('/delete-booking/{id}', [App\Http\Controllers\BookingController::class, 'delete'])->name('delete-room');
     
     //Add Gallery
     Route::get('/gallery/{hotel_id}', [App\Http\Controllers\HotelController::class, 'gallery'])->name('admin-gallery');
