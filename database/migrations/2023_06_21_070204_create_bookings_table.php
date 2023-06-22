@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('user_id')->nullable();
             $table->string('guest_name',50)->nullable();
             $table->string('guest_mobile',20)->nullable();
+            $table->integer('amount')->nullable();
             $table->integer('total_guest')->nullable();
             $table->text('rooms')->nullable();
             $table->date('checkin')->nullable();
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->string('order_id')->nullable();
             $table->string('payment_id')->nullable();
             $table->enum('payment', ['success', 'pending', 'failed'])->default('pending');
+            $table->enum('status', ['comfirm', 'pending', 'cancel'])->default('pending')->nullable();
             $table->timestamps();
         });
     }

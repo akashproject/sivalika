@@ -39,7 +39,7 @@
 								<td>{{ $value->user_id }}</td>													
 								<td>{{ $value->guest_name }}</td>													
 								<td>{{ $value->guest_mobile }}</td>
-								<td>Rs. {{ $value->amount }}/-</td>														
+								<td>Rs. {{ $value->amount }}/-</td>
 								<td>{{ $value->payment }}</td>							
 								<td>
 									<a href="{{ url('view-booking') }}/{{ $value->id }}" class="btn btn-primary btn-lg">Edit</a>

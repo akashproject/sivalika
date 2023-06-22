@@ -34,8 +34,11 @@ class BookingController extends Controller
 
     public function show($id) {
         try {
-            $booking = Booking::findorFail($id);
             $hotels = Hotel::all();
+            $booking = Booking::findorFail($id);
+            
+            $booking->rooms = (isset($booking->rooms))?json_decode($booking->rooms,true):"";
+            
             return view('bookings.show',compact('booking','hotels'));
         } catch(\Illuminate\Database\QueryException $e){
         }        
@@ -58,16 +61,17 @@ class BookingController extends Controller
             } else {
                 $data['user_id'] = $customer->id;
             }
-
+            $data['rooms'] = (isset($data['rooms']) && $data['rooms'] != '')?json_encode($data['rooms']):null;
             if($data['booking_id'] <= 0){
-                Booking::create($data);
+                $booking = Booking::create($data);
+                return redirect('/view-booking/'.$booking->id);
             } else {
                 $booking = Booking::findOrFail($data['booking_id']);
                 $booking->update($data);
             }
             return redirect()->back()->with('message', 'Booking updated successfully!');
         } catch(\Illuminate\Database\QueryException $e){
-
+            var_dump($e);
         }
     }
 

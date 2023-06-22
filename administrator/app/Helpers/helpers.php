@@ -8,6 +8,7 @@ use App\Models\Media;
 use App\Models\Setting;
 use App\Models\Review;
 use App\Models\Faq;
+use App\Models\Room;
 
 if (! function_exists('check_device')) {
     function check_device($param = null){
@@ -75,6 +76,26 @@ if (! function_exists('get_theme_setting')) {
     function get_theme_setting($value){
         $media = Setting::where('key',$value)->first();
         return (isset($media->value))?$media->value:"null";
+    }
+}
+
+if (! function_exists('get_rooms')) {
+    function get_rooms($hotel_id){
+        $room = DB::table('rooms');
+        
+        if($hotel_id){
+            $room->where('hotel_id',$hotel_id);
+        } 
+
+        $room = $room->where('status',"1")->get();
+        return $room;
+    }
+}
+
+if (! function_exists('get_room_by_id')) {
+    function get_room_by_id($value){
+        $room = Room::where('id',$value)->first();
+        return (isset($room->id))?$room:"null";
     }
 }
 

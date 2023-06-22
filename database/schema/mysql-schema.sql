@@ -39,6 +39,7 @@ CREATE TABLE `bookings` (
   `user_id` int(11) DEFAULT NULL,
   `guest_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `guest_mobile` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL,
   `total_guest` int(11) DEFAULT NULL,
   `rooms` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `checkin` date DEFAULT NULL,
@@ -46,6 +47,7 @@ CREATE TABLE `bookings` (
   `order_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `payment_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `payment` enum('success','pending','failed') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `status` enum('comfirm','pending','cancel') COLLATE utf8mb4_unicode_ci DEFAULT 'pending',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -355,5 +357,5 @@ INSERT INTO `migrations` VALUES (13,'2023_04_22_064246_create_adpages_table',1);
 INSERT INTO `migrations` VALUES (14,'2023_02_20_123712_create_gallery_table',2);
 INSERT INTO `migrations` VALUES (15,'2023_06_19_083624_create_hotels_table',2);
 INSERT INTO `migrations` VALUES (18,'2023_06_20_101838_create_rooms_table',3);
-INSERT INTO `migrations` VALUES (20,'2023_06_21_070204_create_bookings_table',4);
 INSERT INTO `migrations` VALUES (22,'2023_06_21_122243_create_customers_table',5);
+INSERT INTO `migrations` VALUES (24,'2023_06_21_070204_create_bookings_table',6);
