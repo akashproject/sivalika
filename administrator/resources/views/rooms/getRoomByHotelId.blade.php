@@ -4,7 +4,6 @@
 	<div class="card" style="border: 1px solid #ccc;">
 		<div class="card-body">
 			<h4 class="card-title text-center">{{ $room->name }}</h4>
-			@if($typeKey <= 1)
 			<div class="room_type_{{$room->id}}" >
 				<div class="row mt-2">
 					<div class="col-sm-5">
@@ -24,7 +23,6 @@
 					</div>
 				</div>
 			</div>
-			@endif
 			<div class="row mt-2 text-right">
 				<button type="button" id="room_type_{{$room->id}}" class="btn btn-primary addNewRoom" data-id="{{$room->id}}"> Add Room </button>
 			</div>
