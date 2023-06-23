@@ -26,7 +26,7 @@
 						<div class="form-group row">
 							<label for="state" class="col-sm-3 text-right control-label col-form-label">Hotel</label>
 							<div class="col-sm-9">
-								<select name="hotel_id" id="hotel_id" class="select2 form-control custom-select" style="width: 100%;">	
+								<select name="hotel_id" id="hotel_id" class="select2 form-control custom-select" style="width: 100%;" onChange="getRoomsByHotelId(this);">	
 									<option value="">Select Hotel</option>
 									@foreach ($hotels as $hotel)
 									<option value="{{  $hotel->id }}" > {{  $hotel->name }} </option>
@@ -34,6 +34,12 @@
 								<select>
 							</div>
 						</div>	
+						<div class="form-group row">
+							<label for="guest_name" class="col-sm-3 text-right control-label col-form-label">Rooms</label>
+							<div class="col-sm-9 hotelRooms">
+								
+							</div>
+						</div>
 						<div class="form-group row">
 							<label for="guest_name" class="col-sm-3 text-right control-label col-form-label">Guest Name</label>
 							<div class="col-sm-9">
@@ -61,13 +67,13 @@
 						<div class="form-group row">
 							<label for="checkin" class="col-sm-3 text-right control-label col-form-label">Checkin Date</label>
 							<div class="col-sm-9">
-								<input type="text" class="form-control" name="checkin" id="datepicker checkin" placeholder="Enter Checkin Date" >
+								<input type="date" class="form-control" name="checkin" id="datepicker checkin" placeholder="Enter Checkin Date" >
 							</div>
 						</div>
 						<div class="form-group row">
 							<label for="checkout" class="col-sm-3 text-right control-label col-form-label">Checkout Date</label>
 							<div class="col-sm-9">
-								<input type="text" class="form-control" name="checkout" id="datepicker checkout" placeholder="Enter Checkout Date" >
+								<input type="date" class="form-control" name="checkout" id="datepicker checkout" placeholder="Enter Checkout Date" >
 							</div>
 						</div>
 						<div class="form-group row">

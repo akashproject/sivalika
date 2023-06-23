@@ -27,6 +27,16 @@ class RoomController extends Controller
         }        
     }
 
+    public function getRoomByHotelId(Request $request) {
+        try {
+            $data = $request->all();
+            $rooms = Room::where("hotel_id",$data['hotel_id'])->get();
+            return view('rooms.getRoomByHotelId',compact('rooms'));
+        } catch(\Illuminate\Database\QueryException $e){
+            //throw $th;
+        }        
+    }
+
     public function add($hotel_id) {
         try {
             return view('rooms.add',compact('hotel_id'));

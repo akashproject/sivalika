@@ -279,10 +279,15 @@ $(function() {
     })
 
     $(document).on("click",".addNewRoom", function(){
-        let element = '<div class="row mt-2"><div class="col-sm-5"><span class="room-label"> Adult </span><span class="room-guest"><input class="form-control" type="number" value="1"></span></div><div class="col-sm-5"><span class="room-label">Child </span><span class="room-guest"><input class="form-control" type="number" value="0"></span></div><div class="col-sm-2"><button type="button" class="btn btn-danger btn remove-room"><i class="mdi mdi-delete"></i></button></div></div>';
+        let id = $(this).attr("data-id");
+        let parentElement = $(this).attr("id");
+        console.log($("."+parentElement+" .row"));
+        let next = parseInt($("."+parentElement+" .row").length) + parseInt("1");
+        console.log(next);
+        let element = '<div class="row mt-2"><div class="col-sm-5"><span class="room-label"> Adult </span><span class="room-guest"><input class="form-control" type="number" name="rooms['+id+']['+next+'][adult]" value="1"></span></div><div class="col-sm-5"><span class="room-label">Child </span><span class="room-guest"><input class="form-control" name="rooms['+id+']['+next+'][child]" type="number" value="0"></span></div><div class="col-sm-2"><button type="button" class="btn btn-danger btn remove-room"><i class="mdi mdi-delete"></i></button></div></div>';
         
-        let id = $(this).attr("id");
-        $("."+id).append(element);
+        
+        $("."+$(this).attr("id")).append(element);
 
     })
 
@@ -317,4 +322,23 @@ function getCitiesByStateId(event){
     });
 }
 
+function getRoomsByHotelId(event){
+    let hotel_id = event.value;
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: `${globalUrl}administrator/get-rooms-by-hotel-id`,
+        type: "post",
+        data: {
+            hotel_id: hotel_id,
+        },
+        success: function(result) {
+           $(".hotelRooms").html(result);
+            //$("#city_id").html(result);  
+        }
+    });
+}
 

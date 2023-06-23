@@ -78,6 +78,26 @@ if (! function_exists('get_theme_setting')) {
     }
 }
 
+if (! function_exists('get_rooms')) {
+    function get_rooms($hotel_id){
+        $room = DB::table('rooms');
+        
+        if($hotel_id){
+            $room->where('hotel_id',$hotel_id);
+        } 
+
+        $room = $room->where('status',"1")->get();
+        return $room;
+    }
+}
+
+if (! function_exists('get_room_by_id')) {
+    function get_room_by_id($value){
+        $room = Room::where('id',$value)->first();
+        return (isset($room->id))?$room:"null";
+    }
+}
+
 if (! function_exists('get_reviews_ratings')) {
     function get_reviews_ratings($model="",$model_id=""){
         $reviews = DB::table('reviews');

@@ -27,7 +27,8 @@
 								<th>Name</th>
 								<th>Mobile</th>
 								<th>Amount</th>
-								<th>Payment Status</th>
+								<th>Payment</th>
+								<th>Status</th>
 								<th>Options</th>
 							</tr>
 						</thead>
@@ -36,11 +37,12 @@
 							@foreach ($bookings as $value)
 							<tr>												
 								<td>{{ $value->hotel_id }}</td>													
-								<td>{{ $value->user_id }}</td>													
+								<td>{{ get_customer_by_id($value->user_id)->name }}</td>													
 								<td>{{ $value->guest_name }}</td>													
 								<td>{{ $value->guest_mobile }}</td>
 								<td>Rs. {{ $value->amount }}/-</td>
 								<td>{{ $value->payment }}</td>							
+								<td>{{ $value->status }}</td>							
 								<td>
 									<a href="{{ url('view-booking') }}/{{ $value->id }}" class="btn btn-primary btn-lg">Edit</a>
 									<a href="{{ url('delete-booking') }}/{{ $value->id }}" class="btn btn-danger btn-lg" onclick="return confirm('Are you sure?')"; >Delete </a>

@@ -9,6 +9,7 @@ use App\Models\Setting;
 use App\Models\Review;
 use App\Models\Faq;
 use App\Models\Room;
+use App\Models\Customer;
 
 if (! function_exists('check_device')) {
     function check_device($param = null){
@@ -89,6 +90,13 @@ if (! function_exists('get_rooms')) {
 
         $room = $room->where('status',"1")->get();
         return $room;
+    }
+}
+
+if (! function_exists('get_customer_by_id')) {
+    function get_customer_by_id($id){
+        $customer = Customer::where('id',$id)->first();
+        return (isset($customer->id))?$customer:"null";
     }
 }
 

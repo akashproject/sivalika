@@ -50,6 +50,7 @@ Route::group(['middleware' => 'auth'], function () {
     
     //Add Rooms
     Route::get('/rooms/{hotel_id}', [App\Http\Controllers\RoomController::class, 'index'])->name('hotels');
+    Route::post('/get-rooms-by-hotel-id', [App\Http\Controllers\RoomController::class, 'getRoomByHotelId'])->name('get-rooms-by-hotel-id');
     Route::get('/add-room/{hotel_id}', [App\Http\Controllers\RoomController::class, 'Add'])->name('add-room');
     Route::get('/view-room/{id}', [App\Http\Controllers\RoomController::class, 'show'])->name('view-room');
     Route::post('/save-room', [App\Http\Controllers\RoomController::class, 'save'])->name('save-room');

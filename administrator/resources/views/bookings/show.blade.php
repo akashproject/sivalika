@@ -36,13 +36,14 @@
 						</div>	
 						<div class="form-group row">
 							<label for="guest_name" class="col-sm-3 text-right control-label col-form-label">Rooms</label>
-							<div class="col-sm-9">
+							<div class="col-sm-9 hotelRooms">
 								@foreach($booking->rooms as $typeKey => $room)
 								<input type="hidden" name="rooms[{{ get_room_by_id($typeKey)->id }}]" >
 								<div class="card" style="border: 1px solid #ccc;">
 									<div class="card-body">
 										<h4 class="card-title text-center">{{ get_room_by_id($typeKey)->name }}</h4>
 										<div class="room_type_{{get_room_by_id($typeKey)->id}}" >
+											@if($room !== null)
 											@foreach($room as $key => $guest)
 												<div class="row mt-2">
 													<div class="col-sm-5">
@@ -62,9 +63,10 @@
 													</div>
 												</div>
 											@endforeach
+											@endif
 										</div>
 										<div class="row mt-2 text-right">
-											<button type="button" id="room_type_{{get_room_by_id($typeKey)->id}}" class="btn btn-primary addNewRoom" > Add Room </button>
+											<button type="button" id="room_type_{{get_room_by_id($typeKey)->id}}" class="btn btn-primary addNewRoom" data-id="{{get_room_by_id($typeKey)->id}}" > Add Room </button>
 										</div>
 									</div>
 								</div>
@@ -98,13 +100,13 @@
 						<div class="form-group row">
 							<label for="checkin" class="col-sm-3 text-right control-label col-form-label">Checkin Date</label>
 							<div class="col-sm-9">
-								<input type="text" class="form-control" name="checkin" id="datepicker checkin" placeholder="Enter Checkin Date" value="{{$booking->checkin}}" >
+								<input type="date" class="form-control" name="checkin" id="datepicker checkin" placeholder="Enter Checkin Date" value="{{$booking->checkin}}" >
 							</div>
 						</div>
 						<div class="form-group row">
 							<label for="checkout" class="col-sm-3 text-right control-label col-form-label">Checkout Date</label>
 							<div class="col-sm-9">
-								<input type="text" class="form-control" name="checkout" id="datepicker checkout" placeholder="Enter Checkout Date" value="{{$booking->checkout}}" >
+								<input type="date" class="form-control" name="checkout" id="datepicker checkout" placeholder="Enter Checkout Date" value="{{$booking->checkout}}" >
 							</div>
 						</div>
 						<div class="form-group row">
