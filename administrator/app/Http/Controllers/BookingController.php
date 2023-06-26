@@ -17,7 +17,11 @@ class BookingController extends Controller
 
     public function index() {
         try {
-            $bookings = Booking::all();
+            $bookings = DB::table('bookings');
+            if(request()->has('cust_id')){
+                $bookings->where('user_id', request()->get('cust_id'));
+            }
+            $bookings = $bookings->get();
             return view('bookings.index',compact('bookings'));
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;

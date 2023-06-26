@@ -27,6 +27,7 @@
 								<td>{{ $value->mobile }}</td>													
 								<td>{{ $value->email }}</td>
 								<td>
+									<a href="{{ url('bookings?cust_id=').$value->id }}" class="btn btn-success btn-sm">Booking</a>
 									<a href="{{ url('view-customer') }}/{{ $value->id }}" class="btn btn-primary btn-sm">Edit</a>
 									<a href="{{ url('delete-customer') }}/{{ $value->id }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"; >Delete </a>
 								</td>
