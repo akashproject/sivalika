@@ -85,10 +85,13 @@ class RoomController extends Controller
     }
 
     public function availability() {
+
+        //select `r`.`hotel_id` as `hotel_id`, `r`.`id` as `room_id`, `rr`.`total_room_book`,`r`.`room_count`,`r`.`room_count` - `rr`.`total_room_book` as `room_left`  from `bookings` as `b` inner join `reserved_rooms` as `rr` on `rr`.`booking_id` = `b`.`id` inner join `rooms` as `r` on `rr`.`room_id` = `r`.`id`;
+        
         echo DB::table('bookings as b')
                 ->join('reserved_rooms as rr', 'rr.booking_id', '=', 'b.id')
                 ->join('rooms as r', 'rr.room_id', '=', 'r.id')
-                ->select('r.hotel_id as hotel_id','r.id as room_id','rr.total_room_book','r.room_count')
+                ->select('r.hotel_id as hotel_id','r.id as room_id','rr.total_room_book','r.room_count',`r`.`room_count` - `rr`.`total_room_book`)
                 ->toSql();
 
     }
