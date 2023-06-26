@@ -63,6 +63,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/save-booking', [App\Http\Controllers\BookingController::class, 'save'])->name('save-booking');
     Route::get('/delete-booking/{id}', [App\Http\Controllers\BookingController::class, 'delete'])->name('delete-room');
     
+    Route::get('/check-availability', [App\Http\Controllers\RoomController::class, 'availability'])->name('customers');
+
     //Add Gallery
     Route::get('/gallery/{hotel_id}', [App\Http\Controllers\HotelController::class, 'gallery'])->name('admin-gallery');
     Route::post('/save-gallery', [App\Http\Controllers\HotelController::class, 'saveGallery'])->name('admin-save-gallery');

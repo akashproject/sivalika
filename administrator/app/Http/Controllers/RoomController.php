@@ -66,8 +66,6 @@ class RoomController extends Controller
             ]);
 
             $data['amenities'] = json_encode($data['amenities']);
-
-           
             if($data['room_id'] <= 0){
                 Room::create($data);
             } else {
@@ -84,5 +82,14 @@ class RoomController extends Controller
         $course = Room::findOrFail($id);
         $course->delete();
         return redirect()->back()->with('message', 'Room deleted successfully!');
+    }
+
+    public function availability() {
+        echo DB::table('bookings as b')
+                ->join('reserved_rooms as rr', 'rr.booking_id', '=', 'b.id')
+                ->join('rooms as r', 'rr.room_id', '=', 'r.id')
+                ->select('r.hotel_id as hotel_id','r.id as room_id','rr.total_room_book','r.room_count')
+                ->toSql();
+
     }
 }

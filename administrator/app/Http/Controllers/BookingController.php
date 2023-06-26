@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Booking;
+use App\Models\ReservedRooms;
 use App\Models\Hotel;
 use App\Models\Customer;
 use Illuminate\Support\Facades\DB;
@@ -61,13 +62,23 @@ class BookingController extends Controller
             } else {
                 $data['user_id'] = $customer->id;
             }
-            $data['rooms'] = (isset($data['rooms']) && $data['rooms'] != '')?json_encode($data['rooms']):null;
+            $rooms = $data['rooms'];
+            $data['rooms'] = (isset($rooms) && $rooms != '')?json_encode($rooms):null;
             if($data['booking_id'] <= 0){
                 $booking = Booking::create($data);
                 return redirect('/view-booking/'.$booking->id);
             } else {
                 $booking = Booking::findOrFail($data['booking_id']);
                 $booking->update($data);
+            }
+            
+            foreach($rooms as $key => $value) {
+                if (is_array($value)) {
+                    $reservedRooms = array('booking_id'=>$booking->id,'room_id'=>$key,'total_room_book'=>count($value));
+                    print_r($reservedRooms);
+                    $reserve_rooms = ReservedRooms::create($reservedRooms);
+                    print_r($reserve_rooms);
+                }
             }
             return redirect()->back()->with('message', 'Booking updated successfully!');
         } catch(\Illuminate\Database\QueryException $e){

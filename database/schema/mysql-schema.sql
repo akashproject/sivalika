@@ -255,6 +255,19 @@ CREATE TABLE `personal_access_tokens` (
   KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `reserved_rooms`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `reserved_rooms` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `booking_id` int(11) DEFAULT NULL,
+  `room_id` int(11) DEFAULT NULL,
+  `total_room_book` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `reviews`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -359,3 +372,4 @@ INSERT INTO `migrations` VALUES (15,'2023_06_19_083624_create_hotels_table',2);
 INSERT INTO `migrations` VALUES (18,'2023_06_20_101838_create_rooms_table',3);
 INSERT INTO `migrations` VALUES (22,'2023_06_21_122243_create_customers_table',5);
 INSERT INTO `migrations` VALUES (24,'2023_06_21_070204_create_bookings_table',6);
+INSERT INTO `migrations` VALUES (25,'2023_06_26_101214_create_reserved_rooms_table',7);
