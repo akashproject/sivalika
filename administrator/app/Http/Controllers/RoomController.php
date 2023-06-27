@@ -91,7 +91,8 @@ class RoomController extends Controller
         echo DB::table('bookings as b')
                 ->join('reserved_rooms as rr', 'rr.booking_id', '=', 'b.id')
                 ->join('rooms as r', 'rr.room_id', '=', 'r.id')
-                ->select('r.hotel_id as hotel_id','r.id as room_id','rr.total_room_book','r.room_count',`r`.`room_count` - `rr`.`total_room_book`)
+                ->select('r.hotel_id as hotel_id','r.id as room_id','rr.total_room_book','r.room_count')
+                ->selectRaw('`r`.`room_count` - `rr`.`total_room_book` as `room_left`')
                 ->toSql();
 
     }
