@@ -24,6 +24,24 @@
 				<div class="row">
 					<div class="col-md-7" >
 						<div class="form-group row">
+							<label for="checkin" class="col-sm-3 text-right control-label col-form-label">Checkin Date</label>
+							<div class="col-sm-9">
+								<input type="date" class="form-control" name="checkin" id="datepicker checkin" placeholder="Enter Checkin Date" >
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="checkout" class="col-sm-3 text-right control-label col-form-label">Checkout Date</label>
+							<div class="col-sm-9">
+								<input type="date" class="form-control" name="checkout" id="datepicker checkout" placeholder="Enter Checkout Date" >
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="total_guest" class="col-sm-3 text-right control-label col-form-label">Total Guest</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="total_guest" id="total_guest" placeholder="Enter Total Guest" >
+							</div>
+						</div>
+						<div class="form-group row">
 							<label for="state" class="col-sm-3 text-right control-label col-form-label">Hotel</label>
 							<div class="col-sm-9">
 								<select name="hotel_id" id="hotel_id" class="select2 form-control custom-select" style="width: 100%;" onChange="getRoomsByHotelId(this);">	
@@ -58,24 +76,7 @@
 								<input type="text" class="form-control" name="amount" id="amount" placeholder="Enter Booking Amount" >
 							</div>
 						</div>
-						<div class="form-group row">
-							<label for="total_guest" class="col-sm-3 text-right control-label col-form-label">Total Guest</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control" name="total_guest" id="total_guest" placeholder="Enter Total Guest" >
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="checkin" class="col-sm-3 text-right control-label col-form-label">Checkin Date</label>
-							<div class="col-sm-9">
-								<input type="date" class="form-control" name="checkin" id="datepicker checkin" placeholder="Enter Checkin Date" >
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="checkout" class="col-sm-3 text-right control-label col-form-label">Checkout Date</label>
-							<div class="col-sm-9">
-								<input type="date" class="form-control" name="checkout" id="datepicker checkout" placeholder="Enter Checkout Date" >
-							</div>
-						</div>
+						
 						<div class="form-group row">
 							<label for="order_id" class="col-sm-3 text-right control-label col-form-label">Order id</label>
 							<div class="col-sm-9">
