@@ -53,13 +53,6 @@
                             </ul>
                         </li>
 
-                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-book-multiple-variant"></i><span class="hide-menu">Ad Pages </span></a>
-                            <ul aria-expanded="false" class="collapse  first-level">
-								<li class="sidebar-item"><a href="{{ url('ad-pages') }}" class="sidebar-link"><i class="mdi mdi-border-inside"></i><span class="hide-menu"> All Ad Pages </span></a></li>
-                                <li class="sidebar-item"><a href="{{ url('add-ad-page') }}" class="sidebar-link"><i class="mdi mdi-border-inside"></i><span class="hide-menu"> Add Ad Page </span></a></li>
-                            </ul>
-                        </li>
-
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ url('media') }}" aria-expanded="false"><i class="mdi mdi-folder-multiple-image"></i><span class="hide-menu">Media Library</span></a></li>
                         
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-comment-question-outline"></i><span class="hide-menu">Faqs</span></a>
@@ -72,6 +65,15 @@
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark" href="{{ url('reviews') }}" aria-expanded="false"><i class="mdi mdi-star"></i><span class="hide-menu">Reviews</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark" href="{{ url('contacts') }}" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">Contacts</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark" href="{{ url('settings') }}" aria-expanded="false"><i class="mdi mdi-settings"></i><span class="hide-menu">Settings </span></a></li>
+                        @endif
+
+                        @if($user->role == 2)
+                            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-book-multiple-variant"></i><span class="hide-menu">Rooms</span></a>
+                                <ul aria-expanded="false" class="collapse  first-level">
+                                    <li class="sidebar-item"><a href="{{ url('hotel-rooms') }}" class="sidebar-link"><i class="mdi mdi-border-inside"></i><span class="hide-menu"> All Rooms </span></a></li>
+                                    <li class="sidebar-item"><a href="{{ url('add-hotel-rooms') }}" class="sidebar-link"><i class="mdi mdi-border-inside"></i><span class="hide-menu"> Add Room </span></a></li>
+                                </ul>
+                            </li>
                         @endif
                     </ul>
                 </nav>

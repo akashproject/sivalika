@@ -10,6 +10,7 @@ use App\Models\Review;
 use App\Models\Faq;
 use App\Models\Room;
 use App\Models\Customer;
+use Illuminate\Support\Facades\Auth;
 
 if (! function_exists('check_device')) {
     function check_device($param = null){
@@ -77,6 +78,14 @@ if (! function_exists('get_theme_setting')) {
     function get_theme_setting($value){
         $media = Setting::where('key',$value)->first();
         return (isset($media->value))?$media->value:"null";
+    }
+}
+
+if (! function_exists('get_user_meta')) {
+    function get_user_meta($key){
+        $user = Auth::user();
+        $meta = DB::table('user_meta')->where('user_id',$user->id)->where('meta_key',$key)->first();
+        return (isset($meta->meta_value))?$meta->meta_value:"null";
     }
 }
 

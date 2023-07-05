@@ -18,9 +18,15 @@ class BookingController extends Controller
     public function index() {
         try {
             $bookings = DB::table('bookings');
+            
             if(request()->has('cust_id')){
                 $bookings->where('user_id', request()->get('cust_id'));
             }
+
+            if(request()->has('checkin')){
+                $bookings->where('checkin', request()->get('checkin'));
+            }
+
             $bookings = $bookings->get();
             return view('bookings.index',compact('bookings'));
         } catch(\Illuminate\Database\QueryException $e){
@@ -68,20 +74,18 @@ class BookingController extends Controller
             }
             $rooms = $data['rooms'];
             $data['rooms'] = (isset($rooms) && $rooms != '')?json_encode($rooms):null;
-            if($data['booking_id'] <= 0){
+            if($data['bookingId'] <= 0){
+                $data['booking_id'] = $this->random_strings(6);
                 $booking = Booking::create($data);
-                return redirect('/view-booking/'.$booking->id);
             } else {
-                $booking = Booking::findOrFail($data['booking_id']);
+                $booking = Booking::findOrFail($data['bookingId']);
                 $booking->update($data);
             }
             
             foreach($rooms as $key => $value) {
                 if (is_array($value)) {
                     $reservedRooms = array('booking_id'=>$booking->id,'room_id'=>$key,'total_room_book'=>count($value));
-                    print_r($reservedRooms);
                     $reserve_rooms = ReservedRooms::create($reservedRooms);
-                    print_r($reserve_rooms);
                 }
             }
             return redirect()->back()->with('message', 'Booking updated successfully!');
@@ -95,4 +99,17 @@ class BookingController extends Controller
         $course->delete();
         return redirect()->back()->with('message', 'Booking deleted successfully!');
     }
+
+    public function random_strings($length_of_string)
+    {
+    
+        // String of all alphanumeric character
+        $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    
+        // Shuffle the $str_result and returns substring
+        // of specified length
+        return substr(str_shuffle($str_result),
+                        0, $length_of_string);
+    }
+
 }

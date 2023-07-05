@@ -106,6 +106,7 @@
 								<select name="status" id="status" class="select2 form-control custom-select" style="width: 100%; height:36px;">	
 									<option value="pending" > Pending</option>
 									<option value="comfirm" > Comfirm</option>
+									<option value="arrvied" > Arrived</option>
 									<option value="cancel" > Cancel </option>
 								<select>
 							</div>
@@ -118,7 +119,7 @@
 
 				<div class="card-body">
 					<button type="submit" class="btn btn-primary">Submit</button>
-					<input type="hidden" name="booking_id" id="booking_id" value="" >
+					<input type="hidden" name="bookingId" id="bookingId" value="" >
 				</div>
 
 			</div>

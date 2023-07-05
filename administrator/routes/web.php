@@ -63,6 +63,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/save-room', [App\Http\Controllers\RoomController::class, 'save'])->name('save-room');
     Route::get('/delete-room/{id}', [App\Http\Controllers\RoomController::class, 'delete'])->name('delete-room');
 
+    //Add Rooms
+    Route::get('/hotel-rooms', [App\Http\Controllers\HotelRoomController::class, 'index'])->name('hotel-rooms');
+    Route::post('/get-hotel-rooms-by-room-id', [App\Http\Controllers\HotelRoomController::class, 'getRoomByHotelId'])->name('get-hotel-rooms-by-room-id');
+    Route::get('/add-hotel-room', [App\Http\Controllers\HotelRoomController::class, 'Add'])->name('add-hotel-room');
+    Route::get('/view-hotel-room/{id}', [App\Http\Controllers\HotelRoomController::class, 'show'])->name('view-hotel-room');
+    Route::post('/save-hotel-room', [App\Http\Controllers\HotelRoomController::class, 'save'])->name('save-hotel-room');
+    Route::get('/delete-hotel-room/{id}', [App\Http\Controllers\HotelRoomController::class, 'delete'])->name('delete-hotel-room');
+
     //Add Bookings
     Route::get('/bookings', [App\Http\Controllers\BookingController::class, 'index'])->name('bookings');
     Route::get('/add-booking', [App\Http\Controllers\BookingController::class, 'Add'])->name('add-booking');

@@ -138,8 +138,9 @@
 							<div class="col-sm-8">
 								<select name="status" id="status" class="select2 form-control custom-select">	
 									<option value="">Update Status</option>
-									<option value="comfirm" {{ ( $booking->status ==  'comfirm' )? 'selected' : '' }} > Comfirm</option>
 									<option value="pending" {{ ( $booking->status ==  'pending' )? 'selected' : '' }}> Pending </option>
+									<option value="comfirm" {{ ( $booking->status ==  'comfirm' )? 'selected' : '' }} > Comfirm</option>
+									<option value="arrvied" {{ ( $booking->status ==  'arrvied' )? 'selected' : '' }} > Arrived</option>
 									<option value="cancel" {{ ( $booking->status ==  'cancel' )? 'selected' : '' }}> Cancel </option>
 								<select>
 							</div>
@@ -151,7 +152,7 @@
 			<div class="border-top">
 				<div class="card-body">
 					<button type="submit" class="btn btn-primary">Submit</button>
-					<input type="hidden" name="booking_id" id="booking_id" value="{{ $booking->id }}" >
+					<input type="hidden" name="bookingId" id="bookingId" value="{{ $booking->id }}" >
 				</div>
 			</div>
 		</form>

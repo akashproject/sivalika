@@ -14932,3 +14932,24 @@ table#zero_config tr td:last-child {
   display: inline-flex;
   width: 50%;
 }
+.hotelroom {
+    height: 80px;
+    background: #6eeb45;
+    border: 2px solid #ccc;
+    text-align: center;
+}
+
+.room-no{
+  width: 100%;
+  display: block;
+  background: #163368;
+  color: #fff;
+  font-size: 18px;
+}
+.color-code {
+  height: 17px;
+  width: 31px;
+  display: inline-flex;
+  vertical-align: middle;
+  margin-right: 15px;
+}

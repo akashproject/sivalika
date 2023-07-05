@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('amenities')->nullable();
             $table->string('featured_image')->nullable();
             $table->string('cost')->nullable();
-            $table->enum('status', ['0', '1'])->default('1');
+            $table->string('status', 50)->default('active');
             $table->timestamps();
         });
     }

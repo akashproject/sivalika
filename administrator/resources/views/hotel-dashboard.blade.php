@@ -8,10 +8,10 @@
 			<!-- Column -->
 			<div class="col-md-6 col-lg-2 col-xlg-3">
 				<div class="card card-hover">
-					<div class="box bg-cyan text-center">
+					<a class="box bg-cyan text-center" href="{{ url('bookings') }}?checkin={{ date('Y-m-d') }}">
 						<h1 class="font-light text-white"><i class="mdi mdi-view-dashboard"></i></h1>
-						<h6 class="text-white">Dashboard</h6>
-					</div>
+						<h6 class="text-white">Bookings ({{ $booking }})</h6>
+					</a>
 				</div>
 			</div>
 			<!-- Column -->
