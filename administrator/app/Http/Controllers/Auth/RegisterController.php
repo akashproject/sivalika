@@ -66,9 +66,9 @@ class RegisterController extends Controller
     protected function create()
     {
         return User::create([
-            'name' => 'Admin User',
-            'email' => 'akashdutta.scriptcrown@gmail.com',
-            'password' => Hash::make('SE~you@9062'),
+            'name' => 'Front Desk - Akash',
+            'email' => 'akashdutta@gmail.com',
+            'password' => Hash::make('123456'),
         ]);
     }
 }

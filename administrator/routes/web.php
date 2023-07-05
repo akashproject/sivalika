@@ -25,13 +25,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('administrator');
     Route::get('/dashboard', [App\Http\Controllers\IndexController::class, 'index'])->name('dashboard');
     Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+
+    //Front Desk User
+    Route::get('/front-desks', [App\Http\Controllers\FrontDeskController::class, 'index'])->name('customers');
+    Route::get('/add-front-desk', [App\Http\Controllers\FrontDeskController::class, 'Add'])->name('add-front-desk');
+    Route::get('/view-front-desk/{id}', [App\Http\Controllers\FrontDeskController::class, 'show'])->name('view-front-desk');
+    Route::post('/save-front-desk', [App\Http\Controllers\FrontDeskController::class, 'save'])->name('save-front-desk');
+    Route::get('/deactivate-front-desk/{id}', [App\Http\Controllers\FrontDeskController::class, 'delete'])->name('deactivate-front-desk');
     
     //Customers
     Route::get('/customers', [App\Http\Controllers\CustomerController::class, 'index'])->name('customers');
     Route::get('/add-customer', [App\Http\Controllers\CustomerController::class, 'Add'])->name('add-customer');
     Route::get('/view-customer/{id}', [App\Http\Controllers\CustomerController::class, 'show'])->name('view-customer');
     Route::post('/save-customer', [App\Http\Controllers\CustomerController::class, 'save'])->name('save-customer');
-    Route::get('/deactivate-customer/{id}', [App\Http\Controllers\CustomerController::class, 'delete'])->name('delete-room');
+    Route::get('/deactivate-customer/{id}', [App\Http\Controllers\CustomerController::class, 'delete'])->name('deactivate-customer');
 
     //Page
     Route::get('/pages', [App\Http\Controllers\PageController::class, 'index'])->name('pages');

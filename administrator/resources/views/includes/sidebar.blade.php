@@ -17,6 +17,14 @@
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ url('/') }}" target="_blank" aria-expanded="false"><i class="mdi mdi-web"></i><span class="hide-menu">Visit Site</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ url('/') }}" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a></li>
                         
+                        @if($user->role == 1)
+                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account"></i><span class="hide-menu">Front Desk</span></a>
+                            <ul aria-expanded="false" class="collapse  first-level">
+								<li class="sidebar-item"><a href="{{ url('front-desks') }}" class="sidebar-link"><i class="mdi mdi-account"></i><span class="hide-menu"> All Front Desk </span></a></li>
+                                <li class="sidebar-item"><a href="{{ url('add-front-desk') }}" class="sidebar-link"><i class="mdi mdi-account"></i><span class="hide-menu"> Add Front Desk User </span></a></li>
+                            </ul>
+                        </li> 
+
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-face"></i><span class="hide-menu">Customers</span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
 								<li class="sidebar-item"><a href="{{ url('customers') }}" class="sidebar-link"><i class="mdi mdi-face"></i><span class="hide-menu"> All Customers </span></a></li>
@@ -64,6 +72,7 @@
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark" href="{{ url('reviews') }}" aria-expanded="false"><i class="mdi mdi-star"></i><span class="hide-menu">Reviews</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark" href="{{ url('contacts') }}" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">Contacts</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark" href="{{ url('settings') }}" aria-expanded="false"><i class="mdi mdi-settings"></i><span class="hide-menu">Settings </span></a></li>
+                        @endif
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->

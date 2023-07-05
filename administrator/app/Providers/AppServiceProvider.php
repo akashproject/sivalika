@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use App\Models\Media;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 use View;
 
@@ -33,6 +34,8 @@ class AppServiceProvider extends ServiceProvider
             $media = Media::orderBy('created_at', 'desc')->get();
             $view->with('media', $media);
 
+            $user = Auth::user();
+            $view->with('user', $user);
         });
     }
 }
