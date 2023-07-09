@@ -71,7 +71,7 @@
                             <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-book-multiple-variant"></i><span class="hide-menu">Rooms</span></a>
                                 <ul aria-expanded="false" class="collapse  first-level">
                                     <li class="sidebar-item"><a href="{{ url('hotel-rooms') }}" class="sidebar-link"><i class="mdi mdi-border-inside"></i><span class="hide-menu"> All Rooms </span></a></li>
-                                    <li class="sidebar-item"><a href="{{ url('add-hotel-rooms') }}" class="sidebar-link"><i class="mdi mdi-border-inside"></i><span class="hide-menu"> Add Room </span></a></li>
+                                    <li class="sidebar-item"><a href="{{ url('add-hotel-room') }}" class="sidebar-link"><i class="mdi mdi-border-inside"></i><span class="hide-menu"> Add Room </span></a></li>
                                 </ul>
                             </li>
                         @endif

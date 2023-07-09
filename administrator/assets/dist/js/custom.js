@@ -15,6 +15,11 @@ $(function() {
         }
     );
 
+    $(".nav-tabs li.nav-item nav-link.disabled").click(function() {
+        alert();
+        return false;
+      });
+
     // this is for close icon when navigation open in mobile view
 
     $(".nav-toggler").on('click', function() {
@@ -106,18 +111,6 @@ $(function() {
         wheelPropagation: !0
 
     });
-
-
-
-    /*var ps = new PerfectScrollbar('.message-body');
-
-    var ps = new PerfectScrollbar('.notifications');
-
-    var ps = new PerfectScrollbar('.scroll-sidebar');
-
-    var ps = new PerfectScrollbar('.customizer-body');*/
-
-
 
     // ============================================================== 
 
@@ -240,20 +233,6 @@ $(function() {
             $(".image-thumbnail").removeClass("active");
         }
         $(this).toggleClass("active");
-        
-        // $(this).magnificPopup({
-        //     // you may add other options here, e.g.:
-        //     preloader: true,
-        //     callbacks: {
-        //       open: function() {
-        //         // Will fire when this exact popup is opened
-        //         // this - is Magnific Popup object
-        //       },
-        //       close: function() {
-        //         // Will fire when popup is closed
-        //       }
-        //     }
-        // });
     });
 
     $(".image-profile").on("click",function(){
@@ -281,9 +260,7 @@ $(function() {
     $(document).on("click",".addNewRoom", function(){
         let id = $(this).attr("data-id");
         let parentElement = $(this).attr("id");
-        console.log($("."+parentElement+" .row"));
         let next = parseInt($("."+parentElement+" .row").length) + parseInt("1");
-        console.log(next);
         let element = '<div class="row mt-2"><div class="col-sm-5"><span class="room-label"> Adult </span><span class="room-guest"><input class="form-control" type="number" name="rooms['+id+']['+next+'][adult]" value="1"></span></div><div class="col-sm-5"><span class="room-label">Child </span><span class="room-guest"><input class="form-control" name="rooms['+id+']['+next+'][child]" type="number" value="0"></span></div><div class="col-sm-2"><button type="button" class="btn btn-danger btn remove-room"><i class="mdi mdi-delete"></i></button></div></div>';
         
         

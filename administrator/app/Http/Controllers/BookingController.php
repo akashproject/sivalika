@@ -7,22 +7,35 @@ use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\ReservedRooms;
 use App\Models\Hotel;
+use App\Models\Room;
 use App\Models\Customer;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
     public $_statusOK = 200;
     public $_statusErr = 500;
+    private $userData;
+
+    public function __construct()
+    {
+       
+    }
 
     public function index() {
         try {
+
             $bookings = DB::table('bookings');
             
             if(request()->has('cust_id')){
                 $bookings->where('user_id', request()->get('cust_id'));
             }
 
+            if(Auth::user()->role == 2){
+                $bookings->where('hotel_id', get_user_meta('hotel_id'));
+            }
+            
             if(request()->has('checkin')){
                 $bookings->where('checkin', request()->get('checkin'));
             }
@@ -38,6 +51,20 @@ class BookingController extends Controller
         try {
             $hotels = Hotel::all();
             return view('bookings.add',compact('hotels'));
+        } catch(\Illuminate\Database\QueryException $e){
+            //throw $th;
+        }
+    }
+
+    public function AddBookingFromFrontDesk(){
+        try {
+            $tab = '';
+            if(request()->has('tab')){
+                $tab = request()->get('tab');
+            }
+            $hotel = Hotel::where('id',get_user_meta('hotel_id'))->first();
+            $rooms = Room::where("hotel_id",$hotel->id)->get();
+            return view('bookings.addFromFrontDesk',compact('hotel','rooms','tab'));
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
         }
@@ -88,6 +115,29 @@ class BookingController extends Controller
                     $reserve_rooms = ReservedRooms::create($reservedRooms);
                 }
             }
+            return redirect()->back()->with('message', 'Booking updated successfully!');
+        } catch(\Illuminate\Database\QueryException $e){
+            var_dump($e);
+        }
+    }
+
+    public function saveFrontDeskBooking(Request $request) {
+        try {
+            $data = $request->all();
+            echo "<pre>"; print_r($data); exit;
+            if($data['tab'] == 'checkin') {
+                
+            }
+
+            if($data['tab'] == 'guest') {
+
+            }
+
+            if($data['tab'] == 'rooms') {
+
+            }
+
+
             return redirect()->back()->with('message', 'Booking updated successfully!');
         } catch(\Illuminate\Database\QueryException $e){
             var_dump($e);
