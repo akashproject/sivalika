@@ -35,6 +35,8 @@ DROP TABLE IF EXISTS `bookings`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `bookings` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `booking_id` varchar(10) NOT NULL,
+  `booking_type` varchar(20) DEFAULT NULL,
   `hotel_id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `guest_name` varchar(50) DEFAULT NULL,
@@ -44,10 +46,11 @@ CREATE TABLE `bookings` (
   `rooms` text DEFAULT NULL,
   `checkin` date DEFAULT NULL,
   `checkout` date DEFAULT NULL,
+  `payment_type` varchar(20) DEFAULT NULL,
   `order_id` varchar(255) DEFAULT NULL,
   `payment_id` varchar(255) DEFAULT NULL,
   `payment` enum('success','pending','failed') NOT NULL DEFAULT 'pending',
-  `status` enum('comfirm','pending','cancel') DEFAULT 'pending',
+  `status` varchar(20) DEFAULT 'pending',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -137,6 +140,20 @@ CREATE TABLE `gallery` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `hotel_id` int(11) NOT NULL,
   `image_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `hotel_rooms`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `hotel_rooms` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `hotel_id` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL,
+  `hotel_room_no` int(11) NOT NULL,
+  `status` varchar(20) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -299,7 +316,7 @@ CREATE TABLE `rooms` (
   `amenities` text DEFAULT NULL,
   `featured_image` varchar(255) DEFAULT NULL,
   `cost` varchar(255) DEFAULT NULL,
-  `status` enum('0','1') NOT NULL DEFAULT '1',
+  `status` varchar(50) NOT NULL DEFAULT 'active',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -331,16 +348,33 @@ CREATE TABLE `states` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `user_meta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_meta` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `meta_key` varchar(255) NOT NULL,
+  `meta_value` text NOT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
+  `mobile` varchar(255) DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
+  `role` int(11) DEFAULT 2,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -373,3 +407,5 @@ INSERT INTO `migrations` VALUES (17,'2023_06_20_101838_create_rooms_table',3);
 INSERT INTO `migrations` VALUES (18,'2023_06_21_070204_create_bookings_table',4);
 INSERT INTO `migrations` VALUES (19,'2023_06_21_122243_create_customers_table',4);
 INSERT INTO `migrations` VALUES (20,'2023_06_26_101214_create_reserved_rooms_table',5);
+INSERT INTO `migrations` VALUES (21,'2023_07_02_075514_create_user_meta_table',6);
+INSERT INTO `migrations` VALUES (22,'2023_07_05_074414_create_hotel_rooms_table',7);

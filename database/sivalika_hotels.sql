@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 05, 2023 at 09:29 PM
+-- Generation Time: Jul 09, 2023 at 09:10 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -58,6 +58,7 @@ CREATE TABLE `adpages` (
 CREATE TABLE `bookings` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `booking_id` varchar(10) NOT NULL,
+  `booking_type` varchar(20) DEFAULT NULL,
   `hotel_id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `guest_name` varchar(50) DEFAULT NULL,
@@ -67,6 +68,7 @@ CREATE TABLE `bookings` (
   `rooms` text DEFAULT NULL,
   `checkin` date DEFAULT NULL,
   `checkout` date DEFAULT NULL,
+  `payment_type` varchar(20) DEFAULT NULL,
   `order_id` varchar(255) DEFAULT NULL,
   `payment_id` varchar(255) DEFAULT NULL,
   `payment` enum('success','pending','failed') NOT NULL DEFAULT 'pending',
@@ -79,10 +81,11 @@ CREATE TABLE `bookings` (
 -- Dumping data for table `bookings`
 --
 
-INSERT INTO `bookings` (`id`, `booking_id`, `hotel_id`, `user_id`, `guest_name`, `guest_mobile`, `amount`, `total_guest`, `rooms`, `checkin`, `checkout`, `order_id`, `payment_id`, `payment`, `status`, `created_at`, `updated_at`) VALUES
-(2, '', 2, 1, 'Akash Dutta', '9836555023', 2500, 3, '{\"4\":[{\"adult\":\"2\",\"child\":\"0\"}],\"5\":[{\"adult\":\"1\",\"child\":\"0\"}]}', '2023-07-06', '2023-07-07', '745447778888', '2114444', 'pending', 'comfirm', '2023-07-05 01:39:51', '2023-07-05 01:39:51'),
-(3, '', 1, 1, 'Test', '9836555023', 1200, 3, '{\"1\":[{\"adult\":\"2\",\"child\":\"0\"}],\"2\":[{\"adult\":\"1\",\"child\":\"0\"}],\"3\":null}', '2023-07-06', '2023-07-07', 'dasdsdsad', '12313232', 'pending', 'comfirm', '2023-07-05 02:12:45', '2023-07-05 02:12:45'),
-(4, '', 1, 5, 'Amit D', '5898744444', 1000, 2, '{\"1\":[{\"adult\":\"2\",\"child\":\"0\"}],\"2\":null,\"3\":null}', '2023-07-05', '2023-07-07', 'Order_2144555555', '111444477', 'success', 'arrvied', '2023-07-05 12:07:41', '2023-07-05 13:55:42');
+INSERT INTO `bookings` (`id`, `booking_id`, `booking_type`, `hotel_id`, `user_id`, `guest_name`, `guest_mobile`, `amount`, `total_guest`, `rooms`, `checkin`, `checkout`, `payment_type`, `order_id`, `payment_id`, `payment`, `status`, `created_at`, `updated_at`) VALUES
+(2, '5874100', NULL, 2, 1, 'Akash Dutta', '9836555023', 2500, 3, '{\"4\":[{\"adult\":\"2\",\"child\":\"0\"}],\"5\":[{\"adult\":\"1\",\"child\":\"0\"}]}', '2023-07-06', '2023-07-07', NULL, '745447778888', '2114444', 'pending', 'comfirm', '2023-07-05 01:39:51', '2023-07-05 01:39:51'),
+(3, '5874102', NULL, 1, 1, 'Test', '9836555023', 1200, 3, '{\"1\":[{\"adult\":\"2\",\"child\":\"0\"}],\"2\":[{\"adult\":\"1\",\"child\":\"0\"}],\"3\":null}', '2023-07-06', '2023-07-07', NULL, 'dasdsdsad', '12313232', 'pending', 'comfirm', '2023-07-05 02:12:45', '2023-07-05 02:12:45'),
+(4, '5874103', NULL, 1, 5, 'Amit D', '5898744444', 1000, 2, '{\"1\":[{\"adult\":\"2\",\"child\":\"0\"}],\"2\":null,\"3\":null}', '2023-07-05', '2023-07-07', NULL, 'Order_2144555555', '111444477', 'success', 'arrvied', '2023-07-05 12:07:41', '2023-07-05 13:55:42'),
+(5, 'ALTKCV', NULL, 2, 6, 'Test User', '9836000110', 1200, 2, '{\"4\":[{\"adult\":\"2\",\"child\":\"0\"}],\"5\":[{\"adult\":\"1\",\"child\":\"0\"}]}', '2023-07-09', '2023-07-10', NULL, NULL, NULL, 'pending', 'comfirm', '2023-07-08 13:45:06', '2023-07-08 13:45:06');
 
 -- --------------------------------------------------------
 
@@ -886,7 +889,8 @@ INSERT INTO `customers` (`id`, `name`, `email`, `mobile`, `dob`, `gender`, `mari
 (2, 'John Doe', NULL, '6290565997', NULL, 'undisclosed', 'undisclosed', '1', '2023-06-24 08:33:44', '2023-06-24 08:33:44'),
 (3, 'Ram Shing', NULL, '8974563301', NULL, 'undisclosed', 'undisclosed', '1', '2023-06-24 11:26:15', '2023-06-24 11:26:15'),
 (4, 'John Doe', 'test@example.com', '9836555023', NULL, 'undisclosed', 'undisclosed', '1', '2023-07-02 02:33:19', '2023-07-02 02:33:19'),
-(5, 'Amit D', NULL, '5898744444', NULL, 'undisclosed', 'undisclosed', '1', '2023-07-05 12:07:41', '2023-07-05 12:07:41');
+(5, 'Amit D', NULL, '5898744444', NULL, 'undisclosed', 'undisclosed', '1', '2023-07-05 12:07:41', '2023-07-05 12:07:41'),
+(6, 'Test User', NULL, '9836000110', NULL, 'undisclosed', 'undisclosed', '1', '2023-07-08 13:43:25', '2023-07-08 13:43:25');
 
 -- --------------------------------------------------------
 
@@ -998,10 +1002,13 @@ CREATE TABLE `hotel_rooms` (
 INSERT INTO `hotel_rooms` (`id`, `hotel_id`, `room_id`, `hotel_room_no`, `status`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, 101, 'blocked', '2023-07-05 08:12:46', '2023-07-05 11:21:13'),
 (2, 1, 1, 102, 'not-cleaned', '2023-07-05 08:12:46', '2023-07-05 12:00:13'),
-(3, 1, 1, 103, 'active', '2023-07-05 08:12:46', '2023-07-05 08:12:46'),
+(3, 1, 1, 103, 'reserved', '2023-07-05 08:12:46', '2023-07-08 13:29:29'),
 (4, 1, 1, 104, 'active', '2023-07-05 09:21:41', '2023-07-05 09:21:41'),
 (5, 1, 2, 201, 'active', '2023-07-05 13:46:33', '2023-07-05 13:46:33'),
-(6, 1, 2, 202, 'active', '2023-07-05 13:46:43', '2023-07-05 13:46:43');
+(6, 1, 2, 202, 'active', '2023-07-05 13:46:43', '2023-07-05 13:46:43'),
+(7, 2, 4, 101, 'active', '2023-07-08 13:38:11', '2023-07-08 13:38:11'),
+(9, 2, 5, 201, 'not-cleaned', '2023-07-08 13:38:34', '2023-07-08 13:41:38'),
+(10, 2, 4, 103, 'blocked', '2023-07-08 13:38:49', '2023-07-08 13:41:02');
 
 -- --------------------------------------------------------
 
@@ -1155,7 +1162,9 @@ INSERT INTO `reserved_rooms` (`id`, `booking_id`, `room_id`, `total_room_book`, 
 (5, 4, 1, 1, '2023-07-05 12:07:41', '2023-07-05 12:07:41'),
 (6, 4, 1, 1, '2023-07-05 13:52:41', '2023-07-05 13:52:41'),
 (7, 4, 1, 1, '2023-07-05 13:54:31', '2023-07-05 13:54:31'),
-(8, 4, 1, 1, '2023-07-05 13:55:42', '2023-07-05 13:55:42');
+(8, 4, 1, 1, '2023-07-05 13:55:42', '2023-07-05 13:55:42'),
+(9, 5, 4, 1, '2023-07-08 13:45:06', '2023-07-08 13:45:06'),
+(10, 5, 5, 1, '2023-07-08 13:45:06', '2023-07-08 13:45:06');
 
 -- --------------------------------------------------------
 
@@ -1203,11 +1212,11 @@ CREATE TABLE `rooms` (
 --
 
 INSERT INTO `rooms` (`id`, `hotel_id`, `name`, `size`, `person`, `room_count`, `amenities`, `featured_image`, `cost`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Classic Room', '130 sq ft', '2', 2, '[\"WiFi\",\"Wardrobe\",\"Mineral Water Bottle\",\"Free Toiletries\",\"LCD TV\",\"Clean Towels\",\"Clean Linen\",\"Toilet Paper\",\"DTH Channels\",\"Tile\\/Marble floor\",\"Electric Kettle (On Request)\",\"Breakfast (Buffet)\"]', '1', '1200', '1', '2023-06-20 13:29:04', '2023-07-05 12:00:13'),
+(1, 1, 'Classic Room', '130 sq ft', '2', 3, '[\"WiFi\",\"Wardrobe\",\"Mineral Water Bottle\",\"Free Toiletries\",\"LCD TV\",\"Clean Towels\",\"Clean Linen\",\"Toilet Paper\",\"DTH Channels\",\"Tile\\/Marble floor\",\"Electric Kettle (On Request)\",\"Breakfast (Buffet)\"]', '1', '1200', '1', '2023-06-20 13:29:04', '2023-07-08 13:29:29'),
 (2, 1, 'Deluxe room', '200 sq ft', '3', 2, '[\"WiFi\",\"Wardrobe\",\"Mineral Water Bottle\",\"Free Toiletries\",\"LCD TV\",\"Clean Towels\",\"Clean Linen\",\"Toilet Paper\",\"DTH Channels\",\"Tile\\/Marble floor\",\"Electric Kettle (On Request)\",\"Breakfast (Buffet)\"]', '1', '2000', '1', '2023-06-20 13:29:40', '2023-06-20 13:29:40'),
 (3, 1, 'Super Deluxe Room', '250 sq ft', '4', 2, '[\"WiFi\",\"Wardrobe\",\"Mineral Water Bottle\",\"Free Toiletries\",\"LCD TV\",\"Clean Towels\",\"Clean Linen\",\"Toilet Paper\",\"DTH Channels\",\"Tile\\/Marble floor\",\"Electric Kettle (On Request)\",\"Breakfast (Buffet)\"]', '1', '2500', '1', '2023-06-24 08:20:14', '2023-06-24 08:20:14'),
-(4, 2, 'Classic Room', '130 sq ft', '2', 3, '[\"WiFi\",\"Wardrobe\",\"Mineral Water Bottle\",\"Free Toiletries\",\"LCD TV\",\"Clean Towels\",\"Clean Linen\",\"Toilet Paper\",\"DTH Channels\",\"Tile\\/Marble floor\",\"Electric Kettle (On Request)\",\"Breakfast (Buffet)\"]', '1', '1000', '1', '2023-06-24 11:20:55', '2023-06-24 11:20:55'),
-(5, 2, 'Deluxe Room', '200 sq ft', '3', 2, '[\"WiFi\",\"Wardrobe\",\"Mineral Water Bottle\",\"Free Toiletries\",\"LCD TV\",\"Clean Towels\",\"Clean Linen\",\"Toilet Paper\",\"DTH Channels\",\"Tile\\/Marble floor\",\"Electric Kettle (On Request)\",\"Breakfast (Buffet)\"]', '1', '1500', '1', '2023-06-24 11:22:00', '2023-06-24 11:22:00');
+(4, 2, 'Classic Room', '130 sq ft', '2', 5, '[\"WiFi\",\"Wardrobe\",\"Mineral Water Bottle\",\"Free Toiletries\",\"LCD TV\",\"Clean Towels\",\"Clean Linen\",\"Toilet Paper\",\"DTH Channels\",\"Tile\\/Marble floor\",\"Electric Kettle (On Request)\",\"Breakfast (Buffet)\"]', '1', '1000', '1', '2023-06-24 11:20:55', '2023-07-08 13:41:02'),
+(5, 2, 'Deluxe Room', '200 sq ft', '3', 4, '[\"WiFi\",\"Wardrobe\",\"Mineral Water Bottle\",\"Free Toiletries\",\"LCD TV\",\"Clean Towels\",\"Clean Linen\",\"Toilet Paper\",\"DTH Channels\",\"Tile\\/Marble floor\",\"Electric Kettle (On Request)\",\"Breakfast (Buffet)\"]', '1', '1500', '1', '2023-06-24 11:22:00', '2023-07-08 13:41:38');
 
 -- --------------------------------------------------------
 
@@ -1334,8 +1343,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `name`, `email`, `mobile`, `email_verified_at`, `password`, `remember_token`, `role`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'admin', 'Admin User', 'akashduttaphp@gmail.com', NULL, NULL, '$2y$10$SfCVfJIPP7OCciDw/RPJJ.Gbt3dwULSBurOvQgcX7OSBdRaxF5Rtu', NULL, 1, 1, '2023-06-19 01:34:45', '2023-06-19 01:34:45'),
-(2, '', 'Front Desk - Akash', 'akashdutta@gmail.com', NULL, NULL, '$2y$10$Lc5ft73rTVH6YEy5IDFFqe99PIXxr1hp.oa/4ktvorY.PSsDOnhe.', NULL, 2, 1, '2023-07-01 13:21:10', '2023-07-01 13:21:10'),
-(4, 'johnsmith', 'John Smith', 'johnsmith@gmail.com', '6589741100', NULL, '$2y$10$LH9bmMQmZ5gjybT6lSAe2.oo34G5v54h.G7QiqD3JguXF75NkBsEK', NULL, 2, 1, '2023-07-02 02:49:44', '2023-07-02 02:49:44');
+(5, 'johndoe', 'John Doe', 'akashdutta@gmail.com', '9836555023', NULL, '$2y$10$N.UkRAJZnPu/cWPRgrPUeegWCC1WnRoCVHhPK0.dW.Y8D9W5AFhFS', NULL, 2, 1, '2023-07-08 13:36:51', '2023-07-08 13:36:51');
 
 -- --------------------------------------------------------
 
@@ -1357,7 +1365,7 @@ CREATE TABLE `user_meta` (
 --
 
 INSERT INTO `user_meta` (`id`, `user_id`, `meta_key`, `meta_value`, `created_at`, `updated_at`) VALUES
-(2, 4, 'hotel_id', '1', '2023-07-02 13:49:44', '2023-07-02 08:19:44');
+(3, 5, 'hotel_id', '2', '2023-07-09 00:36:51', '2023-07-08 19:06:51');
 
 --
 -- Indexes for dumped tables
@@ -1513,7 +1521,7 @@ ALTER TABLE `adpages`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `cities`
@@ -1531,7 +1539,7 @@ ALTER TABLE `contacts`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1561,7 +1569,7 @@ ALTER TABLE `hotels`
 -- AUTO_INCREMENT for table `hotel_rooms`
 --
 ALTER TABLE `hotel_rooms`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `media`
@@ -1591,7 +1599,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `reserved_rooms`
 --
 ALTER TABLE `reserved_rooms`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `reviews`
@@ -1621,13 +1629,13 @@ ALTER TABLE `states`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `user_meta`
 --
 ALTER TABLE `user_meta`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
