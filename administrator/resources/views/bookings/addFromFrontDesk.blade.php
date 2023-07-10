@@ -129,7 +129,7 @@
 									<div class="form-group row">
 										<label for="state" class="col-sm-4 text-right control-label col-form-label">Payment Status</label>
 										<div class="col-sm-8">
-											<select name="status" id="status" class="select2 form-control custom-select" style="width: 100%; height:36px;">	
+											<select name="payment" id="payment" class="select2 form-control custom-select" style="width: 100%; height:36px;">	
 												<option value="" > Select Payment Status</option>
 												<option value="pending" > Pending</option>
 												<option value="success" > Success </option>
@@ -166,6 +166,36 @@
 					<div class="tab-pane active" id="guest" role="tabpanel">
 						<div class="p-20">
 							<h4 class="card-title mt-3"> Guest Details </h4>
+							<div class="row">
+								@for($i=1; $i<=$guests; $i++)
+								<label class="col-sm-1 text-right control-label col-form-label">{{$i}}</label>
+								<div class="col-md-11">
+									<div class="form-group row mb-4">											
+										<div class="col-sm-2 mb-2">
+											<input type="text" class="form-control" name="guest_name" id="guest_name" placeholder="Guest Name">
+										</div>
+										<div class="col-sm-2">
+											<input type="text" class="form-control" name="guest_dob" id="guest_dob" placeholder="Guest Date of Birth">
+										</div>		
+										<div class="col-sm-2">
+											<input type="text" class="form-control" name="address" id="address" placeholder="Guest Address">
+										</div>	
+										<div class="col-sm-2">
+											<input type="text" class="form-control" name="state" id="state" placeholder="Guest State">
+										</div>
+										<div class="col-sm-2">
+											<input type="text" class="form-control" name="city" id="city" placeholder="Guest City">
+										</div>	
+										<div class="col-sm-2">
+											<input type="text" class="form-control" name="pincode" id="pincode" placeholder="Guest Pincode">
+										</div>	
+										<div class="col-sm-2">
+											<input type="text" class="form-control" name="identity" id="identity" placeholder="Guest Identity">
+										</div>					
+									</div>
+								</div>
+								@endfor
+							</div>
 							<div class="row">
 								<div class="col-md-7">
 									<div class="form-group row">
@@ -220,6 +250,7 @@
 
 				<div class="card-body">
 					<button type="submit" class="btn btn-primary">Submit</button>
+					<input type="hidden" name="hotel_id" id="hotel_id" value="{{$hotel->id}}" >
 					<input type="hidden" name="bookingId" id="bookingId" value="" >
 				</div>
 

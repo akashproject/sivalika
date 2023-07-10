@@ -56,15 +56,22 @@ class BookingController extends Controller
         }
     }
 
-    public function AddBookingFromFrontDesk(){
+    public function AddBookingFromFrontDesk(Request $request){
         try {
             $tab = '';
+            $guests = 1;
+            $checkinData = $request->session()->get('checkinData');
             if(request()->has('tab')){
                 $tab = request()->get('tab');
             }
+            
+            if($checkinData !== null){
+                $guests = $checkinData['total_guest'];
+            }   
+
             $hotel = Hotel::where('id',get_user_meta('hotel_id'))->first();
             $rooms = Room::where("hotel_id",$hotel->id)->get();
-            return view('bookings.addFromFrontDesk',compact('hotel','rooms','tab'));
+            return view('bookings.addFromFrontDesk',compact('hotel','rooms','tab','guests'));
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
         }
@@ -124,13 +131,30 @@ class BookingController extends Controller
     public function saveFrontDeskBooking(Request $request) {
         try {
             $data = $request->all();
-            echo "<pre>"; print_r($data); exit;
+           
             if($data['tab'] == 'checkin') {
-                
+                $checkinData =[
+                    'booking_id' => $this->random_strings(6),
+                    'booking_type' => $data['booking_type'],
+                    'hotel_id' => $data['hotel_id'],
+                    'amount' => $data['amount'],
+                    'total_guest' => getTotalGuest($data['rooms']),
+                    'rooms' => (isset($rooms) && $rooms != '')?json_encode($rooms):null,
+                    'checkin' => $data['checkin'],
+                    'checkout' => $data['checkout'],
+                    'payment_type' => $data['payment_type'],
+                    'order_id' => $data['order_id'],
+                    'payment_id' => $data['payment_id'],
+                    'payment' => $data['payment'],
+                    'status' => $data['status'],
+                ];  
+                $request->session()->put('checkinData', $checkinData);
+                return redirect('/add-booking-from-front-desk?tab=guest');
             }
 
             if($data['tab'] == 'guest') {
-
+                print_r($request->session()->get('checkinData'));
+                exit;
             }
 
             if($data['tab'] == 'rooms') {
