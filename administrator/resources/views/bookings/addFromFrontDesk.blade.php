@@ -237,6 +237,13 @@
 											<input type="text" class="form-control" name="guest[{{$i}}][pincode]" id="pincode">
 										</div>	
 										<div class="col-sm-2">
+											<label for="nationality" class="">Nationality :</label>
+											<select name="guest[{{$i}}][nationality]" id="nationality" class="select2 form-control custom-select" style="width: 100%; height:36px;">	
+												<option value="Indian" > Indian </option>
+												<option value="Foreigner" > Foreigner </option>
+											<select>
+										</div>	
+										<div class="col-sm-2">
 											<label for="identity_type" class="">Select Identity :</label>
 											<select name="guest[{{$i}}][identity_type]" id="identity_type" class="select2 form-control custom-select" style="width: 100%; height:36px;">	
 												<option value="Aadhar Card" > Aadhar Card </option>

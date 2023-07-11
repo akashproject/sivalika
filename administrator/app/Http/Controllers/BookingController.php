@@ -165,10 +165,9 @@ class BookingController extends Controller
                         'email'=>$data['email'],
                         'gender'=>$data['gender']
                     );
-
                     $customer = Customer::create($customerData);
                 }
-                
+                /*
                 /*Create Booking*/
                 $checkinData = $request->session()->get('checkinData');  
                 $checkinData['user_id'] = $customer->id;
@@ -176,6 +175,7 @@ class BookingController extends Controller
                 $checkinData['guest_mobile'] = $data['mobile'];
                 $booking = Booking::create($checkinData);
 
+                
 
                 foreach ($data['guest'] as $key => $value) {
                     if($value['identity_image'] != null){
@@ -185,16 +185,18 @@ class BookingController extends Controller
                         $data['guest'][$key]['identity_image'] = public_path('identity')."/".$imageFile;
                     }                    
                 }
-                
 
-                $request->session()->put('guestData', $data['guest']);
+                DB::table('booking_meta')->insert(
+                    ['booking_id' => $booking->id, 'meta_key' => 'guest', 'meta_value' => json_encode($data['guest'])]
+                );
+                
+                $request->session()->put('guestData', $data);
                 return redirect('/add-booking-from-front-desk?tab=rooms');
-                print_r($data['guest']);
-                exit;
             }
 
             if($data['tab'] == 'rooms') {
 
+                
             }
 
 
