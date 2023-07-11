@@ -165,65 +165,99 @@
 					<input type="hidden" name="tab" value="guest" >
 					<div class="tab-pane active" id="guest" role="tabpanel">
 						<div class="p-20">
-							<h4 class="card-title mt-3"> Guest Details </h4>
-							<div class="row">
-								@for($i=1; $i<=$guests; $i++)
-								<label class="col-sm-1 text-right control-label col-form-label">{{$i}}</label>
-								<div class="col-md-11">
-									<div class="form-group row mb-4">											
-										<div class="col-sm-2 mb-2">
-											<input type="text" class="form-control" name="guest_name" id="guest_name" placeholder="Guest Name">
-										</div>
-										<div class="col-sm-2">
-											<input type="text" class="form-control" name="guest_dob" id="guest_dob" placeholder="Guest Date of Birth">
-										</div>		
-										<div class="col-sm-2">
-											<input type="text" class="form-control" name="address" id="address" placeholder="Guest Address">
-										</div>	
-										<div class="col-sm-2">
-											<input type="text" class="form-control" name="state" id="state" placeholder="Guest State">
-										</div>
-										<div class="col-sm-2">
-											<input type="text" class="form-control" name="city" id="city" placeholder="Guest City">
-										</div>	
-										<div class="col-sm-2">
-											<input type="text" class="form-control" name="pincode" id="pincode" placeholder="Guest Pincode">
-										</div>	
-										<div class="col-sm-2">
-											<input type="text" class="form-control" name="identity" id="identity" placeholder="Guest Identity">
-										</div>					
-									</div>
-								</div>
-								@endfor
-							</div>
+							<h4 class="card-title mt-3"> Booking User </h4>
 							<div class="row">
 								<div class="col-md-7">
 									<div class="form-group row">
-										<label for="guest_name" class="col-sm-3 text-right control-label col-form-label">Guest Name</label>
+										<label for="name" class="col-sm-3 text-right control-label col-form-label">User Name</label>
 										<div class="col-sm-9">
-											<input type="text" class="form-control" name="guest_name" id="guest_name" placeholder="Enter Guest Here">
+											<input type="text" class="form-control" name="name" id="name" placeholder="Enter Guest Here">
 										</div>
 									</div>
 									<div class="form-group row">
-										<label for="guest_mobile" class="col-sm-3 text-right control-label col-form-label">Guest Mobile</label>
+										<label for="mobile" class="col-sm-3 text-right control-label col-form-label">User Mobile</label>
 										<div class="col-sm-9">
-											<input type="text" class="form-control" name="guest_mobile" id="guest_mobile" placeholder="Enter Guest Mobile Number">
+											<input type="text" class="form-control" name="mobile" id="mobile" placeholder="Enter Guest Mobile Number">
 										</div>
 									</div>
 									<div class="form-group row">
-										<label for="guest_mobile" class="col-sm-3 text-right control-label col-form-label">Guest Email</label>
+										<label for="email" class="col-sm-3 text-right control-label col-form-label">User Email</label>
 										<div class="col-sm-9">
-											<input type="text" class="form-control" name="guest_email" id="guest_email" placeholder="Enter Guest Email Address">
+											<input type="text" class="form-control" name="email" id="email" placeholder="Enter Guest Email Address">
 										</div>
 									</div>
 									<div class="form-group row">
-										<label for="guest_mobile" class="col-sm-3 text-right control-label col-form-label">Date of Birth</label>
+										<label for="gender" class="col-sm-3 text-right control-label col-form-label">Gender</label>
 										<div class="col-sm-9">
-											<input type="text" class="form-control" name="guest_dob" id="guest_dob" placeholder="Enter Guest Date of Birth">
+											<select name="gender" id="gender" class="select2 form-control custom-select" style="width: 100%; height:36px;">	
+												<option value="male" > Male </option>
+												<option value="female" > Female </option>
+												<option value="other" > Other </option>
+											<select>
 										</div>
 									</div>
 								</div>
-							</div>				
+							</div>
+							<h4 class="card-title mt-3"> Guest Details </h4>
+							@for($i=1; $i<=$guests; $i++)
+							<div class="row guest_row">
+								<label class="col-sm-1 text-right control-label col-form-label">Guest {{$i}}: </label>
+								<div class="col-md-11">
+									<div class="form-group row mb-4">											
+										<div class="col-sm-2 mb-2">
+											<label for="guest_name" class="">Enter Name :</label>
+											<input type="text" class="form-control" name="guest[{{$i}}][name]" id="guest_name" >
+										</div>
+										<div class="col-sm-2">
+											<label for="dob" class="">Enter DOB :</label>
+											<input type="text" class="form-control" name="guest[{{$i}}][dob]" id="dob" >
+										</div>		
+										<div class="col-sm-2">
+											<label for="gander" class="">Select Gander :</label>
+											<select name="guest[{{$i}}][gender]" id="gender" class="select2 form-control custom-select" style="width: 100%; height:36px;">	
+												<option value="male" > Male </option>
+												<option value="female" > Female </option>
+												<option value="other" > Other </option>
+											<select>
+										</div>
+										<div class="col-sm-2">
+											<label for="address" class="">Enter Address :</label>
+											<input type="text" class="form-control" name="guest[{{$i}}][address]" id="address" >
+										</div>
+										<div class="col-sm-2">
+											<label for="city" class="">Enter City :</label>
+											<input type="text" class="form-control" name="guest[{{$i}}][city]" id="city">
+										</div>		
+										<div class="col-sm-2">
+											<label for="state" class="">Enter State :</label>
+											<input type="text" class="form-control" name="guest[{{$i}}][state]" id="state">
+										</div>
+										<div class="col-sm-2">
+											<label for="pincode" class="">Enter Pincode :</label>
+											<input type="text" class="form-control" name="guest[{{$i}}][pincode]" id="pincode">
+										</div>	
+										<div class="col-sm-2">
+											<label for="identity_type" class="">Select Identity :</label>
+											<select name="guest[{{$i}}][identity_type]" id="identity_type" class="select2 form-control custom-select" style="width: 100%; height:36px;">	
+												<option value="Aadhar Card" > Aadhar Card </option>
+												<option value="Voter Card" > Voter Card </option>
+												<option value="Driving Licence" > Driving Licence </option>
+												<option value="Passport" > Passport </option>
+											<select>
+										</div>
+										<div class="col-sm-2 text-center">
+											<label for="identity" class="">Identity Number</label>
+											<input type="text" class="form-control" name="guest[{{$i}}][identity]" id="identity" placeholder="Identity Number">
+										</div>		
+										<div class="col-sm-2">
+											<label for="identity" class="">Identity Image</label>
+											<input type="file" class="form-control" name="guest[{{$i}}][identity_image]" id="identity_image" placeholder="Identity Image">
+										</div>				
+									</div>
+								</div>
+							</div>
+							@endfor
+										
 						</div>
 					</div>
 					@endif

@@ -14953,3 +14953,8 @@ table#zero_config tr td:last-child {
   vertical-align: middle;
   margin-right: 15px;
 }
+
+.guest_row {
+  background: #cdc7ff;
+  margin: 15px 0;
+}

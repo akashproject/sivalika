@@ -11,6 +11,9 @@ use App\Models\Room;
 use App\Models\Customer;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use Image;
 
 class BookingController extends Controller
 {
@@ -133,7 +136,7 @@ class BookingController extends Controller
             $data = $request->all();
            
             if($data['tab'] == 'checkin') {
-                $checkinData =[
+                $checkinData = [
                     'booking_id' => $this->random_strings(6),
                     'booking_type' => $data['booking_type'],
                     'hotel_id' => $data['hotel_id'],
@@ -153,7 +156,40 @@ class BookingController extends Controller
             }
 
             if($data['tab'] == 'guest') {
-                print_r($request->session()->get('checkinData'));
+                /* Create Customer */
+                $customer = Customer::where('mobile',$data['mobile'])->first();
+                if($customer === null){
+                    $customerData = array(
+                        'name'=>$data['name'],
+                        'mobile'=>$data['mobile'],
+                        'email'=>$data['email'],
+                        'gender'=>$data['gender']
+                    );
+
+                    $customer = Customer::create($customerData);
+                }
+                
+                /*Create Booking*/
+                $checkinData = $request->session()->get('checkinData');  
+                $checkinData['user_id'] = $customer->id;
+                $checkinData['guest_name'] = $data['name'];
+                $checkinData['guest_mobile'] = $data['mobile'];
+                $booking = Booking::create($checkinData);
+
+
+                foreach ($data['guest'] as $key => $value) {
+                    if($value['identity_image'] != null){
+                        $imageFile = strtolower(str_replace(" ","_",$value['name'])).'_identity_'.time().'.'.$value['identity_image']->extension(); 
+                        $image = Image::make($value['identity_image']->getRealPath());
+                        $image->save(public_path('identity_image',$imageFile));
+                        $data['guest'][$key]['identity_image'] = public_path('identity')."/".$imageFile;
+                    }                    
+                }
+                
+
+                $request->session()->put('guestData', $data['guest']);
+                return redirect('/add-booking-from-front-desk?tab=rooms');
+                print_r($data['guest']);
                 exit;
             }
 

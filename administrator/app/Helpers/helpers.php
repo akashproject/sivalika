@@ -263,8 +263,10 @@ if (! function_exists('getTotalGuest')) {
     function getTotalGuest($params = null){
         $person = 0;
         foreach ($params as $rt => $roomType) {
-            foreach ($roomType as $t => $room) {
-                $person += $room['adult'];
+            if ($roomType) {
+                foreach ($roomType as $t => $room) {
+                    $person += $room['adult'];
+                }
             }
         }
         return $person;
