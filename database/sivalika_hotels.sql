@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 09, 2023 at 09:10 PM
+-- Generation Time: Jul 12, 2023 at 09:51 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -77,15 +77,20 @@ CREATE TABLE `bookings` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `bookings`
+-- Table structure for table `booking_meta`
 --
 
-INSERT INTO `bookings` (`id`, `booking_id`, `booking_type`, `hotel_id`, `user_id`, `guest_name`, `guest_mobile`, `amount`, `total_guest`, `rooms`, `checkin`, `checkout`, `payment_type`, `order_id`, `payment_id`, `payment`, `status`, `created_at`, `updated_at`) VALUES
-(2, '5874100', NULL, 2, 1, 'Akash Dutta', '9836555023', 2500, 3, '{\"4\":[{\"adult\":\"2\",\"child\":\"0\"}],\"5\":[{\"adult\":\"1\",\"child\":\"0\"}]}', '2023-07-06', '2023-07-07', NULL, '745447778888', '2114444', 'pending', 'comfirm', '2023-07-05 01:39:51', '2023-07-05 01:39:51'),
-(3, '5874102', NULL, 1, 1, 'Test', '9836555023', 1200, 3, '{\"1\":[{\"adult\":\"2\",\"child\":\"0\"}],\"2\":[{\"adult\":\"1\",\"child\":\"0\"}],\"3\":null}', '2023-07-06', '2023-07-07', NULL, 'dasdsdsad', '12313232', 'pending', 'comfirm', '2023-07-05 02:12:45', '2023-07-05 02:12:45'),
-(4, '5874103', NULL, 1, 5, 'Amit D', '5898744444', 1000, 2, '{\"1\":[{\"adult\":\"2\",\"child\":\"0\"}],\"2\":null,\"3\":null}', '2023-07-05', '2023-07-07', NULL, 'Order_2144555555', '111444477', 'success', 'arrvied', '2023-07-05 12:07:41', '2023-07-05 13:55:42'),
-(5, 'ALTKCV', NULL, 2, 6, 'Test User', '9836000110', 1200, 2, '{\"4\":[{\"adult\":\"2\",\"child\":\"0\"}],\"5\":[{\"adult\":\"1\",\"child\":\"0\"}]}', '2023-07-09', '2023-07-10', NULL, NULL, NULL, 'pending', 'comfirm', '2023-07-08 13:45:06', '2023-07-08 13:45:06');
+CREATE TABLE `booking_meta` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `booking_id` int(11) NOT NULL,
+  `meta_key` varchar(255) NOT NULL,
+  `meta_value` text NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -880,18 +885,6 @@ CREATE TABLE `customers` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `customers`
---
-
-INSERT INTO `customers` (`id`, `name`, `email`, `mobile`, `dob`, `gender`, `marital_status`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Akash Dutta', 'dasasd@das.com', '9836555023', NULL, 'male', 'married', '1', '2023-06-24 08:22:31', '2023-06-24 08:22:55'),
-(2, 'John Doe', NULL, '6290565997', NULL, 'undisclosed', 'undisclosed', '1', '2023-06-24 08:33:44', '2023-06-24 08:33:44'),
-(3, 'Ram Shing', NULL, '8974563301', NULL, 'undisclosed', 'undisclosed', '1', '2023-06-24 11:26:15', '2023-06-24 11:26:15'),
-(4, 'John Doe', 'test@example.com', '9836555023', NULL, 'undisclosed', 'undisclosed', '1', '2023-07-02 02:33:19', '2023-07-02 02:33:19'),
-(5, 'Amit D', NULL, '5898744444', NULL, 'undisclosed', 'undisclosed', '1', '2023-07-05 12:07:41', '2023-07-05 12:07:41'),
-(6, 'Test User', NULL, '9836000110', NULL, 'undisclosed', 'undisclosed', '1', '2023-07-08 13:43:25', '2023-07-08 13:43:25');
-
 -- --------------------------------------------------------
 
 --
@@ -942,6 +935,29 @@ CREATE TABLE `gallery` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `guests`
+--
+
+CREATE TABLE `guests` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `mobile` varchar(20) NOT NULL,
+  `perpose` varchar(255) NOT NULL,
+  `identity_image` varchar(255) NOT NULL,
+  `identity_no` varchar(255) NOT NULL,
+  `address` text NOT NULL,
+  `state_id` text NOT NULL,
+  `city_id` text NOT NULL,
+  `pincode` text NOT NULL,
+  `nationality` text NOT NULL,
+  `dob` varchar(20) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `hotels`
 --
 
@@ -977,7 +993,7 @@ CREATE TABLE `hotels` (
 
 INSERT INTO `hotels` (`id`, `name`, `title`, `slug`, `featured_image`, `excerpt`, `description`, `amenities`, `gmap`, `lat`, `lng`, `address`, `state_id`, `city_id`, `meta_description`, `schema`, `robots`, `canonical`, `utm_campaign`, `utm_source`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'Sivalika Inn Belur', 'Sivalika Inn', 'sivalika-inn-belur', '1', 'Sivalika Inn belur', '<p>Sivalika Inn</p>', '[\"24X7 Security\",\"WiFi\",\"Lift\",\"Parking\",\"Wardrobe\",\"Mineral Water Bottle\",\"Daily Housekeeping\",\"Free Toiletries\",\"LCD TV\",\"Clean Towels\",\"Toilet Paper\",\"Wake-Up Service\",\"DTH Channels\",\"Tile\\/Marble floor\",\"24-Hour Front Desk\",\"Card Payment\",\"Fire NOC\",\"Fire Extinguishers\",\"In-House Kitchen\",\"Smoke Detectors\",\"Fire Exit\",\"FHRAI Certification\",\"FSSAI Licence\",\"Security Guard\",\"Electric Kettle (On Request)\",\"Pickup & Drop (Chargeable)\",\"Breakfast (Buffet)\"]', '<p>Sivalika Inn</p>', NULL, NULL, 'Sivalika Inn', 35, 7279, 'Sivalika Inn', 'Sivalika Inn', 'index, No-follow', NULL, 'Google-Organic', 'SEO', '1', '2023-06-19 04:55:14', '2023-07-05 12:04:25'),
-(2, 'Sivalika Hotel Howrah', 'Sivalika Hotel Howrah', 'sivalika-hotel-howrah', NULL, 'Sivalika Hotel Howrah', '<p>Sivalika Hotel Howrah</p>', '[\"24X7 Security\",\"WiFi\",\"Lift\",\"Laundry Service\",\"Wardrobe\",\"Mineral Water Bottle\",\"Daily Housekeeping\",\"Free Toiletries\",\"LCD TV\",\"Clean Towels\",\"Clean Linen\",\"Toilet Paper\",\"Wake-Up Service\",\"DTH Channels\",\"Tile\\/Marble floor\",\"24-Hour Front Desk\",\"Card Payment\",\"In-House Kitchen\",\"Smoke Detectors\",\"Fire Exit\",\"Fire Hose Reels\",\"FHRAI Certification\",\"FSSAI Licence\",\"Security Guard\",\"Electric Kettle (On Request)\",\"Pickup & Drop (Chargeable)\",\"Breakfast (Buffet)\"]', NULL, NULL, NULL, 'Howrah Salkia', 35, 6607, 'Sivalika Hotel Howrah', NULL, 'index,follow', NULL, 'Organic', 'SEO', '1', '2023-06-24 11:18:06', '2023-06-24 11:18:06');
+(2, 'Sivalika Inn - Howrah', 'Sivalika Hotel Howrah', 'sivalika-inn-howrah', NULL, 'Sivalika Hotel Howrah', '<p>Sivalika Hotel Howrah</p>', '[\"24X7 Security\",\"WiFi\",\"Lift\",\"Laundry Service\",\"Wardrobe\",\"Mineral Water Bottle\",\"Daily Housekeeping\",\"Free Toiletries\",\"LCD TV\",\"Clean Towels\",\"Clean Linen\",\"Toilet Paper\",\"Wake-Up Service\",\"DTH Channels\",\"Tile\\/Marble floor\",\"24-Hour Front Desk\",\"Card Payment\",\"In-House Kitchen\",\"Smoke Detectors\",\"Fire Exit\",\"Fire Hose Reels\",\"FHRAI Certification\",\"FSSAI Licence\",\"Security Guard\",\"Electric Kettle (On Request)\",\"Pickup & Drop (Chargeable)\",\"Breakfast (Buffet)\"]', '<p><span style=\"color: #70757a; font-family: Roboto, \'Helvetica Neue\', Arial, sans-serif; font-size: 14px; letter-spacing: 0.2px; background-color: #ffffff;\">2, Watkins Ln, Babudanga, Pilkhana, Mali Panchghara, Howrah, West Bengal 711101</span></p>', '22.598487', '88.338360', 'Howrah Salkia', 35, 6607, 'Sivalika Hotel Howrah', NULL, 'index,follow', NULL, 'Organic', 'SEO', '1', '2023-06-24 11:18:06', '2023-07-12 18:44:53');
 
 -- --------------------------------------------------------
 
@@ -1000,15 +1016,16 @@ CREATE TABLE `hotel_rooms` (
 --
 
 INSERT INTO `hotel_rooms` (`id`, `hotel_id`, `room_id`, `hotel_room_no`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 101, 'blocked', '2023-07-05 08:12:46', '2023-07-05 11:21:13'),
-(2, 1, 1, 102, 'not-cleaned', '2023-07-05 08:12:46', '2023-07-05 12:00:13'),
-(3, 1, 1, 103, 'reserved', '2023-07-05 08:12:46', '2023-07-08 13:29:29'),
-(4, 1, 1, 104, 'active', '2023-07-05 09:21:41', '2023-07-05 09:21:41'),
-(5, 1, 2, 201, 'active', '2023-07-05 13:46:33', '2023-07-05 13:46:33'),
-(6, 1, 2, 202, 'active', '2023-07-05 13:46:43', '2023-07-05 13:46:43'),
-(7, 2, 4, 101, 'active', '2023-07-08 13:38:11', '2023-07-08 13:38:11'),
-(9, 2, 5, 201, 'not-cleaned', '2023-07-08 13:38:34', '2023-07-08 13:41:38'),
-(10, 2, 4, 103, 'blocked', '2023-07-08 13:38:49', '2023-07-08 13:41:02');
+(1, 2, 4, 1001, 'active', '2023-07-12 19:11:51', '2023-07-12 19:11:51'),
+(2, 2, 4, 1002, 'active', '2023-07-12 19:11:51', '2023-07-12 19:11:51'),
+(3, 2, 4, 1003, 'active', '2023-07-12 19:11:51', '2023-07-12 19:11:51'),
+(4, 2, 4, 1004, 'active', '2023-07-12 19:11:51', '2023-07-12 19:11:51'),
+(5, 2, 4, 1005, 'active', '2023-07-12 19:11:51', '2023-07-12 19:11:51'),
+(6, 2, 4, 1006, 'active', '2023-07-12 19:11:51', '2023-07-12 19:11:51'),
+(7, 2, 4, 1007, 'active', '2023-07-12 19:11:51', '2023-07-12 19:11:51'),
+(8, 2, 4, 1008, 'active', '2023-07-12 19:11:51', '2023-07-12 19:11:51'),
+(9, 2, 5, 2001, 'active', '2023-07-12 19:14:00', '2023-07-12 19:14:00'),
+(10, 2, 5, 2002, 'active', '2023-07-12 19:14:08', '2023-07-12 19:14:08');
 
 -- --------------------------------------------------------
 
@@ -1037,7 +1054,40 @@ CREATE TABLE `media` (
 --
 
 INSERT INTO `media` (`id`, `name`, `type`, `filename`, `alternative`, `caption`, `description`, `extension`, `size`, `dimension`, `path`, `created_at`, `updated_at`) VALUES
-(1, 'modern-platform-bedroom-sets', 'image/jpeg', 'modern-platform-bedroom-sets.jpg', '', '', '', 'jpg', '183.82', '1200x675', 'public/upload/2023-06-20', '2023-06-20 12:39:36', '2023-06-20 12:39:36');
+(1, 'modern-platform-bedroom-sets', 'image/jpeg', 'modern-platform-bedroom-sets.jpg', '', '', '', 'jpg', '183.82', '1200x675', 'public/upload/2023-06-20', '2023-06-20 12:39:36', '2023-06-20 12:39:36'),
+(2, '176341598', 'image/jpeg', '176341598.jpg', '', '', '', 'jpg', '89.35', '1024x683', 'public/upload/2023-07-13', '2023-07-12 19:05:24', '2023-07-12 19:05:24'),
+(3, '176341602', 'image/jpeg', '176341602.jpg', '', '', '', 'jpg', '79.68', '1000x667', 'public/upload/2023-07-13', '2023-07-12 19:05:41', '2023-07-12 19:05:41'),
+(4, '176341631', 'image/jpeg', '176341631.jpg', '', '', '', 'jpg', '117.49', '1024x683', 'public/upload/2023-07-13', '2023-07-12 19:08:49', '2023-07-12 19:08:49'),
+(5, '176341657', 'image/jpeg', '176341657.jpg', '', '', '', 'jpg', '64.32', '1024x683', 'public/upload/2023-07-13', '2023-07-12 19:17:55', '2023-07-12 19:17:55'),
+(6, '176341648', 'image/jpeg', '176341648.jpg', '', '', '', 'jpg', '146.50', '1024x683', 'public/upload/2023-07-13', '2023-07-12 19:17:55', '2023-07-12 19:17:55'),
+(7, '176341660', 'image/jpeg', '176341660.jpg', '', '', '', 'jpg', '197.86', '1024x683', 'public/upload/2023-07-13', '2023-07-12 19:17:56', '2023-07-12 19:17:56'),
+(8, '176341666', 'image/jpeg', '176341666.jpg', '', '', '', 'jpg', '150.01', '1024x683', 'public/upload/2023-07-13', '2023-07-12 19:17:56', '2023-07-12 19:17:56'),
+(9, '176341671', 'image/jpeg', '176341671.jpg', '', '', '', 'jpg', '14.60', '300x200', 'public/upload/2023-07-13', '2023-07-12 19:17:57', '2023-07-12 19:17:57'),
+(10, '176341671 (1)', 'image/jpeg', '176341671-(1).jpg', '', '', '', 'jpg', '122.56', '1024x683', 'public/upload/2023-07-13', '2023-07-12 19:17:58', '2023-07-12 19:17:58'),
+(11, '176341681', 'image/jpeg', '176341681.jpg', '', '', '', 'jpg', '97.14', '1024x683', 'public/upload/2023-07-13', '2023-07-12 19:17:59', '2023-07-12 19:17:59'),
+(12, '176341687', 'image/jpeg', '176341687.jpg', '', '', '', 'jpg', '84.64', '1024x683', 'public/upload/2023-07-13', '2023-07-12 19:18:00', '2023-07-12 19:18:00'),
+(13, '1', 'image/jpeg', '1.jpg', '', '', '', 'jpg', '29.91', '633x422', 'public/upload/2023-07-13', '2023-07-12 19:18:00', '2023-07-12 19:18:00'),
+(14, '2', 'image/jpeg', '2.jpg', '', '', '', 'jpg', '151.73', '783x536', 'public/upload/2023-07-13', '2023-07-12 19:18:01', '2023-07-12 19:18:01'),
+(15, '3', 'image/jpeg', '3.jpg', '', '', '', 'jpg', '65.35', '1024x682', 'public/upload/2023-07-13', '2023-07-12 19:18:02', '2023-07-12 19:18:02'),
+(16, '4', 'image/jpeg', '4.jpg', '', '', '', 'jpg', '1041.40', '2880x1920', 'public/upload/2023-07-13', '2023-07-12 19:18:05', '2023-07-12 19:18:05'),
+(17, '5', 'image/jpeg', '5.jpg', '', '', '', 'jpg', '1119.04', '2880x1920', 'public/upload/2023-07-13', '2023-07-12 19:18:06', '2023-07-12 19:18:06'),
+(18, '6', 'image/jpeg', '6.jpg', '', '', '', 'jpg', '155.71', '866x580', 'public/upload/2023-07-13', '2023-07-12 19:18:06', '2023-07-12 19:18:06'),
+(19, '8', 'image/jpeg', '8.jpg', '', '', '', 'jpg', '101.98', '1440x960', 'public/upload/2023-07-13', '2023-07-12 19:18:08', '2023-07-12 19:18:08'),
+(20, '7', 'image/jpeg', '7.jpg', '', '', '', 'jpg', '719.21', '2880x1920', 'public/upload/2023-07-13', '2023-07-12 19:18:10', '2023-07-12 19:18:10'),
+(21, '9', 'image/jpeg', '9.jpg', '', '', '', 'jpg', '562.62', '2880x1920', 'public/upload/2023-07-13', '2023-07-12 19:18:11', '2023-07-12 19:18:11'),
+(22, '11', 'image/jpeg', '11.jpg', '', '', '', 'jpg', '148.88', '815x383', 'public/upload/2023-07-13', '2023-07-12 19:18:11', '2023-07-12 19:18:11'),
+(23, '11-', 'image/jpeg', '11-.jpg', '', '', '', 'jpg', '139.36', '815x383', 'public/upload/2023-07-13', '2023-07-12 19:18:12', '2023-07-12 19:18:12'),
+(24, '10', 'image/jpeg', '10.jpg', '', '', '', 'jpg', '917.02', '2880x1920', 'public/upload/2023-07-13', '2023-07-12 19:18:13', '2023-07-12 19:18:13'),
+(25, '12', 'image/jpeg', '12.jpg', '', '', '', 'jpg', '174.11', '871x616', 'public/upload/2023-07-13', '2023-07-12 19:18:13', '2023-07-12 19:18:13'),
+(26, '13', 'image/png', '13.png', '', '', '', 'png', '439.92', '780x537', 'public/upload/2023-07-13', '2023-07-12 19:18:14', '2023-07-12 19:18:14'),
+(27, '176341570', 'image/jpeg', '176341570.jpg', '', '', '', 'jpg', '147.89', '1024x683', 'public/upload/2023-07-13', '2023-07-12 19:18:14', '2023-07-12 19:18:14'),
+(28, '176341582', 'image/jpeg', '176341582.jpg', '', '', '', 'jpg', '78.50', '1024x683', 'public/upload/2023-07-13', '2023-07-12 19:18:15', '2023-07-12 19:18:15'),
+(29, '176341596', 'image/jpeg', '176341596.jpg', '', '', '', 'jpg', '139.44', '1280x853', 'public/upload/2023-07-13', '2023-07-12 19:18:16', '2023-07-12 19:18:16'),
+(30, '176341606', 'image/jpeg', '176341606.jpg', '', '', '', 'jpg', '201.69', '1024x683', 'public/upload/2023-07-13', '2023-07-12 19:18:16', '2023-07-12 19:18:16'),
+(31, '176341613', 'image/jpeg', '176341613.jpg', '', '', '', 'jpg', '74.60', '1024x683', 'public/upload/2023-07-13', '2023-07-12 19:18:17', '2023-07-12 19:18:17'),
+(32, '176341616', 'image/jpeg', '176341616.jpg', '', '', '', 'jpg', '84.05', '1024x683', 'public/upload/2023-07-13', '2023-07-12 19:18:18', '2023-07-12 19:18:18'),
+(33, '176341631', 'image/jpeg', '1-176341631.jpg', '', '', '', 'jpg', '117.49', '1024x683', 'public/upload/2023-07-13', '2023-07-12 19:18:19', '2023-07-12 19:18:19'),
+(34, '176341643', 'image/jpeg', '176341643.jpg', '', '', '', 'jpg', '97.73', '1024x683', 'public/upload/2023-07-13', '2023-07-12 19:18:20', '2023-07-12 19:18:20');
 
 -- --------------------------------------------------------
 
@@ -1076,7 +1126,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (19, '2023_06_21_122243_create_customers_table', 4),
 (20, '2023_06_26_101214_create_reserved_rooms_table', 5),
 (21, '2023_07_02_075514_create_user_meta_table', 6),
-(22, '2023_07_05_074414_create_hotel_rooms_table', 7);
+(22, '2023_07_05_074414_create_hotel_rooms_table', 7),
+(23, '2023_07_08_174009_create_guests_table', 8),
+(24, '2023_07_11_152214_create_booking_meta_table', 8);
 
 -- --------------------------------------------------------
 
@@ -1150,22 +1202,6 @@ CREATE TABLE `reserved_rooms` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `reserved_rooms`
---
-
-INSERT INTO `reserved_rooms` (`id`, `booking_id`, `room_id`, `total_room_book`, `created_at`, `updated_at`) VALUES
-(1, 2, 4, 1, '2023-07-05 01:40:25', '2023-07-05 01:40:25'),
-(2, 2, 5, 1, '2023-07-05 01:40:25', '2023-07-05 01:40:25'),
-(3, 3, 1, 1, '2023-07-05 02:12:45', '2023-07-05 02:12:45'),
-(4, 3, 2, 1, '2023-07-05 02:12:45', '2023-07-05 02:12:45'),
-(5, 4, 1, 1, '2023-07-05 12:07:41', '2023-07-05 12:07:41'),
-(6, 4, 1, 1, '2023-07-05 13:52:41', '2023-07-05 13:52:41'),
-(7, 4, 1, 1, '2023-07-05 13:54:31', '2023-07-05 13:54:31'),
-(8, 4, 1, 1, '2023-07-05 13:55:42', '2023-07-05 13:55:42'),
-(9, 5, 4, 1, '2023-07-08 13:45:06', '2023-07-08 13:45:06'),
-(10, 5, 5, 1, '2023-07-08 13:45:06', '2023-07-08 13:45:06');
-
 -- --------------------------------------------------------
 
 --
@@ -1215,8 +1251,8 @@ INSERT INTO `rooms` (`id`, `hotel_id`, `name`, `size`, `person`, `room_count`, `
 (1, 1, 'Classic Room', '130 sq ft', '2', 3, '[\"WiFi\",\"Wardrobe\",\"Mineral Water Bottle\",\"Free Toiletries\",\"LCD TV\",\"Clean Towels\",\"Clean Linen\",\"Toilet Paper\",\"DTH Channels\",\"Tile\\/Marble floor\",\"Electric Kettle (On Request)\",\"Breakfast (Buffet)\"]', '1', '1200', '1', '2023-06-20 13:29:04', '2023-07-08 13:29:29'),
 (2, 1, 'Deluxe room', '200 sq ft', '3', 2, '[\"WiFi\",\"Wardrobe\",\"Mineral Water Bottle\",\"Free Toiletries\",\"LCD TV\",\"Clean Towels\",\"Clean Linen\",\"Toilet Paper\",\"DTH Channels\",\"Tile\\/Marble floor\",\"Electric Kettle (On Request)\",\"Breakfast (Buffet)\"]', '1', '2000', '1', '2023-06-20 13:29:40', '2023-06-20 13:29:40'),
 (3, 1, 'Super Deluxe Room', '250 sq ft', '4', 2, '[\"WiFi\",\"Wardrobe\",\"Mineral Water Bottle\",\"Free Toiletries\",\"LCD TV\",\"Clean Towels\",\"Clean Linen\",\"Toilet Paper\",\"DTH Channels\",\"Tile\\/Marble floor\",\"Electric Kettle (On Request)\",\"Breakfast (Buffet)\"]', '1', '2500', '1', '2023-06-24 08:20:14', '2023-06-24 08:20:14'),
-(4, 2, 'Classic Room', '130 sq ft', '2', 5, '[\"WiFi\",\"Wardrobe\",\"Mineral Water Bottle\",\"Free Toiletries\",\"LCD TV\",\"Clean Towels\",\"Clean Linen\",\"Toilet Paper\",\"DTH Channels\",\"Tile\\/Marble floor\",\"Electric Kettle (On Request)\",\"Breakfast (Buffet)\"]', '1', '1000', '1', '2023-06-24 11:20:55', '2023-07-08 13:41:02'),
-(5, 2, 'Deluxe Room', '200 sq ft', '3', 4, '[\"WiFi\",\"Wardrobe\",\"Mineral Water Bottle\",\"Free Toiletries\",\"LCD TV\",\"Clean Towels\",\"Clean Linen\",\"Toilet Paper\",\"DTH Channels\",\"Tile\\/Marble floor\",\"Electric Kettle (On Request)\",\"Breakfast (Buffet)\"]', '1', '1500', '1', '2023-06-24 11:22:00', '2023-07-08 13:41:38');
+(4, 2, 'Premium Deluxe Double Bed Rooms', '130 sq ft', '2', 8, '[\"WiFi\",\"Wardrobe\",\"Mineral Water Bottle\",\"Free Toiletries\",\"LCD TV\",\"Clean Towels\",\"Clean Linen\",\"Toilet Paper\",\"DTH Channels\",\"Tile\\/Marble floor\",\"Electric Kettle (On Request)\",\"Breakfast (Buffet)\"]', '2', '1600', '1', '2023-06-24 11:20:55', '2023-07-12 19:05:53'),
+(5, 2, 'Premium Deluxe Quadruple Rooms', '200 sq ft', '4', 2, '[\"WiFi\",\"Wardrobe\",\"Mineral Water Bottle\",\"Free Toiletries\",\"LCD TV\",\"Clean Towels\",\"Clean Linen\",\"Toilet Paper\",\"DTH Channels\",\"Tile\\/Marble floor\",\"Electric Kettle (On Request)\",\"Breakfast (Buffet)\"]', '4', '2000', '1', '2023-06-24 11:22:00', '2023-07-12 19:09:01');
 
 -- --------------------------------------------------------
 
@@ -1384,6 +1420,12 @@ ALTER TABLE `bookings`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `booking_meta`
+--
+ALTER TABLE `booking_meta`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `cities`
 --
 ALTER TABLE `cities`
@@ -1418,6 +1460,12 @@ ALTER TABLE `faqs`
 -- Indexes for table `gallery`
 --
 ALTER TABLE `gallery`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `guests`
+--
+ALTER TABLE `guests`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1521,7 +1569,13 @@ ALTER TABLE `adpages`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `booking_meta`
+--
+ALTER TABLE `booking_meta`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `cities`
@@ -1539,7 +1593,7 @@ ALTER TABLE `contacts`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1560,6 +1614,12 @@ ALTER TABLE `gallery`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `guests`
+--
+ALTER TABLE `guests`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `hotels`
 --
 ALTER TABLE `hotels`
@@ -1575,13 +1635,13 @@ ALTER TABLE `hotel_rooms`
 -- AUTO_INCREMENT for table `media`
 --
 ALTER TABLE `media`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `pages`
@@ -1599,7 +1659,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `reserved_rooms`
 --
 ALTER TABLE `reserved_rooms`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `reviews`
