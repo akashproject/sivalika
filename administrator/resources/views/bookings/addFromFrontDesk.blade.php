@@ -3,6 +3,45 @@
 @section('content')
 <div class="col-12">
 	<div class="card">
+		<form class="form-horizontal" method="post" action="{{ url('check-availability') }}" enctype="multipart/form-data">
+			@csrf
+			<div class="card-body">
+				<h4 class="card-title"> Booking Date</h4>
+				<div class="row">
+					<div class="col-md-3" >
+						<div class="form-group row">
+							<label for="checkin" class="col-sm-4 text-left control-label col-form-label">Checkin</label>
+							<div class="col-sm-8">
+								<input type="date" class="form-control" name="checkin" id="datepicker checkin" placeholder="Enter Checkin Date" required>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4" >
+						<div class="form-group row">
+							<label for="checkout" class="col-sm-5 text-left control-label col-form-label">Checkout</label>
+							<div class="col-sm-7">
+								<input type="date" class="form-control" name="checkout" id="datepicker checkout" placeholder="Enter Checkout Date" required>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3" >
+						<div class="form-group row">
+							<label for="total_guest" class="col-sm-5 text-left control-label col-form-label">Guest</label>
+							<div class="col-sm-7">
+								<input type="number" class="form-control" name="total_guest" id="total_guest" value="1" placeholder="Total Guest">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2" >
+						<div class="form-group row">
+							<button type="submit" class="btn btn-primary">Check Availibity</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="card">
 		<form class="form-horizontal" method="post" action="{{ url('save-front-desk-booking') }}" enctype="multipart/form-data">
 			@csrf
 			<div class="card-body">
@@ -45,18 +84,6 @@
 							<div class="row">
 								<div class="col-md-7" >
 									<div class="form-group row">
-										<label for="checkin" class="col-sm-3 text-right control-label col-form-label">Checkin Date</label>
-										<div class="col-sm-9">
-											<input type="date" class="form-control" name="checkin" id="datepicker checkin" placeholder="Enter Checkin Date" required>
-										</div>
-									</div>
-									<div class="form-group row">
-										<label for="checkout" class="col-sm-3 text-right control-label col-form-label">Checkout Date</label>
-										<div class="col-sm-9">
-											<input type="date" class="form-control" name="checkout" id="datepicker checkout" placeholder="Enter Checkout Date" required>
-										</div>
-									</div>
-									<div class="form-group row">
 										<label for="guest_name" class="col-sm-3 text-right control-label col-form-label">Rooms</label>
 										<div class="col-sm-9 hotelRooms">
 										@if($rooms)
@@ -70,13 +97,13 @@
 															<div class="col-sm-5">
 																<span class="room-label">Adult</span>
 																<span class="room-guest">
-																	<input class="form-control" name="rooms[{{$room->id}}][0][adult]" type="number" value="1" min="1" max="{{ $room->person }}">
+																	<input class="form-control" name="rooms[{{$room->id}}][1][adult]" type="number" value="1" min="1" max="{{ $room->person }}">
 																</span>
 															</div>
 															<div class="col-sm-5">
 																<span class="room-label">Child</span>
 																<span class="room-guest">
-																	<input class="form-control" type="number" name="rooms[{{$room->id}}][0][child]" value="0">
+																	<input class="form-control" type="number" name="rooms[{{$room->id}}][1][child]" value="0" max="2">
 																</span>
 															</div>
 															<div class="col-sm-2">
@@ -85,21 +112,54 @@
 														</div>
 													</div>
 													<div class="row mt-2 text-right">
-														<button type="button" id="room_type_{{$room->id}}" class="btn btn-primary addNewRoom" data-id="{{$room->id}}"> Add Room </button>
+														<button type="button" id="room_type_{{$room->id}}" data-roomcount="{{ $room->room_count }}" class="btn btn-primary addNewRoom" data-id="{{$room->id}}"> Add Room </button>
 													</div>
 												</div>
 											</div>
 											@endforeach	
 										@endif
 										</div>
-									</div>									
+									</div>
+									<div class="form-group row">
+										<label for="name" class="col-sm-3 text-right control-label col-form-label">User Name</label>
+										<div class="col-sm-9">
+											<input type="text" class="form-control" name="name" id="name" placeholder="Enter Guest Here" required>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="mobile" class="col-sm-3 text-right control-label col-form-label">User Mobile</label>
+										<div class="col-sm-9">
+											<input type="text" class="form-control" name="mobile" id="mobile" placeholder="Enter Guest Mobile Number" required>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="email" class="col-sm-3 text-right control-label col-form-label">User Email</label>
+										<div class="col-sm-9">
+											<input type="text" class="form-control" name="email" id="email" placeholder="Enter Guest Email Address" >
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="gender" class="col-sm-3 text-right control-label col-form-label">Gender</label>
+										<div class="col-sm-9">
+											<select name="gender" id="gender" class="select2 form-control custom-select" style="width: 100%; height:36px;">	
+												<option value="male" > Male </option>
+												<option value="female" > Female </option>
+												<option value="other" > Other </option>
+											<select>
+										</div>
+									</div>
 									<div class="form-group row">
 										<label for="amount" class="col-sm-3 text-right control-label col-form-label">Booking Amount</label>
 										<div class="col-sm-9">
 											<input type="text" class="form-control" name="amount" id="amount" placeholder="Enter Booking Amount" required>
 										</div>
 									</div>
-									
+									<div class="form-group row">
+										<label for="purpose" class="col-sm-3 text-right control-label col-form-label">Visit Purpose</label>
+										<div class="col-sm-9">
+											<input type="text" class="form-control" name="purpose" id="purpose" placeholder="Enter Purpose of visit" required>
+										</div>
+									</div>
 									<div class="form-group row">
 										<label for="order_id" class="col-sm-3 text-right control-label col-form-label">Order id</label>
 										<div class="col-sm-9">
@@ -165,39 +225,6 @@
 					<input type="hidden" name="tab" value="guest" >
 					<div class="tab-pane active" id="guest" role="tabpanel">
 						<div class="p-20">
-							<h4 class="card-title mt-3"> Booking User </h4>
-							<div class="row">
-								<div class="col-md-7">
-									<div class="form-group row">
-										<label for="name" class="col-sm-3 text-right control-label col-form-label">User Name</label>
-										<div class="col-sm-9">
-											<input type="text" class="form-control" name="name" id="name" placeholder="Enter Guest Here">
-										</div>
-									</div>
-									<div class="form-group row">
-										<label for="mobile" class="col-sm-3 text-right control-label col-form-label">User Mobile</label>
-										<div class="col-sm-9">
-											<input type="text" class="form-control" name="mobile" id="mobile" placeholder="Enter Guest Mobile Number">
-										</div>
-									</div>
-									<div class="form-group row">
-										<label for="email" class="col-sm-3 text-right control-label col-form-label">User Email</label>
-										<div class="col-sm-9">
-											<input type="text" class="form-control" name="email" id="email" placeholder="Enter Guest Email Address">
-										</div>
-									</div>
-									<div class="form-group row">
-										<label for="gender" class="col-sm-3 text-right control-label col-form-label">Gender</label>
-										<div class="col-sm-9">
-											<select name="gender" id="gender" class="select2 form-control custom-select" style="width: 100%; height:36px;">	
-												<option value="male" > Male </option>
-												<option value="female" > Female </option>
-												<option value="other" > Other </option>
-											<select>
-										</div>
-									</div>
-								</div>
-							</div>
 							<h4 class="card-title mt-3"> Guest Details </h4>
 							@for($i=1; $i<=$guests; $i++)
 							<div class="row guest_row">
@@ -273,14 +300,41 @@
 					<div class="tab-pane active" id="rooms" role="tabpanel">
 						<div class="p-20">
 							<h4 class="card-title mt-3"> Room Allotment </h4>
-							<div class="row">
-								<div class="col-md-7" >
-									
+							@if($rooms)
+								<div class="row" >
+									<div class="col-md-9">	
+										<div class="card">
+											<div class="card-body">
+												<div class="row" >
+												@foreach ($hotelRooms as $hotelroom)
+													<div class="col-md-2" style="height:80px">	
+														@php
+															$statusColor = ['active'=>'#52b532','blocked'=>'#bcc5b9','not-cleaned'=>'#b7c928','reserved'=>'#f34f6d']
+														@endphp
+														<label for="{{ $hotelroom->id }}" class="hotelroom" style="background:{{ $statusColor[$hotelroom->status] }}">	
+															<span class="room-no" target="_blank" href="{{ url('/view-hotel-room/'.$hotelroom->id) }}">{{ $hotelroom->hotel_room_no }}</span>
+															<input type="checkbox" name="hotel_room[]" value="{{ $hotelroom->id }}" >
+														</label>
+													</div>
+													@endforeach		
+												</div>
+											</div>
+
+										</div>
+									</div>
+									<div class="col-md-3">	
+										<div class="card">
+											<div class="card-body">
+												<p> <span class="color-code" style="background:#52b532"> </span> Active </p>
+												<p> <span class="color-code" style="background:#b7c928"> </span>Not Cleaned </p>
+												<p> <span class="color-code" style="background:#bcc5b9"> </span>Blocked </p>
+												<p> <span class="color-code" style="background:#f34f6d"> </span> Reserved </p>
+											</div>
+										</div>
+									</div>
 								</div>
-								<div class="col-md-5">
-									
-								</div>
-							</div>
+
+							@endif
 						</div>
 					</div>
 					@endif

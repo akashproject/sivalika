@@ -24,7 +24,7 @@
 				</div>
 			</div>
 			<div class="row mt-2 text-right">
-				<button type="button" id="room_type_{{$room->id}}" class="btn btn-primary addNewRoom" data-id="{{$room->id}}"> Add Room </button>
+				<button type="button" id="room_type_{{$room->id}}" data-roomcount="{{ $room->room_count }}" class="btn btn-primary addNewRoom" data-id="{{$room->id}}"> Add Room </button>
 			</div>
 		</div>
 	</div>

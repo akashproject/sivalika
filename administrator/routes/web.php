@@ -80,7 +80,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/save-front-desk-booking', [App\Http\Controllers\BookingController::class, 'saveFrontDeskBooking'])->name('save-front-desk-booking');
     Route::get('/delete-booking/{id}', [App\Http\Controllers\BookingController::class, 'delete'])->name('delete-room');
     
-    Route::get('/check-availability', [App\Http\Controllers\RoomController::class, 'availability'])->name('customers');
+    Route::post('/check-availability', [App\Http\Controllers\BookingController::class, 'checkAvailability'])->name('check-availability');
+    //Route::get('/check-availability', [App\Http\Controllers\RoomController::class, 'availability'])->name('customers');
 
     //Add Gallery
     Route::get('/gallery/{hotel_id}', [App\Http\Controllers\HotelController::class, 'gallery'])->name('admin-gallery');

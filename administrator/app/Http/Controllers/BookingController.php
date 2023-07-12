@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\ReservedRooms;
+use App\Models\HotelRoom;
 use App\Models\Hotel;
 use App\Models\Room;
 use App\Models\Customer;
@@ -50,6 +51,21 @@ class BookingController extends Controller
         }        
     }
 
+    public function checkAvailability(Request $request){
+        try {
+            $data = $request->all();
+            $validatedData = $request->validate([
+                'checkin' => 'required',
+                'checkout' => 'required',
+            ]);
+            print_r($data);
+            //$booking = Booking::select('id')->where
+
+
+        } catch(\Illuminate\Database\QueryException $e){
+        }
+    }
+
     public function add() {
         try {
             $hotels = Hotel::all();
@@ -63,9 +79,22 @@ class BookingController extends Controller
         try {
             $tab = '';
             $guests = 1;
+            $hotelRooms = array();
             $checkinData = $request->session()->get('checkinData');
             if(request()->has('tab')){
                 $tab = request()->get('tab');
+                $hotel_id = $request->session()->get('hotel_id');
+                $roomType = array();
+                foreach (json_decode($checkinData['rooms'],true) as $key => $value) {
+                    if ($value) {
+                        $roomType[] = $key;
+                    }
+                }
+                $hotelRooms = HotelRoom::where("hotel_id",$hotel_id)
+                                ->whereIn('room_id',$roomType)
+                                ->where('status','!=','blocked')
+                                ->where('status','!=','not-cleaned')
+                                ->get();
             }
             
             if($checkinData !== null){
@@ -74,7 +103,7 @@ class BookingController extends Controller
 
             $hotel = Hotel::where('id',get_user_meta('hotel_id'))->first();
             $rooms = Room::where("hotel_id",$hotel->id)->get();
-            return view('bookings.addFromFrontDesk',compact('hotel','rooms','tab','guests'));
+            return view('bookings.addFromFrontDesk',compact('hotel','rooms','tab','guests','hotelRooms'));
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
         }
@@ -142,7 +171,7 @@ class BookingController extends Controller
                     'hotel_id' => $data['hotel_id'],
                     'amount' => $data['amount'],
                     'total_guest' => getTotalGuest($data['rooms']),
-                    'rooms' => (isset($rooms) && $rooms != '')?json_encode($rooms):null,
+                    'rooms' => (isset($data['rooms']) && $data['rooms'] != '')?json_encode($data['rooms']):null,
                     'checkin' => $data['checkin'],
                     'checkout' => $data['checkout'],
                     'payment_type' => $data['payment_type'],
@@ -156,6 +185,7 @@ class BookingController extends Controller
             }
 
             if($data['tab'] == 'guest') {
+               
                 /* Create Customer */
                 $customer = Customer::where('mobile',$data['mobile'])->first();
                 if($customer === null){
@@ -175,8 +205,6 @@ class BookingController extends Controller
                 $checkinData['guest_mobile'] = $data['mobile'];
                 $booking = Booking::create($checkinData);
 
-                
-
                 foreach ($data['guest'] as $key => $value) {
                     if($value['identity_image'] != null){
                         $imageFile = strtolower(str_replace(" ","_",$value['name'])).'_identity_'.time().'.'.$value['identity_image']->extension(); 
@@ -189,14 +217,17 @@ class BookingController extends Controller
                 DB::table('booking_meta')->insert(
                     ['booking_id' => $booking->id, 'meta_key' => 'guest', 'meta_value' => json_encode($data['guest'])]
                 );
-                
-                $request->session()->put('guestData', $data);
+                $checkinData['booking_id'] = $booking->id;
+                $request->session()->put('checkinData', $checkinData);
                 return redirect('/add-booking-from-front-desk?tab=rooms');
             }
 
             if($data['tab'] == 'rooms') {
-
-                
+                $checkinData = $request->session()->get('checkinData');  
+                DB::table('booking_meta')->insert(
+                    ['booking_id' => $checkinData['booking_id'], 'meta_key' => 'rooms', 'meta_value' => json_encode($data['hotel_room'])]
+                );
+                return redirect('bookings?checkin='.date('Y-m-d'));
             }
 
 

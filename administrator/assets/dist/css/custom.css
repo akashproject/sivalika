@@ -14937,6 +14937,7 @@ table#zero_config tr td:last-child {
     background: #6eeb45;
     border: 2px solid #ccc;
     text-align: center;
+    width: 100%;
 }
 
 .room-no{

@@ -12,6 +12,6 @@ class Booking extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'id','booking_id','booking_type','hotel_id','user_id','guest_name','guest_mobile','amount','total_guest','rooms','checkin','checkout','payment_type','order_id','payment_id','payment','status','created_at',
+        'id','booking_id','booking_type','hotel_id','user_id','guest_name','guest_mobile','amount','total_guest','rooms','checkin','checkout','purpose','payment_type','order_id','payment_id','payment','status','created_at',
     ];
 }
