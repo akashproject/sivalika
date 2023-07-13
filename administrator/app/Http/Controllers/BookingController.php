@@ -58,9 +58,10 @@ class BookingController extends Controller
                 'checkin' => 'required',
                 'checkout' => 'required',
             ]);
-            print_r($data);
+            unset($data['_token']);
+            $request->session()->put('filterData', $data);
+            return redirect('/add-booking-from-front-desk');
             //$booking = Booking::select('id')->where
-
 
         } catch(\Illuminate\Database\QueryException $e){
         }
@@ -80,6 +81,16 @@ class BookingController extends Controller
             $tab = '';
             $guests = 1;
             $hotelRooms = array();
+            $filterData = [
+                'checkin'=>date('Y-d-m'),
+                'checkout'=>date('Y-m-d', strtotime(' +1 day')),
+                'total_guest'=>1,
+            ];
+            if($request->session()->has('filterData')) {
+                $filterData = $request->session()->get('filterData');
+            }
+
+
             $checkinData = $request->session()->get('checkinData');
             if(request()->has('tab')){
                 $tab = request()->get('tab');
@@ -103,7 +114,7 @@ class BookingController extends Controller
 
             $hotel = Hotel::where('id',get_user_meta('hotel_id'))->first();
             $rooms = Room::where("hotel_id",$hotel->id)->get();
-            return view('bookings.addFromFrontDesk',compact('hotel','rooms','tab','guests','hotelRooms'));
+            return view('bookings.addFromFrontDesk',compact('hotel','rooms','tab','guests','hotelRooms','filterData'));
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
         }

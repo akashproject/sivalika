@@ -12,7 +12,7 @@
 						<div class="form-group row">
 							<label for="checkin" class="col-sm-4 text-left control-label col-form-label">Checkin</label>
 							<div class="col-sm-8">
-								<input type="date" class="form-control" name="checkin" id="datepicker checkin" placeholder="Enter Checkin Date" required>
+								<input type="date" class="form-control" name="checkin" id="datepicker checkin" value="{{$filterData['checkin']}}" placeholder="Enter Checkin Date" required>
 							</div>
 						</div>
 					</div>
@@ -20,7 +20,7 @@
 						<div class="form-group row">
 							<label for="checkout" class="col-sm-5 text-left control-label col-form-label">Checkout</label>
 							<div class="col-sm-7">
-								<input type="date" class="form-control" name="checkout" id="datepicker checkout" placeholder="Enter Checkout Date" required>
+								<input type="date" class="form-control" name="checkout" id="datepicker checkout" value="{{$filterData['checkout']}}" placeholder="Enter Checkout Date" required>
 							</div>
 						</div>
 					</div>
@@ -28,7 +28,7 @@
 						<div class="form-group row">
 							<label for="total_guest" class="col-sm-5 text-left control-label col-form-label">Guest</label>
 							<div class="col-sm-7">
-								<input type="number" class="form-control" name="total_guest" id="total_guest" value="1" placeholder="Total Guest">
+								<input type="number" class="form-control" name="total_guest" id="total_guest" value="{{$filterData['total_guest']}}" placeholder="Total Guest">
 							</div>
 						</div>
 					</div>
@@ -87,12 +87,38 @@
 										<label for="guest_name" class="col-sm-3 text-right control-label col-form-label">Rooms</label>
 										<div class="col-sm-9 hotelRooms">
 										@if($rooms)
+										
 											@foreach ($rooms as $typeKey => $room)
+											@php 
+												$roomCount = $filterData['total_guest']/$room->person;
+											@endphp
 											<input type="hidden" name="rooms[{{ $room->id }}]" >
 											<div class="card" style="border: 1px solid #ccc;">
 												<div class="card-body">
 													<h4 class="card-title text-center">{{ $room->name }}</h4>
 													<div class="room_type_{{$room->id}}" >
+														
+														
+														@for($i = 1; $i<=$roomCount;$i++)
+														<div class="row mt-2">
+															<div class="col-sm-5">
+																<span class="room-label">Adult</span>
+																<span class="room-guest">
+																	<input class="form-control" name="rooms[{{$room->id}}][1][adult]" type="number" value="{{ $room->person }}" min="1" max="{{ $room->person }}">
+																</span>
+															</div>
+															<div class="col-sm-5">
+																<span class="room-label">Child</span>
+																<span class="room-guest">
+																	<input class="form-control" type="number" name="rooms[{{$room->id}}][1][child]" value="0" max="2">
+																</span>
+															</div>
+															<div class="col-sm-2">
+																<button type="button" class="btn btn-danger btn remove-room"><i class="mdi mdi-delete"></i></button>
+															</div>
+														</div>
+														@endfor
+
 														<div class="row mt-2">
 															<div class="col-sm-5">
 																<span class="room-label">Adult</span>
@@ -110,6 +136,7 @@
 																<button type="button" class="btn btn-danger btn remove-room"><i class="mdi mdi-delete"></i></button>
 															</div>
 														</div>
+
 													</div>
 													<div class="row mt-2 text-right">
 														<button type="button" id="room_type_{{$room->id}}" data-roomcount="{{ $room->room_count }}" class="btn btn-primary addNewRoom" data-id="{{$room->id}}"> Add Room </button>
