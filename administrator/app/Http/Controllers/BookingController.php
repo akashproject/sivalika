@@ -82,13 +82,14 @@ class BookingController extends Controller
             $guests = 1;
             $hotelRooms = array();
             $filterData = [
-                'checkin'=>date('Y-d-m'),
+                'checkin'=>date('Y-m-d'),
                 'checkout'=>date('Y-m-d', strtotime(' +1 day')),
                 'total_guest'=>1,
             ];
             if($request->session()->has('filterData')) {
                 $filterData = $request->session()->get('filterData');
             }
+            
 
 
             $checkinData = $request->session()->get('checkinData');
@@ -174,7 +175,7 @@ class BookingController extends Controller
     public function saveFrontDeskBooking(Request $request) {
         try {
             $data = $request->all();
-           
+            $filterData = $request->session()->get('filterData');
             if($data['tab'] == 'checkin') {
                 $checkinData = [
                     'booking_id' => $this->random_strings(6),
@@ -183,8 +184,8 @@ class BookingController extends Controller
                     'amount' => $data['amount'],
                     'total_guest' => getTotalGuest($data['rooms']),
                     'rooms' => (isset($data['rooms']) && $data['rooms'] != '')?json_encode($data['rooms']):null,
-                    'checkin' => $data['checkin'],
-                    'checkout' => $data['checkout'],
+                    'checkin' => $filterData['checkin'],
+                    'checkout' => $filterData['checkout'],
                     'payment_type' => $data['payment_type'],
                     'order_id' => $data['order_id'],
                     'payment_id' => $data['payment_id'],

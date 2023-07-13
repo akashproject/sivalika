@@ -97,20 +97,18 @@
 												<div class="card-body">
 													<h4 class="card-title text-center">{{ $room->name }}</h4>
 													<div class="room_type_{{$room->id}}" >
-														
-														
 														@for($i = 1; $i<=$roomCount;$i++)
 														<div class="row mt-2">
 															<div class="col-sm-5">
 																<span class="room-label">Adult</span>
 																<span class="room-guest">
-																	<input class="form-control" name="rooms[{{$room->id}}][1][adult]" type="number" value="{{ $room->person }}" min="1" max="{{ $room->person }}">
+																	<input class="form-control" name="rooms[{{$room->id}}][{{$i}}][adult]" type="number" value="{{ $room->person }}" min="1" max="{{ $room->person }}">
 																</span>
 															</div>
 															<div class="col-sm-5">
 																<span class="room-label">Child</span>
 																<span class="room-guest">
-																	<input class="form-control" type="number" name="rooms[{{$room->id}}][1][child]" value="0" max="2">
+																	<input class="form-control" type="number" name="rooms[{{$room->id}}][{{$i}}][child]" value="0" max="2">
 																</span>
 															</div>
 															<div class="col-sm-2">
@@ -118,25 +116,6 @@
 															</div>
 														</div>
 														@endfor
-
-														<div class="row mt-2">
-															<div class="col-sm-5">
-																<span class="room-label">Adult</span>
-																<span class="room-guest">
-																	<input class="form-control" name="rooms[{{$room->id}}][1][adult]" type="number" value="1" min="1" max="{{ $room->person }}">
-																</span>
-															</div>
-															<div class="col-sm-5">
-																<span class="room-label">Child</span>
-																<span class="room-guest">
-																	<input class="form-control" type="number" name="rooms[{{$room->id}}][1][child]" value="0" max="2">
-																</span>
-															</div>
-															<div class="col-sm-2">
-																<button type="button" class="btn btn-danger btn remove-room"><i class="mdi mdi-delete"></i></button>
-															</div>
-														</div>
-
 													</div>
 													<div class="row mt-2 text-right">
 														<button type="button" id="room_type_{{$room->id}}" data-roomcount="{{ $room->room_count }}" class="btn btn-primary addNewRoom" data-id="{{$room->id}}"> Add Room </button>
