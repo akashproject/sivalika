@@ -42,8 +42,8 @@
 							<tr>												
 								<td>{{ $value->booking_id }}</td>													
 								<td>{{ get_customer_by_id($value->user_id)->name }}</td>													
-								<td>{{ $value->guest_name }}</td>													
-								<td>{{ $value->guest_mobile }}</td>
+								<td>{{ $value->name }}</td>													
+								<td>{{ $value->mobile }}</td>
 								<td>Rs. {{ $value->amount }}/-</td>
 								<td>{{ $value->payment }}</td>							
 								<td>{{ $value->status }}</td>							

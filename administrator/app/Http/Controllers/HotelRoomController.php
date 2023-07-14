@@ -66,7 +66,7 @@ class HotelRoomController extends Controller
                 $hotelRoom = HotelRoom::findOrFail($data['hotelRoom_id']);
                 $hotelRoom->update($data);
 
-                $updatedRoom = HotelRoom::where('status','active')->orWhere('status','resverd')->count();
+                $updatedRoom = HotelRoom::where('room_id',$hotelRoom->room_id)->where('status','active')->orWhere('status','resverd')->count();
                 Room::where('id', $hotelRoom->room_id)
                     ->update(['room_count' => $updatedRoom]);
             }

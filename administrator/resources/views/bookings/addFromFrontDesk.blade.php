@@ -87,10 +87,10 @@
 										<label for="guest_name" class="col-sm-3 text-right control-label col-form-label">Rooms</label>
 										<div class="col-sm-9 hotelRooms">
 										@if($rooms)
-										
 											@foreach ($rooms as $typeKey => $room)
 											@php 
 												$roomCount = $filterData['total_guest']/$room->person;
+												$roomCount = ($filterData['total_guest']%$room->person != 0)?$roomCount+1:$roomCount;
 											@endphp
 											<input type="hidden" name="rooms[{{ $room->id }}]" >
 											<div class="card" style="border: 1px solid #ccc;">
@@ -115,6 +115,7 @@
 																<button type="button" class="btn btn-danger btn remove-room"><i class="mdi mdi-delete"></i></button>
 															</div>
 														</div>
+														
 														@endfor
 													</div>
 													<div class="row mt-2 text-right">
