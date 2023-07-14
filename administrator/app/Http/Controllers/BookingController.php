@@ -93,7 +93,8 @@ class BookingController extends Controller
                 $filterData = $request->session()->get('filterData');
             }
             $hotelRooms = array();
-            $todayBooking = Booking::where('bookings.checkout','>',$filterData['checkin'])->where('bookings.checkin','<',$filterData['checkout'])->count();
+            echo $todayBooking = Booking::where('bookings.checkout','>',$filterData['checkin'])->where('bookings.checkin','<',$filterData['checkout'])->toSql();
+            
             if ($todayBooking > 0) {
                 echo DB::table('bookings as b')
                 ->join('reserved_rooms as rr', 'rr.booking_id', '=', 'b.id')
@@ -106,24 +107,6 @@ class BookingController extends Controller
                 exit;
             } else {
                 $rooms = Room::where("hotel_id",$hotel->id)->get();
-                $roomData = [];
-                foreach($rooms as $key => $room) {
-
-                    if($filterData['total_guest'] > $room->person) {
-                        
-                        while($filterData['total_guest'] >= $room->person){
-                            $roomData[$room->id][] = $room->person;
-                            $filterData['total_guest'] = $filterData['total_guest'] - $room->person;
-                            if($filterData['total_guest'] < $room->person){
-                                $roomData[$room->id][] = $filterData['total_guest'];
-                            }
-                        }
-                    }
-                }
-                echo "<pre>"; print_r($roomData);
-                exit;
-                
-
             }
 
             

@@ -87,35 +87,46 @@
 										<label for="guest_name" class="col-sm-3 text-right control-label col-form-label">Rooms</label>
 										<div class="col-sm-9 hotelRooms">
 										@if($rooms)
-											@foreach ($rooms as $typeKey => $room)
+										@php
+											$cost = 0;
+										@endphp
+											@foreach($rooms as $typeKey => $room)
 											@php 
 												$roomCount = $filterData['total_guest']/$room->person;
 												$roomCount = ($filterData['total_guest']%$room->person != 0)?$roomCount+1:$roomCount;
-											@endphp
+											@endphp											
 											<input type="hidden" name="rooms[{{ $room->id }}]" >
 											<div class="card" style="border: 1px solid #ccc;">
 												<div class="card-body">
 													<h4 class="card-title text-center">{{ $room->name }}</h4>
 													<div class="room_type_{{$room->id}}" >
 														@for($i = 1; $i<=$roomCount;$i++)
-														<div class="row mt-2">
-															<div class="col-sm-5">
-																<span class="room-label">Adult</span>
-																<span class="room-guest">
-																	<input class="form-control" name="rooms[{{$room->id}}][{{$i}}][adult]" type="number" value="{{ $room->person }}" min="1" max="{{ $room->person }}">
-																</span>
+															
+															<div class="row mt-2">
+																<div class="col-sm-5">
+																	<span class="room-label">Adult</span>
+																	<span class="room-guest">
+																		<input value="{{ ($filterData['total_guest'] < $room->person)?$filterData['total_guest']:$room->person }}" class="form-control" name="rooms[{{$room->id}}][{{$i}}][adult]" type="number" min="1" max="{{ $room->person }}">
+																	</span>
+																</div>
+																<div class="col-sm-5">
+																	<span class="room-label">Child</span>
+																	<span class="room-guest">
+																		<input class="form-control" type="number" name="rooms[{{$room->id}}][{{$i}}][child]" value="0" max="2">
+																	</span>
+																</div>
+																<div class="col-sm-2">
+																	<button type="button" class="btn btn-danger btn remove-room"><i class="mdi mdi-delete"></i></button>
+																</div>
 															</div>
-															<div class="col-sm-5">
-																<span class="room-label">Child</span>
-																<span class="room-guest">
-																	<input class="form-control" type="number" name="rooms[{{$room->id}}][{{$i}}][child]" value="0" max="2">
-																</span>
-															</div>
-															<div class="col-sm-2">
-																<button type="button" class="btn btn-danger btn remove-room"><i class="mdi mdi-delete"></i></button>
-															</div>
-														</div>
-														
+															@php
+																$cost += $room->cost;
+																$room->room_count-- ;
+																$filterData['total_guest'] -= $room->person;
+															@endphp
+															@if($room->room_count < 1)
+																@break;
+															@endif
 														@endfor
 													</div>
 													<div class="row mt-2 text-right">
@@ -124,6 +135,13 @@
 												</div>
 											</div>
 											@endforeach	
+											@if($filterData['total_guest'] > 1)
+											<div class="card" style="border: 1px solid #ccc;">
+												<div class="card-body">
+													<h4 class="card-title text-center">{{$filterData['total_guest']}} Guest Extra</h4>
+												</div>
+											</div>
+											@endif
 										@endif
 										</div>
 									</div>
@@ -158,7 +176,7 @@
 									<div class="form-group row">
 										<label for="amount" class="col-sm-3 text-right control-label col-form-label">Booking Amount</label>
 										<div class="col-sm-9">
-											<input type="text" class="form-control" name="amount" id="amount" placeholder="Enter Booking Amount" required>
+											<input type="text" value="{{$cost}}" class="form-control" name="amount" id="amount" placeholder="Enter Booking Amount" required>
 										</div>
 									</div>
 									<div class="form-group row">
