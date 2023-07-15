@@ -38,3 +38,7 @@ mysqli_close($connection);
 
 
 select `r`.`hotel_id` as `hotel_id`, `r`.`id` as `room_id`, `rr`.`total_room_book`, `r`.`room_count`, `b`.`checkin`, `r`.`room_count` - `rr`.`total_room_book` as `room_left` from `bookings` as `b` inner join `reserved_rooms` as `rr` on `rr`.`booking_id` = `b`.`id` inner join `rooms` as `r` on `rr`.`room_id` = `r`.`id` where `bookings`.`checkout` > 2023-07-15 and `bookings`.`checkin` < 2023-07-16
+
+
+
+1 2 3 4 5 6 7

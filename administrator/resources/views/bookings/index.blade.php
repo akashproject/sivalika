@@ -48,10 +48,14 @@
 								<td>{{ $value->payment }}</td>							
 								<td>{{ $value->status }}</td>							
 								<td>
-									@if($user->role == 2 && $value->status != 'arrvied')
-									<a href="{{ url('/checkin-by-booking-id?booking='.$value->booking_id) }}" class="btn btn-success"> Checkin </a>
-									@endif
+									@if($user->role == 2)
+									<a href="{{ url('/checkin-by-booking-id/'.$value->id) }}" class="btn btn-success"> Checkin </a>
+									<a href="{{ url('/add-guests/'.$value->id) }}" class="btn btn-primary"> Guests </a>
+									<a href="{{ url('/allocate-rooms/'.$value->id) }}" class="btn btn-danger"> Rooms </a>
+									@else
 									<a href="{{ url('view-booking') }}/{{ $value->id }}" class="btn btn-primary">Edit</a>
+									@endif
+									
 								</td>
 							</tr>
 							@endforeach							

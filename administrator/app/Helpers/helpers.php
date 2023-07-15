@@ -272,3 +272,16 @@ if (! function_exists('getTotalGuest')) {
         return $person;
     }
 }
+
+if (! function_exists('get_booking_meta')) {
+    function get_booking_meta($id, $key){
+        $meta = DB::table('booking_meta')->where('booking_id',$id)->where('meta_key',$key)->first();
+        return (isset($meta->meta_value))?$meta->meta_value:"null";
+    }
+}
+
+if (! function_exists('get_booking_meta_row')) {
+    function get_booking_meta_row($id, $key){
+        return $meta = DB::table('booking_meta')->where('booking_id',$id)->where('meta_key',$key)->first();
+    }
+}

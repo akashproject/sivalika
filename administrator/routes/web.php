@@ -74,13 +74,21 @@ Route::group(['middleware' => 'auth'], function () {
     //Add Bookings
     Route::get('/bookings', [App\Http\Controllers\BookingController::class, 'index'])->name('bookings');
     Route::get('/add-booking', [App\Http\Controllers\BookingController::class, 'Add'])->name('add-booking');
-    Route::get('/add-booking-from-front-desk', [App\Http\Controllers\BookingController::class, 'AddBookingFromFrontDesk'])->name('add-booking-from-front-desk');
+    Route::get('/add-booking-from-front-desk', [App\Http\Controllers\BookingController::class, 'createBooking'])->name('add-booking-from-front-desk');
     Route::get('/view-booking/{id}', [App\Http\Controllers\BookingController::class, 'show'])->name('view-booking');
     Route::post('/save-booking', [App\Http\Controllers\BookingController::class, 'save'])->name('save-booking');
     Route::post('/save-front-desk-booking', [App\Http\Controllers\BookingController::class, 'saveFrontDeskBooking'])->name('save-front-desk-booking');
     Route::get('/delete-booking/{id}', [App\Http\Controllers\BookingController::class, 'delete'])->name('delete-room');
     
     Route::post('/check-availability', [App\Http\Controllers\BookingController::class, 'checkAvailability'])->name('check-availability');
+
+    Route::get('/add-guests/{id}', [App\Http\Controllers\BookingController::class, 'addGuests'])->name('add-guests');
+    Route::post('/save-guests', [App\Http\Controllers\BookingController::class, 'saveGuests'])->name('save-guests');
+
+
+    Route::get('/allocate-rooms/{id}', [App\Http\Controllers\BookingController::class, 'allocateRooms'])->name('allocate-rooms');
+    Route::post('/assign-rooms', [App\Http\Controllers\BookingController::class, 'assignRooms'])->name('assign-rooms');
+
     //Route::get('/check-availability', [App\Http\Controllers\RoomController::class, 'availability'])->name('customers');
 
     //Add Gallery
