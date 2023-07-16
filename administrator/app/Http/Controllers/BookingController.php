@@ -95,7 +95,6 @@ class BookingController extends Controller
                 $filterData = $request->session()->get('filterData');
             }
             $hotelRooms = array();
-            print_r($filterData);
             
             $todayBooking = Booking::where('bookings.checkout','>',$filterData['checkin'])->where('bookings.checkin','<',$filterData['checkout'])->count();
             
@@ -112,7 +111,7 @@ class BookingController extends Controller
             } else {
                 $rooms = Room::where("hotel_id",$hotel->id)->get();
             }
-            return view('bookings.addFromFrontDesk',compact('hotel','rooms','tab','guests','hotelRooms','filterData'));
+            return view('bookings.addFromFrontDesk',compact('hotel','rooms','tab','hotelRooms','filterData'));
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
         }
@@ -121,11 +120,18 @@ class BookingController extends Controller
     public function addGuests($booking_id,Request $request){
         try {
             $booking = Booking::find($booking_id); 
-            $guest = get_booking_meta($booking_id,'guest');        
-            echo "<pre>"; print_r(json_decode($guest,true));   
-            exit;
-            $guestCount = (isset($booking))?$booking->total_guest:$filterData['total_guest'];   
-            return view('bookings.addGuests',compact('guestCount','booking_id'));
+            $guests = json_decode(get_booking_meta($booking_id,'guest'),true);        
+            if($guests == null) {
+                $guestCount = (isset($booking))?$booking->total_guest:$filterData['total_guest'];   
+                $guests = [];
+                for ($i=0; $i < $guestCount; $i++) { 
+                    $guests[$i] = [
+                        'name'=>'','dob'=>'','gender'=>'','address'=>'','city'=>'','state'=>'','pincode'=>'','nationality'=>'','identity_type'=>'','identity'=>'','identity_image'=>'',
+                    ];
+                }
+            }
+            
+            return view('bookings.addGuests',compact('guests','booking_id'));
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
         }
