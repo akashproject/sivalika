@@ -24,7 +24,7 @@
 				<ul class="nav nav-tabs" role="tablist">
                   <li class="nav-item">
 				  
-                    <a class="nav-link disabled" data-toggle="tab" href="#checking" role="tab"><span class="hidden-sm-up"></span>
+                    <a class="nav-link disabled" data-toggle="tab" role="tab"><span class="hidden-sm-up"></span>
                       <span class="hidden-xs-down">Checking Details</span></a>
                   </li>
                   <li class="nav-item ">
@@ -46,20 +46,19 @@
 										<div class="card">
 											<div class="card-body">
 												<div class="row" >
-													@foreach ($hotelRooms as $hotelroom)
+													@foreach($hotelRooms as $hotelroom)
 													<div class="col-md-2" style="height:80px">	
 														@php
 															$statusColor = ['active'=>'#52b532','blocked'=>'#bcc5b9','not-cleaned'=>'#b7c928','reserved'=>'#f34f6d']
 														@endphp
 														<label for="{{ $hotelroom->id }}" class="hotelroom" style="background:{{ $statusColor[$hotelroom->status] }}">	
 															<span class="room-no" target="_blank" href="{{ url('/view-hotel-room/'.$hotelroom->id) }}">{{ $hotelroom->hotel_room_no }}</span>
-															<input type="checkbox" name="hotel_room[]" value="{{ $hotelroom->id }}" >
+															<input type="checkbox" name="hotel_room[]" value="{{ $hotelroom->id }}" {{ (isset($rooms) && in_array($hotelroom->id, $rooms) )?"checked":""}} >
 														</label>
 													</div>
 													@endforeach		
 												</div>
 											</div>
-
 										</div>
 									</div>
 									<div class="col-md-3">	
@@ -73,7 +72,6 @@
 										</div>
 									</div>
 								</div>
-
 							@endif
 						</div>
 					</div>

@@ -19,7 +19,7 @@
 								<th>Options</th>
 							</tr>
 						</thead>
-
+							{{ var_dump($customers) }}
 						<tbody>
 							@foreach ($customers as $value)
 							<tr>												

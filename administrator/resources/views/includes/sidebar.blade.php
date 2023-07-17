@@ -16,7 +16,18 @@
                     <ul id="sidebarnav" class="p-t-30">
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ url('/') }}" target="_blank" aria-expanded="false"><i class="mdi mdi-web"></i><span class="hide-menu">Visit Site</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ url('/') }}" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a></li>
-                        
+                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-face"></i><span class="hide-menu">Customers</span></a>
+                            <ul aria-expanded="false" class="collapse  first-level">
+								<li class="sidebar-item"><a href="{{ url('customers') }}" class="sidebar-link"><i class="mdi mdi-face"></i><span class="hide-menu"> All Customers </span></a></li>
+                                <li class="sidebar-item"><a href="{{ url('add-customer') }}" class="sidebar-link"><i class="mdi mdi-face"></i><span class="hide-menu"> Add Customer </span></a></li>
+                            </ul>
+                        </li> 
+                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-book-multiple-variant"></i><span class="hide-menu">Bookings</span></a>
+                            <ul aria-expanded="false" class="collapse  first-level">
+								<li class="sidebar-item"><a href="{{ url('bookings') }}" class="sidebar-link"><i class="mdi mdi-border-inside"></i><span class="hide-menu"> All Bookings </span></a></li>
+                                <li class="sidebar-item"><a href="{{ url('add-booking-from-front-desk') }}" class="sidebar-link"><i class="mdi mdi-border-inside"></i><span class="hide-menu"> Add Booking </span></a></li>
+                            </ul>
+                        </li>
                         @if($user->role == 1)
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account"></i><span class="hide-menu">Front Desk</span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
@@ -24,14 +35,6 @@
                                 <li class="sidebar-item"><a href="{{ url('add-front-desk') }}" class="sidebar-link"><i class="mdi mdi-account"></i><span class="hide-menu"> Add Front Desk User </span></a></li>
                             </ul>
                         </li> 
-
-                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-face"></i><span class="hide-menu">Customers</span></a>
-                            <ul aria-expanded="false" class="collapse  first-level">
-								<li class="sidebar-item"><a href="{{ url('customers') }}" class="sidebar-link"><i class="mdi mdi-face"></i><span class="hide-menu"> All Customers </span></a></li>
-                                <li class="sidebar-item"><a href="{{ url('add-customer') }}" class="sidebar-link"><i class="mdi mdi-face"></i><span class="hide-menu"> Add Customer </span></a></li>
-                            </ul>
-                        </li> 
-
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-book-multiple-variant"></i><span class="hide-menu">Hotels</span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
 								<li class="sidebar-item"><a href="{{ url('hotels') }}" class="sidebar-link"><i class="mdi mdi-border-inside"></i><span class="hide-menu"> All Hotels </span></a></li>
@@ -39,12 +42,6 @@
                             </ul>
                         </li>
 
-                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-book-multiple-variant"></i><span class="hide-menu">Bookings</span></a>
-                            <ul aria-expanded="false" class="collapse  first-level">
-								<li class="sidebar-item"><a href="{{ url('bookings') }}" class="sidebar-link"><i class="mdi mdi-border-inside"></i><span class="hide-menu"> All Bookings </span></a></li>
-                                <li class="sidebar-item"><a href="{{ url('add-booking') }}" class="sidebar-link"><i class="mdi mdi-border-inside"></i><span class="hide-menu"> Add Booking </span></a></li>
-                            </ul>
-                        </li>
 
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-book-multiple-variant"></i><span class="hide-menu">Pages </span></a>
                             <ul aria-expanded="false" class="collapse  first-level">

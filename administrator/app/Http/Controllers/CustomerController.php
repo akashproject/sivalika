@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
@@ -15,11 +16,16 @@ class CustomerController extends Controller
 
     public function index() {
         try {
-            $customers = Customer::all();
-            
+            $customers = DB::table('customers')
+                ->join('bookings', 'bookings.user_id', '=', 'customers.id')
+                ->select('customers.*');
+            if(Auth::user()->role == 2){
+                $customers->where('bookings.hotel_id', get_user_meta('hotel_id'));
+            }
+            $customers->get();
             return view('customers.index',compact('customers'));
         } catch(\Illuminate\Database\QueryException $e){
-            //throw $th;
+            throw $e;
         }        
     }
 
