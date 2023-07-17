@@ -18,7 +18,7 @@ class CustomerController extends Controller
         try {
             $customers = DB::table('customers')
                 ->join('bookings', 'bookings.user_id', '=', 'customers.id')
-                ->select('customers.*');
+                ->select('customers.nam');
             if(Auth::user()->role == 2){
                 $customers->where('bookings.hotel_id', get_user_meta('hotel_id'));
             }
