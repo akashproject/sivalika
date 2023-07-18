@@ -234,6 +234,7 @@ class BookingController extends Controller
                     $reserve_rooms = ReservedRooms::create($reservedRooms);
                 }
             }
+            $request->session()->forget('filterData');
             return redirect()->route('add-guests', $booking->id)->with('message', 'Booking updated successfully');
         } catch(\Illuminate\Database\QueryException $e){
            
@@ -284,6 +285,7 @@ class BookingController extends Controller
                     $reserve_rooms = ReservedRooms::create($reservedRooms);
                 }
             }
+            $request->session()->forget('filterData');
             return redirect()->route('add-guests', $booking->id)->with('message', 'Booking Created Step 2');
         } catch(\Illuminate\Database\QueryException $e){
             var_dump($e);
