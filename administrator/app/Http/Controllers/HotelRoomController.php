@@ -20,6 +20,23 @@ class HotelRoomController extends Controller
         try {
             $hotel_id = $request->session()->get('hotel_id');
             $rooms = HotelRoom::where("hotel_id",$hotel_id)->get();
+            if(request()->has('checkin')){
+                $checkinTime = request()->has('checkin').config('constant.checkinTime');
+                $checkoutTime = request()->has('checkin').config('constant.checkoutTime');
+                $todayBooking = DB::table('bookings')
+                                    ->where('bookings.checkout','>',$checkinTime)
+                                    ->where('bookings.checkin','<',$checkoutTime)
+                                    ->count();
+                // $bookings = DB::table('bookings')
+                //             ->join('booking_meta', 'bookings.id', '=', 'booking_meta.booking_id')
+                //             ->select('booking_meta.meta_value')
+                //             ->where('booking_meta.meta_key','room')
+                //             ->where('bookings.checkout','>',$checkinTime)
+                //             ->where('bookings.checkin','<',$checkoutTime)
+                //             ->get()->count(); 
+                print_r($todayBooking);
+            }
+
             return view('hotel-rooms.index',compact('rooms','hotel_id'));
 
         } catch(\Illuminate\Database\QueryException $e){

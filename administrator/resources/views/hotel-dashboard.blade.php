@@ -26,19 +26,19 @@
 			<!-- Column -->
 			<div class="col-md-4 col-lg-2 col-xlg-3">
 				<div class="card card-hover">
-					<div class="box bg-warning text-center">
+					<a class="box bg-warning text-center" href="{{ url('bookings') }}?checkin={{ date('Y-m-d') }}">
 						<h1 class="font-light text-white"><i class="mdi mdi-account"></i></h1>
 						<h6 class="text-white">Guests </h6>
-					</div>
+					</a>
 				</div>
 			</div>
 			<!-- Column -->
 			<div class="col-md-4 col-lg-2 col-xlg-3">
 				<div class="card card-hover">
-					<div class="box bg-danger text-center">
-						<h1 class="font-light text-white"><i class="mdi mdi-border-outside"></i></h1>
-						<h6 class="text-white">Tables</h6>
-					</div>
+					<a class="box bg-danger text-center" href="{{ url('hotel-rooms') }}?checkin={{ date('Y-m-d') }}">
+						<h1 class="font-light text-white"><i class="mdi mdi-hotel"></i></h1>
+						<h6 class="text-white">Rooms</h6>
+					</a>
 				</div>
 			</div>
 			<!-- Column -->
