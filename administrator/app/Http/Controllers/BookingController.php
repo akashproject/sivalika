@@ -46,7 +46,7 @@ class BookingController extends Controller
                 $bookings->whereDate('checkin', request()->get('checkin'));
             }
 
-            $bookings = $bookings->get();
+            $bookings = $bookings->orderBy('id', 'DESC')->get();
             return view('bookings.index',compact('bookings'));
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
@@ -99,11 +99,11 @@ class BookingController extends Controller
             $todayBooking = Booking::where('bookings.checkout','>',$checkinTime)->where('bookings.checkin','<',$checkoutTime)->count();
             
             if ($todayBooking > 0) {
-                echo DB::table('bookings as b')
-                ->join('reserved_rooms as rr', 'rr.booking_id', '=', 'b.id')
-                ->join('rooms as r', 'rr.room_id', '=', 'r.id')
-                ->select('r.hotel_id as hotel_id','r.id as room_id','rr.total_room_book','r.room_count','b.checkin')
-                ->selectRaw('`r`.`room_count` - `rr`.`total_room_book` as `room_left`')
+                echo DB::table('bookings')
+                ->join('reserved_rooms', 'reserved_rooms.booking_id', '=', 'bookings.id')
+                ->join('rooms', 'reserved_rooms.room_id', '=', 'rooms.id')
+                ->select('rooms.*')
+                ->selectRaw('`r`.`room_count` - `rr`.`total_room_book` as `room_count`')
                 ->where('bookings.checkout','>',$checkinTime)
                 ->where('bookings.checkin','<',$checkoutTime)
                 ->toSql();
@@ -219,6 +219,7 @@ class BookingController extends Controller
             if($request->session()->has('filterData')) {
                 $filterData = $request->session()->get('filterData');
             }
+
             $rooms = $data['rooms'];
             $data['total_guest'] = getTotalGuest($data['rooms']);
             $data['rooms'] = (isset($data['rooms']) && $data['rooms'] != '')?json_encode($data['rooms']):null;

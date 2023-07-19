@@ -34,9 +34,17 @@ class IndexController extends Controller
         if($this->userData->role == 1){
             return view('dashboard');
         }
+
         $hotel_id = get_user_meta('hotel_id');
         $request->session()->put('hotel_id', $hotel_id);
-        $booking = Booking::where('hotel_id',$hotel_id)->whereDate('checkin',date('Y-m-d'))->count();
+
+        $checkinTime = date('Y-m-d').config('constant.checkinTime');
+        $checkoutTime = date('Y-m-d', strtotime(' +1 day')).config('constant.checkoutTime');
+        
+        $booking = Booking::where('hotel_id',$hotel_id)
+                ->where('bookings.checkout','>',$checkinTime)
+                ->where('bookings.checkin','<',$checkoutTime)->count();
+
         return view('hotel-dashboard',compact('booking'));
     }
 
