@@ -100,6 +100,10 @@
 										<div class="col-sm-2">
 											<label for="identity" class="">Identity Image</label>
 											<input type="file" class="form-control" name="guest[{{$key}}][identity_image]" id="identity_image" placeholder="Identity Image">
+											
+											@if(isset($guest['identity_image']))
+											{{$guest['identity_image']}}
+											@endif
 										</div>				
 									</div>
 								</div>

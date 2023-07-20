@@ -32,7 +32,8 @@ class BookingController extends Controller
 
             $bookings = DB::table('bookings')
                             ->join('customers', 'bookings.user_id', '=', 'customers.id')
-                            ->select('bookings.id','bookings.booking_id','bookings.user_id','customers.name','customers.mobile','bookings.amount','bookings.payment','bookings.status');
+                            ->join('hotels', 'bookings.hotel_id', '=', 'hotels.id')
+                            ->select('bookings.id','hotels.name as hotel','bookings.booking_id','bookings.user_id','customers.name','customers.mobile','bookings.amount','bookings.payment','bookings.status');
             
             if(request()->has('cust_id')){
                 $bookings->where('user_id', request()->get('cust_id'));
@@ -62,17 +63,32 @@ class BookingController extends Controller
             ]);
             unset($data['_token']);
             $request->session()->put('filterData', $data);
-            return redirect('/add-booking-from-front-desk');
+
+            return redirect()->back();
             //$booking = Booking::select('id')->where
 
         } catch(\Illuminate\Database\QueryException $e){
         }
     }
 
-    public function add() {
+    public function add(Request $request) {
         try {
             $hotels = Hotel::all();
-            return view('bookings.add',compact('hotels'));
+
+            $filterData = [
+                'checkin'=>date('Y-m-d'),
+                'checkout'=>date('Y-m-d', strtotime(' +1 day')),
+                'total_guest'=>1,
+            ];
+
+            if($request->session()->has('filterData')) {
+                $filterData = $request->session()->get('filterData');
+            }
+
+            $checkinTime = $filterData['checkin'].config('constant.checkinTime');
+            $checkoutTime = $filterData['checkout'].config('constant.checkoutTime');
+
+            return view('bookings.add',compact('filterData','hotels'));
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
         }
@@ -94,24 +110,25 @@ class BookingController extends Controller
 
             $checkinTime = $filterData['checkin'].config('constant.checkinTime');
             $checkoutTime = $filterData['checkout'].config('constant.checkoutTime');
-            $hotelRooms = array();
             
-            $todayBooking = Booking::where('bookings.checkout','>',$checkinTime)->where('bookings.checkin','<',$checkoutTime)->count();
-            
-            if ($todayBooking > 0) {
-                echo DB::table('bookings')
+            $todayBooking = Booking::select('id')->where('bookings.hotel_id',get_user_meta('hotel_id'))->where('bookings.checkout','>',$checkinTime)->where('bookings.checkin','<',$checkoutTime)->get();
+            $rooms = Room::where("hotel_id",$hotel->id)->get();
+            $bookedRoom = array();
+            if ($todayBooking->count() > 0) {
+                //SELECT `reserved_rooms`.`room_id`, SUM(`reserved_rooms`.`total_room_book`) as `roomstakes` FROM `bookings` join `reserved_rooms` on `reserved_rooms`.`booking_id` = `bookings`.`id` WHERE `bookings`.`hotel_id` AND `checkin` < '2023-07-20 12:24:30' AND `checkout` > '2023-07-20 12:24:30' GROUP by `reserved_rooms`.`room_id`;
+                $bookedRoom = DB::table('bookings')
                 ->join('reserved_rooms', 'reserved_rooms.booking_id', '=', 'bookings.id')
                 ->join('rooms', 'reserved_rooms.room_id', '=', 'rooms.id')
-                ->select('rooms.*')
-                ->selectRaw('`r`.`room_count` - `rr`.`total_room_book` as `room_count`')
-                ->where('bookings.checkout','>',$checkinTime)
-                ->where('bookings.checkin','<',$checkoutTime)
-                ->toSql();
-                exit;
+                ->select('reserved_rooms.room_id')
+                ->selectRaw('sum(reserved_rooms.total_room_book) as roomstake')              
+                ->whereIn('bookings.id',$todayBooking)
+                ->where('bookings.hotel_id',get_user_meta('hotel_id'))
+                ->groupBy('reserved_rooms.room_id')
+                ->get();
             } else {
                 $rooms = Room::where("hotel_id",$hotel->id)->get();
             }
-            return view('bookings.addFromFrontDesk',compact('hotel','rooms','hotelRooms','filterData'));
+            return view('bookings.addFromFrontDesk',compact('hotel','rooms','filterData','bookedRoom'));
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
         }
@@ -185,8 +202,28 @@ class BookingController extends Controller
             $booking = Booking::find($booking_id);    
             if($booking == null) return redirect()->route('bookings')->with('message', 'No Record found');
 
-            $rooms = json_decode(get_booking_meta($booking_id,'room'),true);        
+            $rooms = json_decode(get_booking_meta($booking_id,'room'),true);    
             
+            $checkinTime = request()->get('checkin').config('constant.checkinTime');
+            $checkoutTime = date('Y-m-d', strtotime(request()->get('checkin').' +1 day')).config('constant.checkoutTime');
+            
+            $todayBooking = DB::table('bookings')
+                            ->join('booking_meta', 'bookings.id', '=', 'booking_meta.booking_id')
+                            ->join('customers', 'customers.id', '=', 'bookings.user_id')
+                            ->where('bookings.checkout','>',$checkinTime)
+                            ->where('bookings.checkin','<',$checkoutTime)
+                            ->where('booking_meta.meta_key','room')
+                            ->where('bookings.id', '!=' , $booking_id)
+                            ->select('booking_meta.meta_value as rooms','booking_meta.booking_id','customers.name')
+                            ->get();
+            
+            $reservedRooms = array();
+            foreach ($todayBooking as $value) {
+                foreach (json_decode($value->rooms,true) as $room) {
+                    $reservedRooms[$room]['name'] = $value->name;
+                }
+            }
+
             $roomType = array();
             foreach(json_decode($booking->rooms,true) as $key => $value) {
                 if ($value) {
@@ -199,7 +236,8 @@ class BookingController extends Controller
                     ->where('status','!=','blocked')
                     ->where('status','!=','not-cleaned')
                     ->get(); 
-            return view('bookings.allocate-rooms',compact('hotelRooms','booking_id','rooms'));
+
+            return view('bookings.allocate-rooms',compact('hotelRooms','booking_id','rooms','reservedRooms'));
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
         }
@@ -301,7 +339,7 @@ class BookingController extends Controller
                     $imageFile = strtolower(str_replace(" ","_",$value['name'])).'_identity_'.time().'.'.$value['identity_image']->extension(); 
                     $image = Image::make($value['identity_image']->getRealPath());
                     $image->save(public_path('identity_image',$imageFile));
-                    $data['guest'][$key]['identity_image'] = public_path('identity')."/".$imageFile;
+                    $data['guest'][$key]['identity_image'] = config('constant.relativeMediaPath')."/".$imageFile;
                 }                    
             }
             $guestMeta = get_booking_meta_row($data['bookingId'],'guest');

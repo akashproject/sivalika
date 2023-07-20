@@ -47,15 +47,17 @@
 											<div class="card-body">
 												<div class="row" >
 													@foreach($hotelRooms as $hotelroom)
-													<div class="col-md-2" style="height:80px">	
-														@php
-															$statusColor = ['active'=>'#52b532','blocked'=>'#bcc5b9','not-cleaned'=>'#b7c928','reserved'=>'#f34f6d']
-														@endphp
+													@php
+														$statusColor = ['active'=>'#52b532','blocked'=>'#bcc5b9','not-cleaned'=>'#b7c928','reserved'=>'#f34f6d']
+													@endphp
+													@if(!array_key_exists($hotelroom->id,$reservedRooms))
+													<div class="col-md-2" style="height:80px">
 														<label for="{{ $hotelroom->id }}" class="hotelroom" style="background:{{ $statusColor[$hotelroom->status] }}">	
 															<span class="room-no" target="_blank" href="{{ url('/view-hotel-room/'.$hotelroom->id) }}">{{ $hotelroom->hotel_room_no }}</span>
 															<input type="checkbox" name="hotel_room[]" value="{{ $hotelroom->id }}" {{ (isset($rooms) && in_array($hotelroom->id, $rooms) )?"checked":""}} >
 														</label>
 													</div>
+													@endif
 													@endforeach		
 												</div>
 											</div>

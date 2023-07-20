@@ -3,6 +3,45 @@
 @section('content')
 <div class="col-12">
 	<div class="card">
+		<form class="form-horizontal" method="post" action="{{ url('check-availability') }}" enctype="multipart/form-data">
+			@csrf
+			<div class="card-body">
+				<h4 class="card-title"> Booking Date</h4>
+				<div class="row">
+					<div class="col-md-3" >
+						<div class="form-group row">
+							<label for="checkin" class="col-sm-4 text-left control-label col-form-label">Checkin</label>
+							<div class="col-sm-8">
+								<input type="date" class="form-control" name="checkin" id="datepicker checkin" value="{{$filterData['checkin']}}" placeholder="Enter Checkin Date" min="{{ date('Y-m-d') }}" required>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4" >
+						<div class="form-group row">
+							<label for="checkout" class="col-sm-5 text-left control-label col-form-label">Checkout</label>
+							<div class="col-sm-7">
+								<input type="date" class="form-control" name="checkout" id="datepicker checkout" value="{{$filterData['checkout']}}" placeholder="Enter Checkout Date" min="{{ date('Y-m-d') }}" required>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3" >
+						<div class="form-group row">
+							<label for="total_guest" class="col-sm-5 text-left control-label col-form-label">Guest</label>
+							<div class="col-sm-7">
+								<input type="number" class="form-control" name="total_guest" id="total_guest" value="{{$filterData['total_guest']}}" placeholder="Total Guest">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2" >
+						<div class="form-group row">
+							<button type="submit" class="btn btn-primary">Check Availibity</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="card">
 		<form class="form-horizontal" method="post" action="{{ url('save-booking') }}" enctype="multipart/form-data">
 			@csrf
 			<div class="card-body">
@@ -23,24 +62,6 @@
 				@endif
 				<div class="row">
 					<div class="col-md-7" >
-						<div class="form-group row">
-							<label for="checkin" class="col-sm-3 text-right control-label col-form-label">Checkin Date</label>
-							<div class="col-sm-9">
-								<input type="date" class="form-control" name="checkin" id="datepicker checkin" placeholder="Enter Checkin Date" >
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="checkout" class="col-sm-3 text-right control-label col-form-label">Checkout Date</label>
-							<div class="col-sm-9">
-								<input type="date" class="form-control" name="checkout" id="datepicker checkout" placeholder="Enter Checkout Date" >
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="total_guest" class="col-sm-3 text-right control-label col-form-label">Total Guest</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control" name="total_guest" id="total_guest" placeholder="Enter Total Guest" >
-							</div>
-						</div>
 						<div class="form-group row">
 							<label for="state" class="col-sm-3 text-right control-label col-form-label">Hotel</label>
 							<div class="col-sm-9">

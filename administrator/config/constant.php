@@ -7,6 +7,7 @@ return [
     ],
     'absoluteMediaPath' => env('APP_URL').'public/upload',
     'relativeMediaPath' => 'public/upload',
+    'identityMediaPath' => 'public/identity',
     'checkinTime'=>' 11:00:00',
     'checkoutTime'=>' 10:00:00',
 ];

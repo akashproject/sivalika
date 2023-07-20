@@ -12,7 +12,7 @@
 						<div class="form-group row">
 							<label for="checkin" class="col-sm-4 text-left control-label col-form-label">Checkin</label>
 							<div class="col-sm-8">
-								<input type="date" class="form-control" name="checkin" id="datepicker checkin" value="{{$filterData['checkin']}}" placeholder="Enter Checkin Date" required>
+								<input type="date" class="form-control" name="checkin" id="datepicker checkin" value="{{$filterData['checkin']}}" placeholder="Enter Checkin Date" min="{{ date('Y-m-d') }}" required>
 							</div>
 						</div>
 					</div>
@@ -20,7 +20,7 @@
 						<div class="form-group row">
 							<label for="checkout" class="col-sm-5 text-left control-label col-form-label">Checkout</label>
 							<div class="col-sm-7">
-								<input type="date" class="form-control" name="checkout" id="datepicker checkout" value="{{$filterData['checkout']}}" placeholder="Enter Checkout Date" required>
+								<input type="date" class="form-control" name="checkout" id="datepicker checkout" value="{{$filterData['checkout']}}" placeholder="Enter Checkout Date" min="{{ date('Y-m-d') }}" required>
 							</div>
 						</div>
 					</div>
@@ -76,7 +76,7 @@
                   </li>
                 </ul>
 				<div class="tab-content tabcontent-border">
-				<input type="hidden" name="tab" value="checkin" >
+					
 					<div class="tab-pane active" id="checkin" role="tabpanel">
 						<div class="p-20">
 							<h4 class="card-title mt-3"> Checking Details </h4>
@@ -90,17 +90,25 @@
 											$cost = 0;
 										@endphp
 											@foreach($rooms as $typeKey => $room)
-											@php 
-												$roomCount = $filterData['total_guest']/$room->person;
-												$roomCount = ($filterData['total_guest']%$room->person != 0)?$roomCount+1:$roomCount;
-											@endphp											
+												@foreach($bookedRoom as $takeroomForBooking)
+													@php
+														$room->room_count = ($takeroomForBooking->room_id == $room->id)?$room->room_count - $takeroomForBooking->roomstake:$room->room_count
+													@endphp	
+												@endforeach
+												@php 
+													$availableRoom = $room->room_count;
+													$roomCount = $filterData['total_guest']/$room->person;
+													$roomCount = ($filterData['total_guest']%$room->person != 0)?$roomCount+1:$roomCount;
+												@endphp											
 											<input type="hidden" name="rooms[{{ $room->id }}]" >
 											<div class="card" style="border: 1px solid #ccc;">
 												<div class="card-body">
 													<h4 class="card-title text-center">{{ $room->name }}</h4>
 													<div class="room_type_{{$room->id}}" >
 														@for($i = 1; $i<=$roomCount;$i++)
-															
+															@if($room->room_count < 1)
+																@break;
+															@endif
 															<div class="row mt-2">
 																<div class="col-sm-5">
 																	<span class="room-label">Adult</span>
@@ -123,18 +131,15 @@
 																$room->room_count-- ;
 																$filterData['total_guest'] -= $room->person;
 															@endphp
-															@if($room->room_count < 1)
-																@break;
-															@endif
 														@endfor
 													</div>
 													<div class="row mt-2 text-right">
-														<button type="button" id="room_type_{{$room->id}}" data-roomcount="{{ $room->room_count }}" class="btn btn-primary addNewRoom" data-id="{{$room->id}}"> Add Room </button>
+														<button type="button" id="room_type_{{$room->id}}" data-roomcount="{{ $availableRoom }}" class="btn btn-primary addNewRoom" data-id="{{$room->id}}"> Add Room </button>
 													</div>
 												</div>
 											</div>
 											@endforeach	
-											@if($filterData['total_guest'] > 1)
+											@if($filterData['total_guest'] >= 1)
 											<div class="card" style="border: 1px solid #ccc;">
 												<div class="card-body">
 													<h4 class="card-title text-center">{{$filterData['total_guest']}} Guest Extra</h4>
@@ -153,7 +158,7 @@
 									<div class="form-group row">
 										<label for="mobile" class="col-sm-3 text-right control-label col-form-label">User Mobile</label>
 										<div class="col-sm-9">
-											<input type="text" class="form-control" name="mobile" id="mobile" placeholder="Enter Guest Mobile Number" required>
+											<input type="number" class="form-control" name="mobile" id="mobile" placeholder="Enter Guest Mobile Number" required>
 										</div>
 									</div>
 									<div class="form-group row">

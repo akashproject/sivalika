@@ -27,7 +27,7 @@
 						<thead>
 							<tr>
 								<th>Booking</th>
-								<th>User</th>
+								<th>Hotel</th>
 								<th>Name</th>
 								<th>Mobile</th>
 								<th>Amount</th>
@@ -41,8 +41,8 @@
 							@foreach ($bookings as $value)
 							<tr>												
 								<td>{{ $value->booking_id }}</td>													
+								<td>{{ $value->hotel }}</td>													
 								<td>{{ get_customer_by_id($value->user_id)->name }}</td>													
-								<td>{{ $value->name }}</td>													
 								<td>{{ $value->mobile }}</td>
 								<td>Rs. {{ $value->amount }}/-</td>
 								<td>{{ $value->payment }}</td>							
