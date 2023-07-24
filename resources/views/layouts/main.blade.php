@@ -51,11 +51,13 @@
     <link href="{{ url('assets/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ url('assets/css/style.css') }}" rel="stylesheet">
     @yield('style')
+    <!--
     @if(isset($contentMain->schema))
     {!! $contentMain->schema !!}
     @else
     {!! get_theme_setting('schema') !!}
     @endif
+    -->
 </head>
 
 <body>

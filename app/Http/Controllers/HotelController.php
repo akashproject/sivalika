@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\ReservedRooms;
 use App\Models\HotelRoom;
@@ -15,18 +15,19 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 
-class BookingController extends Controller
+class HotelController extends Controller
 {
     //
-    public function checkAvailability(Request $request) {
+
+    public function view($slug)
+    {
         try {
-            $data = $request->all();
-            print_r($data); exit;
-            
-            return view('index');
+
+            $hotel = Hotel::where('slug',$slug)->first();
+            $rooms = Room::where('hotel_id',$hotel->id)->where('status',1)->get();
+
+            return view('hotel.view',compact('hotel','rooms'));
         } catch(\Illuminate\Database\QueryException $e){
-            //throw $th;
         }
-        
     }
 }

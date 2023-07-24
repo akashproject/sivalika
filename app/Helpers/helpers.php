@@ -77,6 +77,18 @@ if (! function_exists('get_theme_setting')) {
         return (isset($media->value))?$media->value:"null";
     }
 }
+if (! function_exists('get_hotels')) {
+    function get_hotels($slug = null){
+        $hotel = DB::table('hotels');
+        
+        if($slug){
+            $hotel->where('slug',$slug);
+        } 
+
+        $hotel = $hotel->where('status',"1")->get();
+        return $hotel;
+    }
+}
 
 if (! function_exists('get_rooms')) {
     function get_rooms($hotel_id){
