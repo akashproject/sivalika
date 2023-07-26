@@ -12,7 +12,7 @@
         #big.owl-theme .owl-next, #big.owl-theme .owl-prev { background:#333; width: 22px; line-height:40px; height: 40px; margin-top: -20px; position: absolute; text-align:center; top: 50%; }
         #big.owl-theme .owl-prev { left: 10px; }
         #big.owl-theme .owl-next { right: 10px; }
-        #thumbs.owl-theme .owl-next, #thumbs.owl-theme .owl-prev { background:#333; }
+        #thumbs.owl-theme .owl-next, #thumbs.owl-theme .owl-prev { }
     </style>
     
         
@@ -24,38 +24,27 @@
                 <h1 class="mb-5"><span class="text-primary text-uppercase">{{ $hotel->name }}</span></h1>
             </div>
             <div class="row g-5">
+                @if($hotel->gallery)
                 <div class="col-lg-6">
                     <div class="outer">
                         <div id="big" class="owl-carousel owl-theme">
+                            @foreach(json_decode($hotel->gallery) as $thumb)
                             <div class="item">
-                                <img class="img-fluid rounded w-100 wow zoomIn" src="{{ url('assets/img/about-2.jpg')}}">
+                                <img class="img-fluid rounded w-100 wow zoomIn" src="{{ getSizedImage('',$thumb); }}">
                             </div>
-                            <div class="item">
-                                <img class="img-fluid rounded w-100 wow zoomIn" src="{{ url('assets/img/about-2.jpg')}}">
-                            </div>
-                            <div class="item">
-                                <img class="img-fluid rounded w-100 wow zoomIn" src="{{ url('assets/img/about-2.jpg')}}">
-                            </div>
-                            <div class="item">
-                                <img class="img-fluid rounded w-100 wow zoomIn" src="{{ url('assets/img/about-2.jpg')}}">
-                            </div>
+                            @endforeach
                         </div>
-                        <div id="thumbs" class="owl-carousel owl-theme">
+                       
+                        <div id="thumbs" class="owl-carousel owl-theme">             
+                            @foreach(json_decode($hotel->gallery) as $thumb)               
                             <div class="item">
-                                <img class="img-fluid rounded w-100 wow zoomIn" src="{{ url('assets/img/about-2.jpg')}}">
+                                <img class="img-fluid rounded w-100 wow zoomIn" src="{{ getSizedImage('',$thumb); }}">
                             </div>
-                            <div class="item">
-                                <img class="img-fluid rounded w-100 wow zoomIn" src="{{ url('assets/img/about-2.jpg')}}">
-                            </div>
-                            <div class="item">
-                                <img class="img-fluid rounded w-100 wow zoomIn" src="{{ url('assets/img/about-2.jpg')}}">
-                            </div>
-                            <div class="item">
-                                <img class="img-fluid rounded w-100 wow zoomIn" src="{{ url('assets/img/about-2.jpg')}}">
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
+                @endif
                 <div class="col-lg-6">
                     <div class="wow fadeInUp" data-wow-delay="0.2s">
                         <form>
@@ -134,6 +123,9 @@
     <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-4 justified-center">
+                <h3 >Select Rooms </h3> 
+            </div>
+            <div class="row g-4 justified-center">
                 @foreach($rooms as $kKey => $room)
 
                 <div class="col-lg-5 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
@@ -192,6 +184,19 @@
                         <i class="fa fa-check" aria-hidden="true"></i> {{ $value }}
                     </div>
                     @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-4 justified-center">
+                <h3 > About Hotel </h3> 
+            </div>
+            <div class="section-border form-14" >
+                <div class="row p-4">
+                   {!! $hotel->description !!}
                 </div>
             </div>
         </div>
