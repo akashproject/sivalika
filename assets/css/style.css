@@ -39,6 +39,47 @@
 .justified-center {
     justify-content: center;
 }
+.fa.fa-calendar {
+    vertical-align: middle;
+    margin-right: 2px;
+}
+.highlights {
+    padding: 20px;
+}
+
+.highlights span {
+    border: 1px solid #fbd9b7;
+    padding: 7px 9px;
+    font-size: 14px;
+    background: #fea14326;
+    color: #564c94;
+    border-radius: 19px;
+    width: 100%;
+    display: inline-block;
+}
+.checkin_panel {
+    border: 1px solid #fff;
+    box-shadow: 0px 0px 4px 1px #cccccc91;
+    border-radius: 10px;
+}
+
+.checkin_data {
+    padding: 20px;
+    background: #f9f9f9;
+    margin: 0;
+}
+.t-datepicker {
+    clear: both;
+    width: 100%;
+    font-size: 14px;
+    line-height: 1.4em;
+    max-width: 650px;
+    background: #fff;
+}
+.t-check-in, .t-check-out {
+    border-color: #ededed;
+    height: calc(3.5rem + 2px);
+}
 /*** Button ***/
 .btn {
     font-weight: 500;
@@ -64,10 +105,32 @@
 }
 
 .btn-secondary {
-    background-color: #e3b53d !important;
-    border-color: #d5a527 !important;
+    background-color: #160e42 !important;
+    border-color: #160e42 !important;
 }
 
+.color-secondary {
+    color: #160e42 !important;
+}
+
+
+.checkin_title {
+    background: -webkit-linear-gradient(left, #2e3cbf 0%, #7f74e3 51%, #3694cb 100%);
+    padding: 6px 30px;
+}
+
+.checkin_title h5 {
+    color: #fff;
+    margin: 11px 0;
+}
+
+a.login-btn {
+    padding: 8px 20px;
+    background: #3541c2;
+    opacity: 0.9;
+    color: #fff;
+    margin-left: 10px;
+}
 .btn.btn-primary,
 .btn.btn-secondary {
     color: #FFFFFF;
@@ -512,4 +575,72 @@
     margin-right: 0;
     padding-right: 0;
     border-right: none;
+}
+.remove-guest,.add-guest {
+    cursor: pointer;
+}
+
+.submenu {
+    box-shadow: 2px 2px 2px 0 rgb(0 0 0 / 4%);
+}
+
+ul.submenu_content {
+    display: flex;
+    margin: auto;
+    width: 100%;
+    justify-content: center;
+}
+
+li.submenu_item:hover{
+    background: #e3b53d;
+    color: #160e42;
+}
+
+
+li.submenu_item {
+    margin-right: 33px;
+    list-style: none;
+}
+
+.submenu_item a {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: 0.3px;
+    text-align: center;
+    color: #3c3c3c;
+    padding: 15px 33px;
+    display: block;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.submenu.fixed {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background: #fff;
+    z-index: 9;
+}
+
+.personal_info_content {
+    background: #f9f9f9;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.personal_info_title {
+    padding: 10px;
+    background: #eee;
+    text-align: center;
+}
+
+.personal_form_data {
+    padding: 20px;
+}
+
+.checkout_review {
+    box-shadow: 0px 0px 3px 0px;
+    padding: 20px;
+    border-radius: 10px;
 }

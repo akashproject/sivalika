@@ -49,7 +49,11 @@
     <link href="{{ url('assets/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet">
 
     <link href="{{ url('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+
     <link href="{{ url('assets/css/style.css') }}" rel="stylesheet">
+    <link href="{{ url('assets/css/t-datepicker.min.css') }}" rel="stylesheet">
+    <link href="{{ url('assets/css/t-datepicker-yellow.css') }}" rel="stylesheet">
     @yield('style')
     <!--
     @if(isset($contentMain->schema))
@@ -84,6 +88,7 @@
     <script src="{{ url('assets/lib/tempusdominus/js/moment-timezone.min.js') }}"></script>
     <script src="{{ url('assets/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js') }}"></script>
     <script src="{{ url('assets/js/main.js') }}"></script>
+    <script src="{{ url('assets/js/t-datepicker.min.js') }}"></script>
 </body>
 
 </html>

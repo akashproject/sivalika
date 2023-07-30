@@ -5,16 +5,10 @@
             <div class="col-md-10">
                 
                     <div class="row g-2">
-                        <div class="col-md-3">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="name" placeholder="CHECKIN">
-                                <label for="name">CHECKIN</label>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="name" placeholder="CHECKOUT">
-                                <label for="name">CHECKOUT</label>
+                        <div class="col-md-6">
+                            <div class="t-datepicker">
+                                <div class="t-check-in"></div>
+                                <div class="t-check-out"></div>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -25,9 +19,9 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-floating">
-                                <select class="form-select" id="select2">
+                                <select class="form-select" id="select2" name="hotel">
                                     @foreach(get_hotels() as $hotel)
-                                    <option >{{ $hotel->name }}</option>
+                                    <option value="{{ $hotel->id }}" >{{ $hotel->name }}</option>
                                     @endforeach
                                 </select>
                                 <label for="select2">Select Hotel</label>

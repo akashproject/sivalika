@@ -21,12 +21,26 @@ class BookingController extends Controller
     public function checkAvailability(Request $request) {
         try {
             $data = $request->all();
-            print_r($data); exit;
-            
-            return view('index');
+            $hotel = Hotel::where('id',$data['hotel'])->first();
+            return redirect('/hotel/'.$hotel->slug);
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
         }
         
     }
+
+    public function confirmBooking(Request $request) {
+       
+        return redirect('/checkout');
+    }
+
+    public function checkout(Request $request) {
+        try {
+            return view('booking.checkout');
+        } catch(\Illuminate\Database\QueryException $e){
+            //throw $th;
+        }
+        
+    }
+
 }

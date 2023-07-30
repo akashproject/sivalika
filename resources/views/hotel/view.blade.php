@@ -13,13 +13,29 @@
         #big.owl-theme .owl-prev { left: 10px; }
         #big.owl-theme .owl-next { right: 10px; }
         #thumbs.owl-theme .owl-next, #thumbs.owl-theme .owl-prev { }
+        #thumbs .owl-item .item:before {
+            content: '';
+            display: block;
+            background-color: rgba(38, 38, 38, 0.52);
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1;
+            margin: 2px;
+            border-radius: 7px;
+        }
+        #thumbs .owl-item.current .item:before{
+         background-color: rgba(38, 38, 38, 0);
+        }
     </style>
     
         
     <!-- Booking Start -->
-    <div class="container-xxl py-5">
+    <div class="container-xxl py-3">
         <div class="container">
-            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <div class="text-center">
                 <h6 class="section-title text-center text-primary text-uppercase">Room Booking</h6>
                 <h1 class="mb-5"><span class="text-primary text-uppercase">{{ $hotel->name }}</span></h1>
             </div>
@@ -30,7 +46,7 @@
                         <div id="big" class="owl-carousel owl-theme">
                             @foreach(json_decode($hotel->gallery) as $thumb)
                             <div class="item">
-                                <img class="img-fluid rounded w-100 wow zoomIn" src="{{ getSizedImage('',$thumb); }}">
+                                <img class="img-fluid rounded w-100" src="{{ getSizedImage('',$thumb); }}">
                             </div>
                             @endforeach
                         </div>
@@ -38,7 +54,7 @@
                         <div id="thumbs" class="owl-carousel owl-theme">             
                             @foreach(json_decode($hotel->gallery) as $thumb)               
                             <div class="item">
-                                <img class="img-fluid rounded w-100 wow zoomIn" src="{{ getSizedImage('',$thumb); }}">
+                                <img class="img-fluid rounded w-100" src="{{ getSizedImage('',$thumb); }}">
                             </div>
                             @endforeach
                         </div>
@@ -46,71 +62,46 @@
                 </div>
                 @endif
                 <div class="col-lg-6">
-                    <div class="wow fadeInUp" data-wow-delay="0.2s">
-                        <form>
-                            <div class="row g-3">
+                    <div class="checkin_panel">
+                        <div class="checkin_title" >
+                            <h5> Login Now to get Best Price  <a href="javascript:void(0)" class="login-btn" > Login </a></h5>
+                        </div>
+                        <div class="row g-3 mb-3 highlights" >
+                            <div class="col-md-4">
+                                <span class="" > <i class="fa fa-check-circle" aria-hidden="true"></i> Free Cancelation </span>  
+                            </div>
+                            <div class="col-md-4">
+                                <span class="" > <i class="fa fa-check-circle" aria-hidden="true"></i> Couple Friendly </span> 
+                            </div>
+                            <div class="col-md-4">
+                                <span class="" > <i class="fa fa-check-circle" aria-hidden="true"></i> Pay Later </span> 
+                            </div>
+                        </div>
+                        <div class="row g-3 checkin_data">
+                            <div class="col-8" >
+                                <div class="t-datepicker">
+                                    <div class="t-check-in"></div>
+                                    <div class="t-check-out"></div>
+                                </div>
+                            </div>
+                            <div class="col-4" >
+                                <div class="form-floating">
+                                    <select class="form-select" id="select1">
+                                        @for($i = 1;$i<=15;$i++)
+                                        <option value="{{$i}}">Adult {{$i}}</option>
+                                        @endfor
+                                    </select>
+                                    <label for="select1">Select Adult</label>
+                                </div>
+                            </div>
+                        </div>
+                        <form method="post" action="{{ url('confirm-booking') }}" >
+                            @csrf
+                            <div class="row g-3 checkin_data">
                                 <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="name" placeholder="Your Name">
-                                        <label for="name">Your Name</label>
-                                    </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="email" class="form-control" id="email" placeholder="Your Email">
-                                        <label for="email">Your Email</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating date" id="date3" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" id="checkin" placeholder="Check In" data-target="#date3" data-toggle="datetimepicker" />
-                                        <label for="checkin">Check In</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating date" id="date4" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" id="checkout" placeholder="Check Out" data-target="#date4" data-toggle="datetimepicker" />
-                                        <label for="checkout">Check Out</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <select class="form-select" id="select1">
-                                            <option value="1">Adult 1</option>
-                                            <option value="2">Adult 2</option>
-                                            <option value="3">Adult 3</option>
-                                        </select>
-                                        <label for="select1">Select Adult</label>
-                                        </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <select class="form-select" id="select2">
-                                            <option value="1">Child 1</option>
-                                            <option value="2">Child 2</option>
-                                            <option value="3">Child 3</option>
-                                        </select>
-                                        <label for="select2">Select Child</label>
-                                        </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <select class="form-select" id="select3">
-                                            <option value="1">Room 1</option>
-                                            <option value="2">Room 2</option>
-                                            <option value="3">Room 3</option>
-                                        </select>
-                                        <label for="select3">Select A Room</label>
-                                        </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <textarea class="form-control" placeholder="Special Request" id="message" style="height: 100px"></textarea>
-                                        <label for="message">Special Request</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="submit">Book Now</button>
+                                    <button type="submit" class="btn btn-success w-100 py-3" type="submit">Book Now</button>
                                 </div>
                             </div>
                         </form>
@@ -119,10 +110,32 @@
             </div>
         </div>
     </div>
+    <div class="submenu" >
+            <ul class="submenu_content">
+                <li class="submenu_item" >
+                    <a href="#selectroom" class="color-secondary"  > Select Room </a>
+                </li>
+                <li class="submenu_item" >
+                    <a href="#amenities" class="color-secondary" > Amenities </a>
+                </li>
+                <li class="submenu_item" >
+                    <a href="#about" class="color-secondary" > About </a>
+                </li>
+                <li class="submenu_item" >
+                    <a href="#location" class="color-secondary" > Location </a>
+                </li>
+                <li class="submenu_item" >
+                    <a href="#reviews" class="color-secondary" > Reviews </a>
+                </li>
+                <li class="submenu_item" >
+                    <a href="#policies" class="color-secondary" > Policies </a>
+                </li>
+            </div>
+        </div>
     <!-- Booking End -->
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="row g-4 justified-center">
+            <div id="selectroom" class="row g-4 justified-center">
                 <h3 >Select Rooms </h3> 
             </div>
             <div class="row g-4 justified-center">
@@ -134,7 +147,7 @@
                             <img class="img-fluid" src="{{ getSizedImage('',$room->featured_image) }}" alt="">
                             <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">₹{{$room->cost}}/Night</small>
                         </div>
-                        <div class="p-4 mt-2">
+                        <div class="p-4 mt-2 pb-2">
                             <div class="d-flex justify-content-between mb-3">
                                 <h5 class="mb-0">{{$room->name}}</h5>
                                 <div class="ps-2">
@@ -155,7 +168,7 @@
                                     <span> Room 1 </span>
                                 </div>
                                 <div class="col-md-5" >
-                                <span class="remove-guest px-2" > <i class="fa fa-minus-circle text-primary me-2"></i> </span> <span> 1 Guest </span> <span class="add-guest px-2" > <i class="fa fa-plus-circle text-primary me-2"></i> </span>
+                                <span class="remove-guest px-2" > <i class="fa fa-minus-circle text-primary me-2"></i> </span> <span class="guestCount"> 1 Guest </span> <span class="add-guest px-2" > <i class="fa fa-plus-circle text-primary me-2"></i> </span>
                                 </div>
                                 <div class="col-md-2" >
                                     <span class="" > <i class="fa fa-trash text-primary me-2"></i> </span>
@@ -163,6 +176,13 @@
                             </div>
                             <div class="d-flex mb-3 row">
                                 <a href="javascrit:void(0)" class="addMoreRoom"> <i class="fa fa-plus text-primary me-2"></i> Add room </a>
+                            </div>
+                            <div class="d-flex mb-3 row">
+                                <div class="col-md-6">
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-primary" type="submit">Clear Selection</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -174,7 +194,7 @@
 
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="row g-4 justified-center">
+            <div id="amenities" class="row g-4 justified-center">
                 <h3 > Hotel Amenities </h3> 
             </div>
             <div class="section-border form-14" >
@@ -191,7 +211,7 @@
 
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="row g-4 justified-center">
+            <div id="about" class="row g-4 justified-center">
                 <h3 > About Hotel </h3> 
             </div>
             <div class="section-border form-14" >
@@ -204,7 +224,7 @@
 
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="row g-4 justified-center">
+            <div id="location" class="row g-4 justified-center">
                 <h3 > Hotel Location </h3> 
             </div>
             <div class="section-border form-14" >
@@ -215,7 +235,7 @@
 
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="row g-4 justified-center">
+            <div id="policies" class="row g-4 justified-center">
                 <h3 > {{ $hotel->name }} Policies </h3> 
             </div>
             <div class="section-border form-14" >

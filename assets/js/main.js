@@ -80,6 +80,12 @@
         $('#videoModal').on('hide.bs.modal', function (e) {
             $("#video").attr('src', $videoSrc);
         })
+
+        $('.t-datepicker').tDatePicker({
+          // options here
+          iconDate: '<i class="fa fa-calendar" aria-hidden="true"></i>',
+          formatDate      :'MM-dd',
+        });
     });
 
 
@@ -134,8 +140,8 @@
             .eq(0)
             .addClass("current");
         })
-          .owlCarousel({
-          items: 4,
+        .owlCarousel({
+          items: 5,
           dots: true,
           nav: true,
           navText: [
@@ -202,8 +208,16 @@
       });
 
       $('.addNewRoom').on("click",function(){
-          
+            alert();
       });
+
+      $(window).scroll(function () {
+        if ($(this).scrollTop() > 850) {
+            $('.submenu').addClass('fixed');
+        } else {
+            $('.submenu').removeClass('fixed');
+        }
+    });
       
 })(jQuery);
 
