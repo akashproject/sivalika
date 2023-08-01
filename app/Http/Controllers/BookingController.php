@@ -21,7 +21,14 @@ class BookingController extends Controller
     public function checkAvailability(Request $request) {
         try {
             $data = $request->all();
+           
             $hotel = Hotel::where('id',$data['hotel'])->first();
+            $filterData = [
+                'checkin'=> $data['t-start'],
+                'checkout'=> $data['t-end'],
+                'total_guest'=>$data['total_guest'],
+            ];
+            $request->session()->put('filterData', $filterData);
             return redirect('/hotel/'.$hotel->slug);
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;

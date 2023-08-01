@@ -66,7 +66,7 @@
                         <div class="checkin_title" >
                             <h5> Login Now to get Best Price  <a href="javascript:void(0)" class="login-btn" > Login </a></h5>
                         </div>
-                        <div class="row g-3 mb-3 highlights" >
+                        <div class="row py-3 highlights" >
                             <div class="col-md-4">
                                 <span class="" > <i class="fa fa-check-circle" aria-hidden="true"></i> Free Cancelation </span>  
                             </div>
@@ -77,7 +77,7 @@
                                 <span class="" > <i class="fa fa-check-circle" aria-hidden="true"></i> Pay Later </span> 
                             </div>
                         </div>
-                        <div class="row g-3 checkin_data">
+                        <div class="row py-3 checkin_data">
                             <div class="col-8" >
                                 <div class="t-datepicker">
                                     <div class="t-check-in"></div>
@@ -85,20 +85,45 @@
                                 </div>
                             </div>
                             <div class="col-4" >
-                                <div class="form-floating">
-                                    <select class="form-select" id="select1">
-                                        @for($i = 1;$i<=15;$i++)
-                                        <option value="{{$i}}">Adult {{$i}}</option>
-                                        @endfor
-                                    </select>
-                                    <label for="select1">Select Adult</label>
-                                </div>
+                                <select class="form-select" id="select1">
+                                    @for($i = 1;$i<=15;$i++)
+                                    <option value="{{$i}}">Adult {{$i}}</option>
+                                    @endfor
+                                </select>
                             </div>
                         </div>
+                        <div class="checkin_content">
+                        @php
+                            $cost = 0;
+                        @endphp
+                            <div class="checkin_room_selection" >
+                                <p> Our Recommandation </p>
+                                @if($rooms)
+                                <div class="review_room" > 
+                                    @foreach($rooms as $typeKey => $room)
+                                        @php 
+                                            $availableRoom = $room->room_count;
+                                            $roomCount = $filterData['total_guest']/$room->person;
+                                            $roomCount = ($filterData['total_guest']%$room->person != 0)?$roomCount+1:$roomCount;
+                                            $cost = $roomCount*$room->cost;
+                                        @endphp	
+                                     <strong> 1x Deluxe Room for 2 Guest </strong>
+                                    @endforeach
+                                </div>
+                                @endif
+                            </div>
+                            <div class="checkin_amount" >
+                                <span> Price Per Night </span>
+                                <h5> ₹{{$cost}} </h5>
+                                <span> Including GST & Taxes </span>
+                            </div>
+                        </div>
+                        
                         <form method="post" action="{{ url('confirm-booking') }}" >
                             @csrf
                             <div class="row g-3 checkin_data">
                                 <div class="col-md-6">
+                                    <a href="#selectroom" class="color-secondary" style="font-weight: 600;" > <i class="fa fa-edit"></i> Modify Selection </a>
                                 </div>
                                 <div class="col-md-6">
                                     <button type="submit" class="btn btn-success w-100 py-3" type="submit">Book Now</button>
@@ -110,7 +135,8 @@
             </div>
         </div>
     </div>
-    <div class="submenu" >
+    <div class="container-fluid">
+        <div class="submenu" >
             <ul class="submenu_content">
                 <li class="submenu_item" >
                     <a href="#selectroom" class="color-secondary"  > Select Room </a>
@@ -132,6 +158,7 @@
                 </li>
             </div>
         </div>
+    </div>
     <!-- Booking End -->
     <div class="container-xxl py-5">
         <div class="container">
@@ -139,55 +166,77 @@
                 <h3 >Select Rooms </h3> 
             </div>
             <div class="row g-4 justified-center">
-                @foreach($rooms as $kKey => $room)
-
-                <div class="col-lg-5 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="room-item shadow rounded overflow-hidden">
-                        <div class="position-relative">
-                            <img class="img-fluid" src="{{ getSizedImage('',$room->featured_image) }}" alt="">
-                            <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">₹{{$room->cost}}/Night</small>
-                        </div>
-                        <div class="p-4 mt-2 pb-2">
-                            <div class="d-flex justify-content-between mb-3">
-                                <h5 class="mb-0">{{$room->name}}</h5>
-                                <div class="ps-2">
-                                    <small class="fa fa-star text-primary"></small>
-                                    <small class="fa fa-star text-primary"></small>
-                                    <small class="fa fa-star text-primary"></small>
-                                    <small class="fa fa-star text-primary"></small>
-                                    <small class="fa fa-star text-primary"></small>
-                                </div>
+            @if($rooms)
+                @foreach($rooms as $typeKey => $room)
+                    @foreach($bookedRoom as $takeroomForBooking)
+                        @php
+                            $room->room_count = ($takeroomForBooking->room_id == $room->id)?$room->room_count - $takeroomForBooking->roomstake:$room->room_count
+                        @endphp	
+                    @endforeach
+                    @php 
+                        $availableRoom = $room->room_count;
+                        $roomCount = $filterData['total_guest']/$room->person;
+                        $roomCount = ($filterData['total_guest']%$room->person != 0)?$roomCount+1:$roomCount;
+                    @endphp	
+                    <input type="hidden" name="rooms[{{ $room->id }}]" >
+                    <div class="col-lg-5 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="room-item shadow rounded overflow-hidden">
+                            <div class="position-relative">
+                                <img class="img-fluid" src="{{ getSizedImage('',$room->featured_image) }}" alt="">
+                                <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">₹{{$room->cost}}/Night</small>
                             </div>
-                            <div class="d-flex mb-3">
-                                <small class="border-end me-3 pe-3"><i class="fa fa-home text-primary me-2"></i>{{$room->size}}</small>
-                                <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>{{$room->person}} Bed</small>
-                                <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>{{$room->room_count}} Left</small>
-                            </div>
-                            <div class="d-flex mb-3 row">
-                                <div class="col-md-5" >
-                                    <span> Room 1 </span>
+                            <div class="p-4 mt-2 pb-2">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <h5 class="mb-0">{{$room->name}}</h5>
+                                    <div class="ps-2">
+                                        <small class="fa fa-star text-primary"></small>
+                                        <small class="fa fa-star text-primary"></small>
+                                        <small class="fa fa-star text-primary"></small>
+                                        <small class="fa fa-star text-primary"></small>
+                                        <small class="fa fa-star text-primary"></small>
+                                    </div>
                                 </div>
-                                <div class="col-md-5" >
-                                <span class="remove-guest px-2" > <i class="fa fa-minus-circle text-primary me-2"></i> </span> <span class="guestCount"> 1 Guest </span> <span class="add-guest px-2" > <i class="fa fa-plus-circle text-primary me-2"></i> </span>
+                                <div class="d-flex mb-3">
+                                    <small class="border-end me-3 pe-3"><i class="fa fa-home text-primary me-2"></i>{{$room->size}}</small>
+                                    <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>{{$room->person}} Bed</small>
+                                    <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>{{$room->room_count}} Left</small>
                                 </div>
-                                <div class="col-md-2" >
-                                    <span class="" > <i class="fa fa-trash text-primary me-2"></i> </span>
+                                @for($i = 1; $i<=$roomCount;$i++)
+                                    @if($room->room_count < 1)
+                                        @break;
+                                    @endif
+                                    <div class="d-flex mb-3 row">
+                                        <div class="col-md-5" >
+                                            <span> Room {{$i}} </span>
+                                        </div>
+                                        <div class="col-md-5" >
+                                        <span class="remove-guest px-2" > <i class="fa fa-minus-circle text-primary me-2"></i> </span> <span class="guestCount"> {{ ($filterData['total_guest'] < $room->person)?$filterData['total_guest']:$room->person }} Guest </span> <span class="add-guest px-2" > <i class="fa fa-plus-circle text-primary me-2"></i> </span>
+                                        </div>
+                                        <div class="col-md-2" >
+                                            <span class="" > <i class="fa fa-trash text-primary me-2"></i> </span>
+                                        </div>
+                                    </div>
+                                    @php
+                                        $cost += $room->cost;
+                                        $room->room_count-- ;
+                                        $filterData['total_guest'] -= $room->person;
+                                    @endphp
+                                @endfor
+                                <div class="d-flex mb-3 row">
+                                    <a type="button" id="room_type_{{$room->id}}" data-roomcount="{{ $availableRoom }}" class="addMoreRoom " data-id="{{$room->id}}"> <i class="fa fa-plus text-primary me-2"></i> Add room </a>
                                 </div>
-                            </div>
-                            <div class="d-flex mb-3 row">
-                                <a href="javascrit:void(0)" class="addMoreRoom"> <i class="fa fa-plus text-primary me-2"></i> Add room </a>
-                            </div>
-                            <div class="d-flex mb-3 row">
-                                <div class="col-md-6">
-                                </div>
-                                <div class="col-md-6">
-                                    <button class="btn btn-primary" type="submit">Clear Selection</button>
+                                <div class="d-flex mb-3 row">
+                                    <div class="col-md-6">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button class="btn btn-primary" type="submit">Clear Selection</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 @endforeach
+            @endif
             </div>
         </div>
     </div>
