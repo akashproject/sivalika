@@ -204,9 +204,9 @@ class BookingController extends Controller
 
             $rooms = json_decode(get_booking_meta($booking_id,'room'),true);    
             
-            $checkinTime = request()->get('checkin').config('constant.checkinTime');
-            $checkoutTime = date('Y-m-d', strtotime(request()->get('checkin').' +1 day')).config('constant.checkoutTime');
-            
+            $checkinTime = $booking->checkin; // request()->get('checkin').config('constant.checkinTime');
+            $checkoutTime = $booking->checkout; //date('Y-m-d', strtotime(request()->get('checkin').' +1 day')).config('constant.checkoutTime');
+           
             $todayBooking = DB::table('bookings')
                             ->join('booking_meta', 'bookings.id', '=', 'booking_meta.booking_id')
                             ->join('customers', 'customers.id', '=', 'bookings.user_id')
@@ -216,7 +216,6 @@ class BookingController extends Controller
                             ->where('bookings.id', '!=' , $booking_id)
                             ->select('booking_meta.meta_value as rooms','booking_meta.booking_id','customers.name')
                             ->get();
-            
             $reservedRooms = array();
             foreach ($todayBooking as $value) {
                 foreach (json_decode($value->rooms,true) as $room) {
