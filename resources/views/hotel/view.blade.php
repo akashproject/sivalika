@@ -226,11 +226,14 @@
                                     <a type="button" id="room_type_{{$room->id}}" data-roomcount="{{ $availableRoom }}" class="addMoreRoom " data-id="{{$room->id}}"> <i class="fa fa-plus text-primary me-2"></i> Add room </a>
                                 </div>
                                 <div class="d-flex mb-3 row">
-                                    <div class="col-md-6">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <button class="btn btn-primary" type="submit">Clear Selection</button>
-                                    </div>
+                                    @if($room->room_count > 1)
+                                        <div class="col-md-6">
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <button class="btn btn-primary" type="submit">Clear Selection</button>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
