@@ -9,40 +9,79 @@
             <div class="row g-5">
                 <div class="col-lg-7 py-3">
                     <div class="personal_info_content wow fadeInUp" data-wow-delay="0.2s">
-                        <div class="personal_info_title mb-5" >
+                        <div class="personal_info_title mb-2" >
                             <h5> Enter your booking details</h5>
                         </div>
                         <div class="personal_form_data" >
-                            <form>
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="name" placeholder="Your Name">
-                                            <label for="name">Your Name</label>
+                            <form id="customer_ragistration_form" method="post" action="{{ url('confirm-booking')}}" >
+                                @csrf
+                                <div class="registration_process step-1 active " >
+                                    <div class="row g-3">
+                                        <div class="col-md-6 mb-2">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" name="firstname" id="formFieldFirstName" placeholder="Your Name" required>
+                                                <label for="name">First Name</label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <input type="email" class="form-control" id="email" placeholder="Your Email">
-                                            <label for="email">Your Email</label>
+                                        <div class="col-md-6 mb-2">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" name="lastname" id="formFieldLastName" placeholder="Your Name" required>
+                                                <label for="name">Last Name</label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <input type="number" class="form-control" id="mobile" placeholder="Your Mobile">
-                                            <label for="mobile">Your Mobile</label>
+                                        <div class="col-md-6 mb-2">
+                                            <div class="form-floating">
+                                                <input type="email" class="form-control" name="email" id="formFieldEmail" placeholder="Your Email" required>
+                                                <label for="email">Your Email</label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-floating">
-                                            <textarea class="form-control" placeholder="Special Request" id="message" style="height: 100px"></textarea>
-                                            <label for="message">Special Request</label>
+                                        <div class="col-md-6 mb-2">
+                                            <div class="form-floating">
+                                                <input type="number" class="form-control" name="mobile" id="formFieldMobile" placeholder="Your Mobile" required>
+                                                <label for="mobile">Your Mobile</label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <button class="btn btn-primary w-100 py-3" type="submit">Book Now</button>
+                                        <div class="col-6">
+                                            <button class="btn btn-secondary w-100 py-3 submit_customer_ragistration_form" type="submit">Pay @ Hotel</button>
+                                        </div>
+                                        <div class="col-6">
+                                            <button class="btn btn-primary w-100 py-3" type="submit">Book Now</button>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="registration_process step-2 text-center" >
+                                    <div class="otp-content">
+                                        <h4 class="otp-heading"> OTP Verification </h4>                                   
+                                        <p class="message"> <span class="message"> Enter the OTP you recive at </span> +91 XXXXXX<span class="lastDigit">0000</span> <span class="changeGivenNumber"> (Change) </span> </p>
+                                        <p class="response_status" style="color: #000;"></p>
+                                    </div>
+                                    
+                                    <div class="row justified-center">
+                                        <div class="col-md-6 mb-2">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control verify_otp" name="verify_otp" id="" placeholder="Enter one time password">
+                                                <label for="email">Enter OTP</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="otp-content">
+                                        <p class="message"> Did not recive OTP?
+                                            <span class="countdown_label"> Resend in <span class="countdown">-1:59</span> Sec </span>
+                                            <a class="resendOtp display-none" href="javascript:void(0)"> Resend OTP </a>
+                                        </p>
+                                    </div>
+                                    <div class="row justified-center " >
+                                        <div class="col-md-6">
+                                            <button class="btn btn-secondary w-100 py-3 submit_customer_ragistration_form" type="submit">
+                                                Confirm Booking
+                                            </button>
+                                            <div >
+                                                 <img src="https://www.icacourse.in/wp-content/themes/scriptcrown/images/loader.gif" style="width: 42px; display:none;" class="checkout_loader">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" class="formFieldOtpResponse" value="">
                             </form>
                         </div>
                     </div>
@@ -50,13 +89,38 @@
                 <div class="col-lg-5 py-3">
                     <div class="checkout_review mb-5">
                         <div class="payment_title" > 
-                            <h4> Payable Amount : 2000/- <span> Including GST </span></h4>
+                            <div class="row" >
+                                <div class="col-8">
+                                    <h5> Payable Amount : <span> Including GST </span></h5>
+                                </div>
+                                <div class="col-4">
+                                    <h5 class="paying_amount" style="font-size: 36px; margin-bottom: 0;color: #160e42;"><strong>₹2000 </strong></h5>
+                                </div>
+                            </div>
                         </div>
-                        <h4> De Sivalika - Belur </h4>
-                        <p>317, Grand Trunk Rd, Belur Math, Howrah, Kolkata, India, 711202 </p>
+                        <div class="review_content" >
+                            <h4> Sivalika INN - Howrah </h4>
+                            <p class="address_review" >317, Grand Trunk Rd, Belur Math, Howrah, Kolkata, India, 711202 </p>
 
-                        <div class="" > 
-                            <p> 1x Deluxe Room for 2 Guest </p>
+                            <div class="review_room" > 
+                                <strong> 1x Deluxe Room for 2 Guest </strong>
+                            </div>
+                        </div>
+                        <div class="review_checkin text-center" >
+                            <div class="row " >
+                                <div class="col-4">
+                                    <span> Checkin </span>
+                                    <h5> 11 July </h5>
+                                </div>
+                                <div class="col-4">
+                                    <span> Checkout </span>
+                                    <h5><strong> 12 July </strong></h5>
+                                </div>
+                                <div class="col-4">
+                                    <span> Guest </span>
+                                    <h5><strong> 5 Person </strong></h5>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

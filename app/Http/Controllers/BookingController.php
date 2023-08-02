@@ -29,6 +29,7 @@ class BookingController extends Controller
                 'total_guest'=>$data['total_guest'],
             ];
             $request->session()->put('filterData', $filterData);
+            setCookie('filterData',json_encode($filterData));
             return redirect('/hotel/'.$hotel->slug);
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
@@ -36,7 +37,7 @@ class BookingController extends Controller
         
     }
 
-    public function confirmBooking(Request $request) {
+    public function proceedToCheckout(Request $request) {
        
         return redirect('/checkout');
     }
@@ -44,6 +45,17 @@ class BookingController extends Controller
     public function checkout(Request $request) {
         try {
             return view('booking.checkout');
+        } catch(\Illuminate\Database\QueryException $e){
+            //throw $th;
+        }
+    }
+
+    public function confirmBooking(Request $request){
+        try {
+            $data = $request->all();
+           // print_r($data);
+            //exit;
+            return redirect('/thank-you');
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
         }

@@ -7,5 +7,8 @@ Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('i
 //Route::get('/{slug}', [App\Http\Controllers\PageController::class, 'index'])->where('slug', '([A-Za-z0-9\-]+)');
 Route::post('/check-availability', [App\Http\Controllers\BookingController::class, 'checkAvailability'])->name('check-availability');
 Route::get('/hotel/{slug}', [App\Http\Controllers\HotelController::class, 'view'])->name('hotel');
-Route::post('/confirm-booking', [App\Http\Controllers\BookingController::class, 'confirmBooking'])->name('confirm-booking');
+Route::post('/proceed-to-checkout', [App\Http\Controllers\BookingController::class, 'proceedToCheckout'])->name('proceed-to-checkout');
 Route::get('/checkout', [App\Http\Controllers\BookingController::class, 'checkout'])->name('checkout');
+Route::post('/confirm-booking', [App\Http\Controllers\BookingController::class, 'confirmBooking'])->name('confirm-booking');
+Route::post('/submit-mobile-otp', [App\Http\Controllers\IndexController::class, 'submitMobileOtp'])->name('submit-mobile-otp');
+Route::get('/thank-you', [App\Http\Controllers\IndexController::class, 'thankYou'])->name('thank-you');

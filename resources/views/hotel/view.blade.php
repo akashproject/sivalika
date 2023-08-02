@@ -85,11 +85,10 @@
                                 </div>
                             </div>
                             <div class="col-4" >
-                                <select class="form-select" id="select1">
-                                    @for($i = 1;$i<=15;$i++)
-                                    <option value="{{$i}}">Adult {{$i}}</option>
-                                    @endfor
-                                </select>
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="name"  name="total_guest" placeholder="Enter total guests" value="{{ $filterData['total_guest'] }}">
+                                    <label for="name">TOTAL GUEST</label>
+                                </div>
                             </div>
                         </div>
                         <div class="checkin_content">
@@ -119,7 +118,7 @@
                             </div>
                         </div>
                         
-                        <form method="post" action="{{ url('confirm-booking') }}" >
+                        <form method="post" action="{{ url('proceed-to-checkout') }}" >
                             @csrf
                             <div class="row g-3 checkin_data">
                                 <div class="col-md-6">
@@ -280,8 +279,126 @@
                 <h3 > Hotel Location </h3> 
             </div>
             <div class="section-border form-14" >
-                
+                <div class="row p-4">
+                    <div class="col-md-6" >
+                        {!! $hotel->gmap !!}
+                    </div>
+                    <div class="col-md-6" > 
+                        <h6> {{ $hotel->name }} </h5>
+                        <p> {{ $hotel->address }}
+
+                        <div class=" my-3" >
+                            <a target="_blank" href="https://www.google.com/maps/dir//{{$hotel->address}}" class="btn btn-small btn-secondary" > <i class="fa fa-map-marker"></i> Get Direction </a>
+                        </div>
+                        <div class=" my-3" >
+                            <p class="color-secondary" >
+                                 <strong> Call Hotel : <a href="tel:{{ get_theme_setting('mobile') }}" ><i class="fa fa-phone"></i> {{ get_theme_setting('mobile') }} </a> </strong> 
+                            </p>
+                            <p class="color-secondary">
+                                <strong> Conntent whatsapp : <a href="tel:{{ get_theme_setting('whatsapp') }}" ><i class="fa fa-whatsapp"></i> {{ get_theme_setting('whatsapp') }} </a> </strong>
+                            </p>
+                        </div>
+                        
+                    </div>
+                </div>
             </div>
+        </div>
+    </div>
+
+    <div id="reviews" class="container-xxl py-5">
+        <div class="container">
+                <div id="policies" class="row g-4 justified-center">
+                    <h3 > Customer Reviews </h3> 
+                </div>
+                <div class="section-border form-14" >
+                    <div class="course-review">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="ratting-preview">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="avrg-rating ul-li">
+                                                <b>Average Rating</b>
+                                                <span class="avrg-rate">5.0</span>
+                                                <ul>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                </ul>
+                                                <b>1.225 Ratings</b>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="avrg-rating ul-li">
+                                                <span>Details</span>
+                                                <div class="rating-overview">
+                                                    <span class="start-item">5 Starts</span>
+                                                    <span class="start-bar"></span>
+                                                    <span class="start-count">1.225</span>
+                                                </div>
+                                                <div class="rating-overview">
+                                                    <span class="start-item">4 Starts</span>
+                                                    <span class="start-bar"></span>
+                                                    <span class="start-count">0</span>
+                                                </div>
+                                                <div class="rating-overview">
+                                                    <span class="start-item">3 Starts</span>
+                                                    <span class="start-bar"></span>
+                                                    <span class="start-count">0</span>
+                                                </div>
+                                                <div class="rating-overview">
+                                                    <span class="start-item">2 Starts</span>
+                                                    <span class="start-bar"></span>
+                                                    <span class="start-count">0</span>
+                                                </div>
+                                                <div class="rating-overview">
+                                                    <span class="start-item">1 Starts</span>
+                                                    <span class="start-bar"></span>
+                                                    <span class="start-count">0</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="couse-comment">
+                        <div class="blog-comment-area ul-li about-teacher-2">
+                            <ul class="comment-list">
+                                <li>
+                                    <div class=" comment-avater">
+                                        <img src="https://dummyimage.com/48" alt="">
+                                    </div>
+
+                                    <div class="author-name-rate">
+                                        <div class="author-name float-left">
+                                            BY: <span>FRANK LAMPARD</span> 
+                                        </div>
+                                        <div class="comment-ratting float-right ul-li">
+                                            <ul>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                            </ul>
+                                        </div>
+                                        <div class="time-comment float-right">3 Days ago</div>
+                                    </div>
+                                    <div class="author-designation-comment">
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation.
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
 

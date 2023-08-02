@@ -13,7 +13,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="name"  name="total_guest" placeholder="Enter total guests">
+                                <input type="text" class="form-control" id="name"  name="total_guest" placeholder="Enter total guests" value="2" >
                                 <label for="name">ENTER TOTAL GUEST</label>
                             </div>
                         </div>

@@ -57,6 +57,126 @@
         return false;
     });
 
+    $('#customer_ragistration_form input').on('keyup', function() {
+      if ($("#customer_ragistration_form").valid()) {
+          $('#customer_ragistration_form .submit_classroom_lead_generation_form').prop('disabled', false);  
+      } else {
+          $('#customer_ragistration_form .submit_classroom_lead_generation_form').prop('disabled', 'disabled');
+      }
+  });
+
+    $("#customer_ragistration_form").validate({
+      messages: {
+        firstname: {
+          required: "Please enter First Name",
+        },
+        lastname: {
+          required: "Please enter Last Name",
+        },
+        email: {
+          required: "Please enter valid email address",
+          email_rule: "Please enter valid email address",
+        },
+        mobile: {
+          required: "Please enter valid mobile number",
+          min: "Please enter valid mobile number",
+          max: "Please enter valid mobile number",
+        },
+      },
+      submitHandler: function(form) {
+        bookingConfirmProcess(form);
+        return false; // required to block normal submit since you used ajax
+      }
+    });
+
+    jQuery(".changeGivenNumber").on("click",function(){
+      let formId = jQuery(this).closest("form").attr("id");
+      jQuery("#" + formId + " .formFieldOtpResponse").val("");
+      jQuery("#" + formId + " .registration_process").removeClass("active");
+      jQuery("#" + formId + " .registration_process.step-1").addClass("active");
+    });
+    
+    jQuery(".resendOtp").on('click',function(){
+      jQuery(this).addClass('display-none');
+      jQuery('.countdown_label').removeClass('display-none');
+      let form = jQuery(this).closest("form");
+      let formId = $(form).attr('id');
+      jQuery("#" + formId + " .checkout_loader").show();
+      countDown();
+      sendMobileOtp(formId);
+    });
+
+    function bookingConfirmProcess(form){
+      let formId = $(form).attr('id');
+      jQuery("#" + formId + " .checkout_loader").show();
+      if(jQuery("#" + formId + " .formFieldOtpResponse").val() == ""){
+        sendMobileOtp(formId);
+        countDown()
+        return false;
+      }
+  
+      if(jQuery("#" + formId + " .verify_otp").val() != '' && jQuery("#" + formId + " .formFieldOtpResponse").val() == jQuery("#" + formId + " .verify_otp").val()){
+        form.submit();
+      } else {
+        jQuery("#" + formId + " .response_status").html("OTP is Invalid");
+        jQuery("#" + formId + " .checkout_loader").hide();
+        return false;
+      }
+
+    }
+  
+    function sendMobileOtp(formId) {
+      var mobileNo = jQuery("#" + formId + " input[name='mobile']").val();
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+      $.ajax({
+        url: `${globalUrl}submit-mobile-otp`,
+        type: "post",
+        data: {
+          mobile: mobileNo,
+        },
+        success: function(result) {
+          if (result) {
+            jQuery("#" + formId + " .formFieldOtpResponse").val(result.otp_value);
+            jQuery("#" + formId + " .lastDigit").text(result.lastdigit);
+            jQuery("#" + formId + " .registration_process").removeClass("active");
+            jQuery("#" + formId + " .registration_process.step-2").addClass("active");
+            jQuery(".checkout_loader").hide();
+            return true;
+          } else {
+            jQuery("#" + formId + " .response_status").html("OTP Sent Failed! Please Try Again Later");
+            jQuery(".checkout_loader").hide();
+            return true;
+          }
+        }
+      });
+    }
+
+    function countDown(){
+      var timer2 = "0:59";
+      var interval = setInterval(function() {
+        var timer = timer2.split(':');
+        //by parsing integer, I avoid all extra string processing
+        var minutes = parseInt(timer[0], 10);
+        var seconds = parseInt(timer[1], 10);
+        --seconds;
+        minutes = (seconds < 0) ? --minutes : minutes;
+        if (minutes < 0) {
+          clearInterval(interval)
+          jQuery('.countdown_label').addClass("display-none");
+          jQuery('.resendOtp').removeClass("display-none");
+        };
+        seconds = (seconds < 0) ? 59 : seconds;
+        seconds = (seconds < 10) ? '0' + seconds : seconds;
+        //minutes = (minutes < 10) ?  minutes : minutes;
+        jQuery('.countdown').html(minutes + ':' + seconds);
+        timer2 = minutes + ':' + seconds;
+      }, 1000);
+    }
+
 
     // Facts counter
     $('[data-toggle="counter-up"]').counterUp({
@@ -81,10 +201,20 @@
             $("#video").attr('src', $videoSrc);
         })
 
+       
+
+        let currentDate = new Date();
+        let nextDay = currentDate.setDate(currentDate.getDate() + 1);
+        if(jQuery.cookie("filterData")){
+          let filterData = JSON.parse(jQuery.cookie("filterData"))
+           currentDate = filterData.checkin;
+           nextDay = filterData.checkout;
+         }
         $('.t-datepicker').tDatePicker({
           // options here
           iconDate: '<i class="fa fa-calendar" aria-hidden="true"></i>',
-          formatDate      :'MM-dd',
+          dateCheckIn: currentDate,
+          dateCheckOut: nextDay,
         });
     });
 

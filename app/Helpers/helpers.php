@@ -8,6 +8,7 @@ use App\Models\Media;
 use App\Models\Setting;
 use App\Models\Review;
 use App\Models\Faq;
+use Cookie;
 
 if (! function_exists('check_device')) {
     function check_device($param = null){
@@ -77,6 +78,14 @@ if (! function_exists('get_theme_setting')) {
         return (isset($media->value))?$media->value:"null";
     }
 }
+
+if (! function_exists('setCookie')) {
+    function setCookie($key,$value) {
+        echo $value; exit;
+        return $cookie =   Cookie::queue(Cookie::make($key, $value, 60));
+    }
+}
+
 if (! function_exists('get_hotels')) {
     function get_hotels($slug = null){
         $hotel = DB::table('hotels');
