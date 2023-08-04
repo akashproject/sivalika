@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Mail;
 
 class BookingController extends Controller
 {
@@ -55,6 +56,21 @@ class BookingController extends Controller
             $data = $request->all();
            // print_r($data);
             //exit;
+
+            $user = array(
+                'name' => "Akash Dutta",
+                'email' => "akashdutta.scriptcrown@gmail.com",
+            );
+
+            $orderData = [
+                'name' => "Akash Dutta",
+                'email' => "akashdutta.scriptcrown@gmail.com",
+            ];
+
+            $mail = Mail::send('emails.booking', $orderData, function ($m) use ($user) {
+                $m->from('sivalika@scriptcrown.com', 'Sivalika Hotel Booking');
+                $m->to('akashdutta.scriptcrown@gmail.com', "Akash Dutta")->subject('Booking has been completed successfully - ');
+            });
             return redirect('/thank-you');
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
