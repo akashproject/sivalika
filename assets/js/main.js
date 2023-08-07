@@ -10,8 +10,7 @@
         }, 1);
     };
     spinner();
-    
-    
+     
     // Initiate the wowjs
     new WOW().init();
     
@@ -43,6 +42,9 @@
         }
     });
     
+    $("#total_guest").on('keyup',function(){
+      $(".update_booking").show();
+    });
     
     // Back to top button
     $(window).scroll(function () {
@@ -204,12 +206,14 @@
        
 
         let currentDate = new Date();
-        let nextDay = currentDate.setDate(currentDate.getDate() + 1);
+        let nextDay = new Date().setDate(new Date().getDate() + 1);
+        
         if(jQuery.cookie("filterData")){
           let filterData = JSON.parse(jQuery.cookie("filterData"))
            currentDate = filterData.checkin;
            nextDay = filterData.checkout;
-         }
+        }
+
         $('.t-datepicker').tDatePicker({
           // options here
           iconDate: '<i class="fa fa-calendar" aria-hidden="true"></i>',
@@ -337,8 +341,24 @@
         });
       });
 
+      $(document).on("click",".remove-room", function(){
+        console.log("hi",$(this).parent().parent());
+        lectureField = $(this).parent().parent().remove();
+      })
+
       $('.addNewRoom').on("click",function(){
-            alert();
+        let count = $(this).attr("data-roomcount");
+        let parentElement = $(this).attr("id");
+        let next = parseInt($("."+parentElement+" .row").length) + parseInt("1");
+
+        if(next <= count) {
+            let id = $(this).attr("data-id");
+            
+            let element = '<div class="d-flex mb-3 row"><div class="col-md-5"><span> Room </span></div><div class="col-md-5"><span class="remove-guest px-2"> <i class="fa fa-minus-circle text-primary me-2"></i> </span><span class="guestCount"> 1 Guest </span> <span class="add-guest px-2"> <i class="fa fa-plus-circle text-primary me-2"></i> </span></div><div class="col-md-2"><span class="remove-room"> <i class="fa fa-trash text-primary me-2"></i> </span></div></div>';
+        
+        
+            $("."+$(this).attr("id")).append(element);
+        }
       });
 
       $(window).scroll(function () {
@@ -347,6 +367,18 @@
         } else {
             $('.submenu').removeClass('fixed');
         }
+    });
+
+    $(".clear_selection").on("click",function(){
+        let id = $(this).attr("data-id");
+        $("."+id).html("");
+    });
+
+    $('.add-guest').on("click",function(){
+      let max = $(this).attr("data-max");
+      let min = $(this).attr("data-min");
+
+      //$(this).parent().
     });
       
 })(jQuery);

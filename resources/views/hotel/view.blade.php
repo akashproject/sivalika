@@ -86,15 +86,18 @@
                             </div>
                             <div class="col-4" >
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="name"  name="total_guest" placeholder="Enter total guests" value="{{ $filterData['total_guest'] }}">
+                                    <input type="text" id="total_guest" class="form-control" id="name"  name="total_guest" placeholder="Enter total guests" value="{{ $filterData['total_guest'] }}">
                                     <label for="name">TOTAL GUEST</label>
                                 </div>
                             </div>
                         </div>
+                        <div class="text-right">
+                            <a class="update_booking" href="javascript:void(0)" >Modify</a>
+                        </div>
                         <div class="checkin_content">
-                        @php
-                            $cost = 0;
-                        @endphp
+                            @php
+                                $cost = 0;
+                            @endphp
                             <div class="checkin_room_selection" >
                                 <p> Our Recommandation </p>
                                 @if($rooms)
@@ -178,7 +181,7 @@
                         $roomCount = ($filterData['total_guest']%$room->person != 0)?$roomCount+1:$roomCount;
                     @endphp	
                     <input type="hidden" name="rooms[{{ $room->id }}]" >
-                    <div class="col-lg-5 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="col-md-{{12/count($rooms)}} wow fadeInUp" data-wow-delay="0.1s">
                         <div class="room-item shadow rounded overflow-hidden">
                             <div class="position-relative">
                                 <img class="img-fluid" src="{{ getSizedImage('',$room->featured_image) }}" alt="">
@@ -200,37 +203,40 @@
                                     <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>{{$room->person}} Bed</small>
                                     <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>{{$room->room_count}} Left</small>
                                 </div>
-                                @for($i = 1; $i<=$roomCount;$i++)
-                                    @if($room->room_count < 1)
-                                        @break;
-                                    @endif
-                                    <div class="d-flex mb-3 row">
-                                        <div class="col-md-5" >
-                                            <span> Room {{$i}} </span>
+                                <div class="room_type_{{$room->id}}" >
+                                    @for($i = 1; $i<=$roomCount;$i++)
+                                        @if($room->room_count < 1)
+                                            @break;
+                                        @endif
+                                        <div class="d-flex mb-3 row" >
+                                            <div class="col-md-5" >
+                                                <span> Room </span>
+                                            </div>
+                                            <div class="col-md-5" >
+                                                <span class="remove-guest px-2" data-min="1" data-max="{{ $room->person }}"> <i class="fa fa-minus-circle text-primary me-2"></i> </span>
+                                                <span class="guestCount" > {{ ($filterData['total_guest'] < $room->person)?$filterData['total_guest']:$room->person }}</span> Guest 
+                                                <span class="add-guest px-2" data-min="1" data-max="{{ $room->person }}"> <i class="fa fa-plus-circle text-primary me-2"></i> </span>
+                                            </div>
+                                            <div class="col-md-2" >
+                                                <span class="remove-room" > <i class="fa fa-trash text-primary me-2"></i> </span>
+                                            </div>
                                         </div>
-                                        <div class="col-md-5" >
-                                        <span class="remove-guest px-2" > <i class="fa fa-minus-circle text-primary me-2"></i> </span> <span class="guestCount"> {{ ($filterData['total_guest'] < $room->person)?$filterData['total_guest']:$room->person }} Guest </span> <span class="add-guest px-2" > <i class="fa fa-plus-circle text-primary me-2"></i> </span>
-                                        </div>
-                                        <div class="col-md-2" >
-                                            <span class="" > <i class="fa fa-trash text-primary me-2"></i> </span>
-                                        </div>
-                                    </div>
                                     @php
                                         $cost += $room->cost;
                                         $room->room_count-- ;
                                         $filterData['total_guest'] -= $room->person;
                                     @endphp
                                 @endfor
+                                </div>
                                 <div class="d-flex mb-3 row">
-                                    <a type="button" id="room_type_{{$room->id}}" data-roomcount="{{ $availableRoom }}" class="addMoreRoom " data-id="{{$room->id}}"> <i class="fa fa-plus text-primary me-2"></i> Add room </a>
+                                    <a type="button" id="room_type_{{$room->id}}" data-roomcount="{{ $availableRoom }}" class="addNewRoom" data-id="{{$room->id}}"> <i class="fa fa-plus text-primary me-2"></i> Add room </a>
                                 </div>
                                 <div class="d-flex mb-3 row">
                                     @if($room->room_count > 1)
                                         <div class="col-md-6">
                                         </div>
-                                        
                                         <div class="col-md-6">
-                                            <button class="btn btn-primary" type="submit">Clear Selection</button>
+                                            <button class="btn btn-primary clear_selection" data-id="room_type_{{$room->id}}" type="submit">Clear Selection</button>
                                         </div>
                                     @endif
                                 </div>
@@ -327,7 +333,7 @@
                                                     <li><i class="fa fa-star"></i></li>
                                                     <li><i class="fa fa-star"></i></li>
                                                 </ul>
-                                                <b>1.225 Ratings</b>
+                                                <b>55 Ratings</b>
                                             </div>
                                         </div>
                                         <div class="col-md-8">
@@ -371,12 +377,12 @@
                             <ul class="comment-list">
                                 <li>
                                     <div class=" comment-avater">
-                                        <img src="https://dummyimage.com/48" alt="">
+                                        <img src="{{ url('assets/img/user.png')}}" alt="">
                                     </div>
 
                                     <div class="author-name-rate">
                                         <div class="author-name float-left">
-                                            BY: <span>FRANK LAMPARD</span> 
+                                            BY: <span>Bapi Patra</span> 
                                         </div>
                                         <div class="comment-ratting float-right ul-li">
                                             <ul>
@@ -387,11 +393,62 @@
                                                 <li><i class="fa fa-star"></i></li>
                                             </ul>
                                         </div>
-                                        <div class="time-comment float-right">3 Days ago</div>
+                                        <div class="time-comment float-right">55 Days ago</div>
+                                    </div>
+                                    <div class="author-designation-comment">
+                                        <p>Fantastic hotel has come up near Howrah Railway Station. The property is belonged to Sivalika Group. Excellent facilities. Come and experience once
+                                            
+                                        </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class=" comment-avater">
+                                        <img src="{{ url('assets/img/user.png')}}" alt="">
+                                    </div>
+
+                                    <div class="author-name-rate">
+                                        <div class="author-name float-left">
+                                            BY: <span>Brijesh Pandey</span> 
+                                        </div>
+                                        <div class="comment-ratting float-right ul-li">
+                                            <ul>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                            </ul>
+                                        </div>
+                                        <div class="time-comment float-right">30 Days ago</div>
                                     </div>
                                     <div class="author-designation-comment">
                                         <p>
-                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation.
+                                            Excellent hotel in Howrah we were regular to Howrah but never seen this type of hotel ever. Clean rooms great location and pleasant stay overall. We will visit again
+                                        </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class=" comment-avater">
+                                        <img src="{{ url('assets/img/user.png')}}" alt="">
+                                    </div>
+
+                                    <div class="author-name-rate">
+                                        <div class="author-name float-left">
+                                            BY: <span>Manoj Gupta</span> 
+                                        </div>
+                                        <div class="comment-ratting float-right ul-li">
+                                            <ul>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                            </ul>
+                                        </div>
+                                        <div class="time-comment float-right">2 Days ago</div>
+                                    </div>
+                                    <div class="author-designation-comment">
+                                        <p> Very beautiful and well-maintained property, staff behavior is quite decent, nice location, locality is good market place
                                         </p>
                                     </div>
                                 </li>

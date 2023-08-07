@@ -52,8 +52,6 @@
 								<textarea class="form-control editor" name="description" id="description" placeholder="Enter description Here" >{{ $file->description }}</textarea>
 							</div>
 						</div>
-						
-						
 					</div>
 					<div class="col-md-4">
                         <div class="form-group row">
