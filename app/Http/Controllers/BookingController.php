@@ -14,11 +14,18 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Mail;
 
 class BookingController extends Controller
 {
     //
+
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+    }
+
     public function checkAvailability(Request $request) {
         try {
             $data = $request->all();
@@ -54,26 +61,37 @@ class BookingController extends Controller
     public function confirmBooking(Request $request){
         try {
             $data = $request->all();
-           // print_r($data);
-            //exit;
+            $customer = Customer::where('mobile',$data['mobile'])->first();
+            if($customer === null){
+                $customerData = array(
+                    'name'=>$data['firstname'].' '.$data['lastname'],
+                    'mobile'=>$data['mobile'],
+                    'email'=>$data['email'],
+                    'passcode' => Hash::make($data['mobile']),
+                );
+                $customer = Customer::create($customerData);
 
-            $user = array(
-                'name' => "Akash Dutta",
-                'email' => "akashdutta.scriptcrown@gmail.com",
-            );
+                
+            }
+            Auth::login($customer);
+           
+            // $user = array(
+            //     'name' => "Akash Dutta",
+            //     'email' => "akashdutta.scriptcrown@gmail.com",
+            // );
 
-            $orderData = [
-                'name' => "Akash Dutta",
-                'email' => "akashdutta.scriptcrown@gmail.com",
-            ];
+            // $orderData = [
+            //     'name' => "Akash Dutta",
+            //     'email' => "akashdutta.scriptcrown@gmail.com",
+            // ];
 
-            $mail = Mail::send('emails.booking', $orderData, function ($m) use ($user) {
-                $m->from('sivalika@scriptcrown.com', 'Sivalika Hotel Booking');
-                $m->to('akashdutta.scriptcrown@gmail.com', "Akash Dutta")->subject('Booking has been completed successfully - ');
-            });
+            // $mail = Mail::send('emails.booking', $orderData, function ($m) use ($user) {
+            //     $m->from('sivalika@scriptcrown.com', 'Sivalika Hotel Booking');
+            //     $m->to('akashdutta.scriptcrown@gmail.com', "Akash Dutta")->subject('Booking has been completed successfully - ');
+            // });
             return redirect('/thank-you');
         } catch(\Illuminate\Database\QueryException $e){
-            //throw $th;
+            var_dump($e);
         }
         
     }

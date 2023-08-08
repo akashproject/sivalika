@@ -12,3 +12,6 @@ Route::get('/checkout', [App\Http\Controllers\BookingController::class, 'checkou
 Route::post('/confirm-booking', [App\Http\Controllers\BookingController::class, 'confirmBooking'])->name('confirm-booking');
 Route::post('/submit-mobile-otp', [App\Http\Controllers\IndexController::class, 'submitMobileOtp'])->name('submit-mobile-otp');
 Route::get('/thank-you', [App\Http\Controllers\IndexController::class, 'thankYou'])->name('thank-you');
+
+Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLogin'])->name('login');
+Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
