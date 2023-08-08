@@ -10,6 +10,9 @@
                             <div class="bg-white rounded text-center p-5">
                                 <div class="booking_success">
                                     <h1 class="booking-success-heading"> <i class="fa fa-check-circle ml-2"></i> </h1>
+                                    @if (Auth::check())
+                                     Hi {{ Auth::user()->name }},
+                                    @endif
                                     <h4 class="booking-success-subheading">Booking Successfully Confirmed</h4>
                                     <p> Booking Detaiils has been sent to your email address </p>
                                     <h4 class="booking-success-subheading">BOOKING ID <strong> 54788788 </strong> </h4>

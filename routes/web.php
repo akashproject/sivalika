@@ -15,3 +15,6 @@ Route::get('/thank-you', [App\Http\Controllers\IndexController::class, 'thankYou
 
 Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLogin'])->name('login');
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
+
+Route::get('/dashboard', function () { return view('dashboard');})->middleware('auth')->name('dashboard');
+Route::get('/logout',  [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');

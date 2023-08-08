@@ -67,10 +67,11 @@ class LoginController extends Controller
         return redirect()->route('thank-you'); // Replace 'dashboard' with your route
     }
 
-    public function logout () {
-        //logout user
-        auth()->logout();
-        // redirect to homepage
-        return redirect('/administrator');
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
     }
 }

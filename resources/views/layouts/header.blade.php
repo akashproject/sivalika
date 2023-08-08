@@ -58,6 +58,16 @@
 								</div>
 							</div>
 							<a href="contact.html" class="nav-item nav-link">Contact</a>
+							@if (Auth::check())
+							<div class="nav-item dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Dashboard</a>
+								<div class="dropdown-menu rounded-0 m-0">
+									<a href="booking.html" class="dropdown-item">Booking</a>
+									<a href="team.html" class="dropdown-item">Profile</a>
+									<a href="{{ route('logout') }}" class="dropdown-item">Logout</a>
+								</div>
+							</div>
+							@endif
 						</div>
 					</div>
 				</nav>
