@@ -19,26 +19,33 @@
                                     <div class="row g-3">
                                         <div class="col-md-6 mb-2">
                                             <div class="form-floating">
-                                                <input type="text" class="form-control" name="firstname" id="formFieldFirstName" placeholder="Your Name" required>
+                                                <input type="text" class="form-control" name="firstname" id="formFieldFirstName" placeholder="Your Name" value="{{(Auth::check())?Auth::user()->name:''}}" required>
                                                 <label for="name">First Name</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-2">
                                             <div class="form-floating">
-                                                <input type="text" class="form-control" name="lastname" id="formFieldLastName" placeholder="Your Name" required>
+                                                <input type="text" class="form-control" name="lastname" id="formFieldLastName" placeholder="Your Name" value="{{(Auth::check())?Auth::user()->name:''}}" required>
                                                 <label for="name">Last Name</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-2">
                                             <div class="form-floating">
-                                                <input type="email" class="form-control" name="email" id="formFieldEmail" placeholder="Your Email" required>
+                                                <input type="email" class="form-control" name="email" id="formFieldEmail" placeholder="Your Email" value="{{(Auth::check())?Auth::user()->email:''}}" required>
                                                 <label for="email">Your Email</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-2">
                                             <div class="form-floating">
-                                                <input type="number" class="form-control" name="mobile" id="formFieldMobile" placeholder="Your Mobile" required>
+                                                @if(Auth::check())
+                                                <div class="form-control">
+                                                    {{Auth::user()->mobile}}
+                                                    <label for="mobile" style="opacity: .65;transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);display: inline-flex;position: absolute;top: 13px;left: 0;">Your Mobile</label>
+                                                </div>
+                                                @else
+                                                <input type="number" class="form-control" name="mobile" id="formFieldMobile" placeholder="Your Mobile" value="" required>
                                                 <label for="mobile">Your Mobile</label>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="col-6">
@@ -94,13 +101,13 @@
                                     <h5> Payable Amount : <span> Including GST </span></h5>
                                 </div>
                                 <div class="col-4">
-                                    <h5 class="paying_amount" style="font-size: 36px; margin-bottom: 0;color: #160e42;"><strong>₹2000 </strong></h5>
+                                    <h5 class="paying_amount" style="font-size: 36px; margin-bottom: 0;color: #160e42;"><strong>₹{{$checkinRooms['amount']}} </strong></h5>
                                 </div>
                             </div>
                         </div>
                         <div class="review_content" >
-                            <h4> Sivalika INN - Howrah </h4>
-                            <p class="address_review" >317, Grand Trunk Rd, Belur Math, Howrah, Kolkata, India, 711202 </p>
+                            <h4> {{$hotel->name}} </h4>
+                            <p class="address_review" >{{$hotel->address}}</p>
 
                             <div class="review_room" > 
                                 <strong> 1x Deluxe Room for 2 Guest </strong>
@@ -110,15 +117,15 @@
                             <div class="row " >
                                 <div class="col-4">
                                     <span> Checkin </span>
-                                    <h5> 11 July </h5>
+                                    <h5> {{ date('d M',strtotime($checkinRooms['t-start'])) }} </h5>
                                 </div>
                                 <div class="col-4">
                                     <span> Checkout </span>
-                                    <h5><strong> 12 July </strong></h5>
+                                    <h5><strong> {{ date('d M',strtotime($checkinRooms['t-end'])) }} </strong></h5>
                                 </div>
                                 <div class="col-4">
                                     <span> Guest </span>
-                                    <h5><strong> 5 Person </strong></h5>
+                                    <h5><strong> {{$checkinRooms['total_guest']}} Person </strong></h5>
                                 </div>
                             </div>
                         </div>

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+
 use Mail;
 
 class BookingController extends Controller
@@ -23,7 +24,7 @@ class BookingController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        //$this->middleware('guest')->except('logout');
     }
 
     public function checkAvailability(Request $request) {
@@ -46,13 +47,22 @@ class BookingController extends Controller
     }
 
     public function proceedToCheckout(Request $request) {
-       
-        return redirect('/checkout');
+        try {
+            $data = $request->all();
+            unset($data['_token']);
+            $data['amount'] = base64_decode($data['amount']);
+            $request->session()->put('checkinRooms', $data);
+            return redirect('/checkout');
+        } catch(\Illuminate\Database\QueryException $e){
+            var_dump($e);
+        }
     }
 
     public function checkout(Request $request) {
         try {
-            return view('booking.checkout');
+            $checkinRooms = $request->session()->get('checkinRooms');
+            $hotel = Hotel::findOrFail($checkinRooms['hotel_id']);
+            return view('booking.checkout',compact('checkinRooms','hotel'));
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
         }

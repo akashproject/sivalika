@@ -347,16 +347,14 @@
       })
 
       $('.addNewRoom').on("click",function(){
-        let count = $(this).attr("data-roomcount");
+        let count = $(this).attr("data-roomcount"),max=$(this).attr("data-max");
+        
         let parentElement = $(this).attr("id");
         let next = parseInt($("."+parentElement+" .row").length) + parseInt("1");
 
         if(next <= count) {
             let id = $(this).attr("data-id");
-            
-            let element = '<div class="d-flex mb-3 row"><div class="col-md-5"><span> Room </span></div><div class="col-md-5"><span class="remove-guest px-2"> <i class="fa fa-minus-circle text-primary me-2"></i> </span><span class="guestCount"> 1 Guest </span> <span class="add-guest px-2"> <i class="fa fa-plus-circle text-primary me-2"></i> </span></div><div class="col-md-2"><span class="remove-room"> <i class="fa fa-trash text-primary me-2"></i> </span></div></div>';
-        
-        
+            let element = '<div class="d-flex mb-3 row" data-min="1" data-max="'+max+'"><div class="col-md-5"><span> Room </span></div><div class="col-md-5"><span class="quantity-down px-2"> <i class="fa fa-minus-circle text-primary me-2"></i> </span><span class="guestCount quantity"> <input type="number" value="2" name="rooms['+id+']['+next+'][adult]" min="1" readonly> </span><span class="quantity-up px-2"> <i class="fa fa-plus-circle text-primary me-2"></i> </span>  Guest</div><div class="col-md-2"><span class="remove-room"> <i class="fa fa-trash text-primary me-2"></i> </span></div></div>';
             $("."+$(this).attr("id")).append(element);
         }
       });
@@ -380,6 +378,67 @@
 
       //$(this).parent().
     });
+
+        $(document).on('click',".quantity-up",function() {
+          var spinner = jQuery(this),input = spinner.parent().find('input[type="number"]'),max = jQuery(this).parent().parent().attr('data-max');
+          console.log("hi",max);
+          var oldValue = parseFloat(input.val());
+          if (oldValue >= max) {
+            var newVal = oldValue;
+          } else {
+            var newVal = oldValue + 1;
+          }
+          console.log(newVal);
+          input.val(newVal);
+          input.trigger("change");
+        });
+
+        $(document).on('click',".quantity-down",function() {
+          var spinner = jQuery(this),input = spinner.parent().find('input[type="number"]'),min = jQuery(this).parent().parent().attr('data-min');
+          console.log("hi",min);
+          var oldValue = parseFloat(input.val());
+          if (oldValue <= min) {
+            var newVal = oldValue;
+          } else {
+            var newVal = oldValue - 1;
+          }
+         input.val(newVal);
+         input.trigger("change");
+        });
+
       
 })(jQuery);
+
+// jQuery('<div class="quantity-nav"><div class="quantity-button quantity-up">+</div><div class="quantity-button quantity-down">-</div></div>').insertAfter('.quantity input');
+//     jQuery.each('.quantity',function() {
+//       var spinner = jQuery(this),
+//         input = spinner.find('input[type="number"]'),
+//         btnUp = spinner.find('.quantity-up'),
+//         btnDown = spinner.find('.quantity-down'),
+//         min = input.attr('min'),
+//         max = input.attr('max');
+
+//       btnUp.on('click',function() {
+//         var oldValue = parseFloat(input.val());
+//         if (oldValue >= max) {
+//           var newVal = oldValue;
+//         } else {
+//           var newVal = oldValue + 1;
+//         }
+//         spinner.find("input").val(newVal);
+//         spinner.find("input").trigger("change");
+//       });
+
+//       btnDown.on('click',function() {
+//         var oldValue = parseFloat(input.val());
+//         if (oldValue <= min) {
+//           var newVal = oldValue;
+//         } else {
+//           var newVal = oldValue - 1;
+//         }
+//         spinner.find("input").val(newVal);
+//         spinner.find("input").trigger("change");
+//       });
+
+//     });
 

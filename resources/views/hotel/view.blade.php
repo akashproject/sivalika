@@ -29,9 +29,29 @@
         #thumbs .owl-item.current .item:before{
          background-color: rgba(38, 38, 38, 0);
         }
+        .guestCount input[type="number"] {
+            -webkit-appearance: textfield;
+            -moz-appearance: textfield;
+            appearance: textfield;
+            border: none;
+            width: 36px;
+            background: #f1f8ff;
+            color: #423c3c;
+        }
+
+        .guestCount input[type=number]::-webkit-inner-spin-button,
+        .guestCount input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            appearance: textfield;
+            border: none;
+            width: 36px;
+            background: #f1f8ff;
+            color: #423c3c;
+        }
     </style>
     
-        
+    <form method="post" action="{{ url('proceed-to-checkout') }}" >
+    @csrf
     <!-- Booking Start -->
     <div class="container-xxl py-3">
         <div class="container">
@@ -117,21 +137,19 @@
                             <div class="checkin_amount" >
                                 <span> Price Per Night </span>
                                 <h5> ₹{{$cost}} </h5>
+                                <input type="hidden" name="amount" value="{{base64_encode($cost)}}" >
+                                <input type="hidden" name="hotel_id" value="{{$hotel->id}}" >
                                 <span> Including GST & Taxes </span>
                             </div>
                         </div>
-                        
-                        <form method="post" action="{{ url('proceed-to-checkout') }}" >
-                            @csrf
-                            <div class="row g-3 checkin_data">
-                                <div class="col-md-6">
-                                    <a href="#selectroom" class="color-secondary" style="font-weight: 600;" > <i class="fa fa-edit"></i> Modify Selection </a>
-                                </div>
-                                <div class="col-md-6">
-                                    <button type="submit" class="btn btn-success w-100 py-3" type="submit">Book Now</button>
-                                </div>
+                        <div class="row g-3 checkin_data">
+                            <div class="col-md-6">
+                                <a href="#selectroom" class="color-secondary" style="font-weight: 600;" > <i class="fa fa-edit"></i> Modify Selection </a>
                             </div>
-                        </form>
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-success w-100 py-3" type="submit">Book Now</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -208,17 +226,22 @@
                                         @if($room->room_count < 1)
                                             @break;
                                         @endif
-                                        <div class="d-flex mb-3 row" >
-                                            <div class="col-md-5" >
+                                        <div class="d-flex mb-3 row" data-min="1" data-max="{{ $room->person }}">
+                                            <div class="col-md-3" >
                                                 <span> Room </span>
                                             </div>
-                                            <div class="col-md-5" >
-                                                <span class="remove-guest px-2" data-min="1" data-max="{{ $room->person }}"> <i class="fa fa-minus-circle text-primary me-2"></i> </span>
-                                                <span class="guestCount" > {{ ($filterData['total_guest'] < $room->person)?$filterData['total_guest']:$room->person }}</span> Guest 
-                                                <span class="add-guest px-2" data-min="1" data-max="{{ $room->person }}"> <i class="fa fa-plus-circle text-primary me-2"></i> </span>
+                                            <div class="col-md-4">
+                                                <span class="quantity-down"> <i class="fa fa-minus-circle text-primary"></i> </span>
+                                                <span class="guestCount quantity" > <input type="number" value="{{ ($filterData['total_guest'] < $room->person)?$filterData['total_guest']:$room->person }}" name="rooms[{{$room->id}}][{{$i}}][adult]"  min="1" max="{{ $room->person }}" readonly> </span>
+                                                <span class="quantity-up"> <i class="fa fa-plus-circle text-primary"></i> </span>  Adult
                                             </div>
-                                            <div class="col-md-2" >
-                                                <span class="remove-room" > <i class="fa fa-trash text-primary me-2"></i> </span>
+                                            <div class="col-md-4">
+                                                <span class="quantity-down"> <i class="fa fa-minus-circle text-primary"></i> </span>
+                                                <span class="guestCount quantity" > <input type="number" value="0" name="rooms[{{$room->id}}][{{$i}}][child]"  min="0" max="2"> </span>
+                                                <span class="quantity-up"> <i class="fa fa-plus-circle text-primary"></i> </span>  Child
+                                            </div>
+                                            <div class="col-md-1" >
+                                                <span class="remove-room" > <i class="fa fa-trash text-primary"></i> </span>
                                             </div>
                                         </div>
                                     @php
@@ -229,7 +252,7 @@
                                 @endfor
                                 </div>
                                 <div class="d-flex mb-3 row">
-                                    <a type="button" id="room_type_{{$room->id}}" data-roomcount="{{ $availableRoom }}" class="addNewRoom" data-id="{{$room->id}}"> <i class="fa fa-plus text-primary me-2"></i> Add room </a>
+                                    <a type="button" id="room_type_{{$room->id}}" data-max="{{$room->person}}" data-roomcount="{{ $availableRoom }}" class="addNewRoom" data-id="{{$room->id}}"> <i class="fa fa-plus text-primary me-2"></i> Add room </a>
                                 </div>
                                 <div class="d-flex mb-3 row">
                                     @if($room->room_count > 1)
@@ -248,7 +271,7 @@
             </div>
         </div>
     </div>
-
+    </form>     
     <div class="container-xxl py-5">
         <div class="container">
             <div id="amenities" class="row g-4 justified-center">

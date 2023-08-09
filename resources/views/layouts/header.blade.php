@@ -58,17 +58,24 @@
 								</div>
 							</div>
 							<a href="contact.html" class="nav-item nav-link">Contact</a>
-							@if (Auth::check())
+											
+						</div>
+						@if(Auth::check())
+						<div class="nav navbar-nav navbar-right">
 							<div class="nav-item dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Dashboard</a>
+								<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">My Account</a>
 								<div class="dropdown-menu rounded-0 m-0">
 									<a href="booking.html" class="dropdown-item">Booking</a>
 									<a href="team.html" class="dropdown-item">Profile</a>
 									<a href="{{ route('logout') }}" class="dropdown-item">Logout</a>
 								</div>
-							</div>
-							@endif
+							</div>	
 						</div>
+						@else
+						<div class="nav navbar-nav navbar-right">
+							<a href="{{ route('login') }}" class="nav-item nav-link">Login / Sign up</a>
+						</div>
+						@endif
 					</div>
 				</nav>
 			</div>
