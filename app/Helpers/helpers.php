@@ -114,7 +114,7 @@ if (! function_exists('get_rooms')) {
 
 if (! function_exists('get_room_by_id')) {
     function get_room_by_id($value){
-        $room = Room::where('id',$value)->first();
+        $room = DB::table('rooms')->where('id',$value)->first();
         return (isset($room->id))?$room:"null";
     }
 }

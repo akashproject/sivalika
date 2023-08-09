@@ -122,15 +122,19 @@
                                 <p> Our Recommandation </p>
                                 @if($rooms)
                                 <div class="review_room" > 
+                                    @php $i = 1;  $roomType = ''; $guests = '0'; @endphp
                                     @foreach($rooms as $typeKey => $room)
+
                                         @php 
+                                            print_r($room);
                                             $availableRoom = $room->room_count;
                                             $roomCount = $filterData['total_guest']/$room->person;
                                             $roomCount = ($filterData['total_guest']%$room->person != 0)?$roomCount+1:$roomCount;
                                             $cost = $roomCount*$room->cost;
                                         @endphp	
-                                     <strong> 1x Deluxe Room for 2 Guest </strong>
+                                     
                                     @endforeach
+                                    <strong> 1x Deluxe Room for 2 Guest </strong>
                                 </div>
                                 @endif
                             </div>

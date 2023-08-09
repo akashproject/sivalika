@@ -110,11 +110,19 @@
                             <p class="address_review" >{{$hotel->address}}</p>
 
                             <div class="review_room" > 
-                                @php $i = 1;  @endphp
+                                @php $i = 1;  $roomType = ''; $guests = '0'; @endphp
                                 @foreach($checkinRooms['rooms'] as $key => $value)
-                                    @php $i++;  @endphp
+                                    @if(!empty($value))
+                                        @php 
+                                            $roomType = get_room_by_id($key)->name;
+                                            foreach($value as $key => $guest){
+                                                $guests += $guest['adult'];
+                                            }
+                                            $i++; 
+                                        @endphp
+                                    @endif
                                 @endforeach
-                                <strong> {{ $i }}x {{$key}} for 2 Guest </strong>
+                                <strong> {{ $i }}x {{$roomType}} for {{$guests}} Guest </strong>
                             </div>
                         </div>
                         <div class="review_checkin text-center" >

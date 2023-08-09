@@ -61,7 +61,7 @@ class BookingController extends Controller
     public function checkout(Request $request) {
         try {
             $checkinRooms = $request->session()->get('checkinRooms');
-            print_r($checkinRooms);
+           
             $hotel = Hotel::findOrFail($checkinRooms['hotel_id']);
             return view('booking.checkout',compact('checkinRooms','hotel'));
         } catch(\Illuminate\Database\QueryException $e){
