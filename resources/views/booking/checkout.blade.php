@@ -110,7 +110,11 @@
                             <p class="address_review" >{{$hotel->address}}</p>
 
                             <div class="review_room" > 
-                                <strong> 1x Deluxe Room for 2 Guest </strong>
+                                @php $i = 1;  @endphp
+                                @foreach($checkinRooms['rooms'] as $key => $value)
+                                    @php $i++;  @endphp
+                                @endforeach
+                                <strong> {{ $i }}x {{$key}} for 2 Guest </strong>
                             </div>
                         </div>
                         <div class="review_checkin text-center" >
