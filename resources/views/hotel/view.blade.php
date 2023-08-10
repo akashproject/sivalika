@@ -289,11 +289,10 @@
                     <span> Including GST &amp; Taxes </span>
                 </div>
             </div>
-            
         </div>
     </div>
-    <input type="hidden" name="amount" value="{{base64_encode($cost)}}">
-    <input type="hidden" name="hotel_id" value="{{$hotel->id}}">
+        <input type="hidden" name="amount" value="{{base64_encode($cost)}}">
+        <input type="hidden" name="hotel_id" value="{{$hotel->id}}">
     </form>     
     <div class="container-xxl py-5">
         <div class="container">
