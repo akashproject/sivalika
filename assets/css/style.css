@@ -932,3 +932,9 @@ h1.booking-success-heading {
     padding: 30px;
     height: 190px;
 }
+.checkin_room_selection{
+    width: 68%;
+}
+.checkin_content_data{
+    display: none;
+}

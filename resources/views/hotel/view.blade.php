@@ -116,33 +116,37 @@
                         </div>
                         <div class="checkin_content">
                             @php
-                                $cost = 0;
+                                $cost1 = 0;
                             @endphp
                             <div class="checkin_room_selection" >
                                 <p> Our Recommandation </p>
                                 @if($rooms)
                                 <div class="review_room" > 
-                                    @php $i = 1;  $roomType = ''; $guests = '0'; @endphp
-                                    @foreach($rooms as $typeKey => $room)
+                                    @php
+                                        $roomLabels = [];
+                                    @endphp
 
+                                    @foreach($rooms as $typeKey => $room)
                                         @php 
-                                            print_r($room);
-                                            $availableRoom = $room->room_count;
-                                            $roomCount = $filterData['total_guest']/$room->person;
+                                            $roomCount = intdiv($filterData['total_guest'], $room->person);
                                             $roomCount = ($filterData['total_guest']%$room->person != 0)?$roomCount+1:$roomCount;
-                                            $cost = $roomCount*$room->cost;
+                                            $roomLabels[$typeKey]['name'] = $room->name;
+                                            $roomLabels[$typeKey]['count'] = $roomCount;
+                                            $cost1 += $roomCount*$room->cost;
+                                            break;
                                         @endphp	
-                                     
                                     @endforeach
-                                    <strong> 1x Deluxe Room for 2 Guest </strong>
+                                    
+                                    @foreach($roomLabels as $label)
+                                    <strong> {{$label['count']}}x {{$label['name']}} for 2 Guest </strong><br>
+                                    @endforeach
                                 </div>
                                 @endif
                             </div>
                             <div class="checkin_amount" >
                                 <span> Price Per Night </span>
-                                <h5> ₹{{$cost}} </h5>
-                                <input type="hidden" name="amount" value="{{base64_encode($cost)}}" >
-                                <input type="hidden" name="hotel_id" value="{{$hotel->id}}" >
+                                <h5> ₹{{$cost1}} </h5>
+                                
                                 <span> Including GST & Taxes </span>
                             </div>
                         </div>
@@ -191,6 +195,7 @@
             </div>
             <div class="row g-4 justified-center">
             @if($rooms)
+                @php $cost = 0; @endphp
                 @foreach($rooms as $typeKey => $room)
                     @foreach($bookedRoom as $takeroomForBooking)
                         @php
@@ -232,7 +237,7 @@
                                         @endif
                                         <div class="d-flex mb-3 row" data-min="1" data-max="{{ $room->person }}">
                                             <div class="col-md-3" >
-                                                <span> Room </span>
+                                                <span> Room {{$i}}</span>
                                             </div>
                                             <div class="col-md-4">
                                                 <span class="quantity-down"> <i class="fa fa-minus-circle text-primary"></i> </span>
@@ -273,8 +278,22 @@
                 @endforeach
             @endif
             </div>
+            <div class="checkin_content_data">
+                <div class="checkin_room_selection">
+                    <p> Our Recommandation </p>
+                    <div class="review_room"><strong> 9x Deluxe Rooms for 2 Guest </strong><br></div>
+                </div>
+                <div class="checkin_amount">
+                    <span> Price Per Night </span>
+                    <h5> {{$cost}} </h5>
+                    <span> Including GST &amp; Taxes </span>
+                </div>
+            </div>
+            
         </div>
     </div>
+    <input type="hidden" name="amount" value="{{base64_encode($cost)}}">
+    <input type="hidden" name="hotel_id" value="{{$hotel->id}}">
     </form>     
     <div class="container-xxl py-5">
         <div class="container">
