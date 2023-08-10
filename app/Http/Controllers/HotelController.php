@@ -45,7 +45,15 @@ class HotelController extends Controller
             $bookedRoom = array();
 
             if ($todayBooking->count() > 0) {
-
+                $bookedRoom = DB::table('bookings')
+                ->join('reserved_rooms', 'reserved_rooms.booking_id', '=', 'bookings.id')
+                ->join('rooms', 'reserved_rooms.room_id', '=', 'rooms.id')
+                ->select('reserved_rooms.room_id')
+                ->selectRaw('sum(reserved_rooms.total_room_book) as roomstake')              
+                ->whereIn('bookings.id',$todayBooking)
+                ->where('bookings.hotel_id',$hotel->id)
+                ->groupBy('reserved_rooms.room_id')
+                ->get();
             } else {
                 $rooms = Room::where("hotel_id",$hotel->id)->get();
             }
