@@ -113,6 +113,7 @@
                         </div>
                         <div class="text-right">
                             <a class="update_booking" href="javascript:void(0)" >Modify</a>
+                            <img src="{{url('assets/img/loader.gif')}}" class="checkout_loader">
                         </div>
                         <div class="checkin_content">
                             @php
@@ -268,7 +269,7 @@
                                         <div class="col-md-6">
                                         </div>
                                         <div class="col-md-6">
-                                            <button class="btn btn-primary clear_selection" data-id="room_type_{{$room->id}}" type="submit">Clear Selection</button>
+                                            <a class="btn btn-primary clear_selection" data-id="room_type_{{$room->id}}" >Clear Selection</a>
                                         </div>
                                     @endif
                                 </div>

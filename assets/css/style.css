@@ -207,29 +207,6 @@ a.login-btn {
     height: 3rem;
 }
 
-@media (max-width: 768px) {
-    #header-carousel .carousel-item {
-        position: relative;
-        min-height: 450px;
-    }
-    
-    #header-carousel .carousel-item img {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-    .checkout_review .payment_title h5 {
-        font-weight: 500;
-        font-size: 18px;
-    }
-    .review_checkin h5 {
-        font-size: 16px;
-    }
-    .paying_amount {
-        font-size: 25px;
-    }
-}
 
 .page-header {
     background-position: center center;
@@ -937,4 +914,51 @@ h1.booking-success-heading {
 }
 .checkin_content_data{
     display: none;
+}
+.checkout_loader {
+    width: 50px;
+    display: none;
+}
+.hotel-thumb {
+    display: flex;
+}
+
+
+
+@media (max-width: 768px) {
+    h5 {
+        font-size: 15px;
+    }
+    #header-carousel .carousel-item {
+        position: relative;
+        min-height: 450px;
+    }
+    
+    #header-carousel .carousel-item img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .checkout_review .payment_title h5 {
+        font-weight: 500;
+        font-size: 18px;
+    }
+    .review_checkin h5 {
+        font-size: 16px;
+    }
+    .paying_amount {
+        font-size: 25px;
+    }
+    .hotel-image,.hotel-details {
+        width: 100%;
+    }
+    .hotel-content{
+        width: 100%;
+        padding: 12px;
+    }
+    
+    .hotel-thumb {
+        display: block;
+    }
 }

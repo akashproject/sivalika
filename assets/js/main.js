@@ -339,27 +339,57 @@
           var number = $(this).index();
           bigimage.data("owl.carousel").to(number, 300, true);
         });
-      });
+    });
 
-      $(document).on("click",".remove-room", function(){
-        console.log("hi",$(this).parent().parent());
-        lectureField = $(this).parent().parent().remove();
-      })
+    $(document).on("click",".remove-room", function(){
+      console.log("hi",$(this).parent().parent());
+      lectureField = $(this).parent().parent().remove();
+    })
 
-      $('.addNewRoom').on("click",function(){
-        let count = $(this).attr("data-roomcount"),max=$(this).attr("data-max");
-        
-        let parentElement = $(this).attr("id");
-        let next = parseInt($("."+parentElement+" .row").length) + parseInt("1");
+    $(".update_booking").on("click",function(){
+      $(".checkout_loader").show();
+      $.ajaxSetup({
+				headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+			$.ajax({
+				url: `${globalUrl}check-availability`,
+				type: "post",
+				data: {
+          't-start':$('input[name="t-start"]').val(),
+          't-end':$('input[name="t-end"]').val(),
+          'total_guest':$('input[name="total_guest"]').val(),
+          'hotel':$('input[name="hotel_id"]').val(),
+          'submitBy':"ajax",
+        },
+				success: function(result) {
+          $(".checkout_loader").hide();
+          if (result == true) {
+            location.reload();
+          }
+					
+				}
+			});
+    });
 
-        if(next <= count) {
-            let id = $(this).attr("data-id");
-            let element = '<div class="d-flex mb-3 row" data-min="1" data-max="'+max+'"><div class="col-md-5"><span> Room </span></div><div class="col-md-5"><span class="quantity-down px-2"> <i class="fa fa-minus-circle text-primary me-2"></i> </span><span class="guestCount quantity"> <input type="number" value="2" name="rooms['+id+']['+next+'][adult]" min="1" readonly> </span><span class="quantity-up px-2"> <i class="fa fa-plus-circle text-primary me-2"></i> </span>  Guest</div><div class="col-md-2"><span class="remove-room"> <i class="fa fa-trash text-primary me-2"></i> </span></div></div>';
-            $("."+$(this).attr("id")).append(element);
-        }
-      });
+    $('.addNewRoom').on("click",function(){
+      let count = $(this).attr("data-roomcount"),max=$(this).attr("data-max");
+      
+      let parentElement = $(this).attr("id");
+      let next = parseInt($("."+parentElement+" .row").length) + parseInt("1");
 
-      $(window).scroll(function () {
+      if(next <= count) {
+          let id = $(this).attr("data-id");
+
+          let element = '<div class="d-flex mb-3 row" data-min="1" data-max="'+max+'"><div class="col-md-3"><span> Room </span></div><div class="col-md-4"><span class="quantity-down"> <i class="fa fa-minus-circle text-primary"></i> </span><span class="guestCount quantity"> <input type="number" value="2" name="rooms['+id+']['+next+'][adult]" readonly> </span><span class="quantity-up"> <i class="fa fa-plus-circle text-primary"></i> </span>  Adult</div><div class="col-md-4"><span class="quantity-down"> <i class="fa fa-minus-circle text-primary"></i> </span><span class="guestCount quantity"> <input type="number" value="0" name="rrooms['+id+']['+next+'][child]" min="0" max="2"> </span><span class="quantity-up"> <i class="fa fa-plus-circle text-primary"></i> </span>  Child</div><div class="col-md-1"><span class="remove-room"> <i class="fa fa-trash text-primary"></i> </span></div></div>';
+
+         
+          $("."+$(this).attr("id")).append(element);
+      }
+    });
+
+    $(window).scroll(function () {
         if ($(this).scrollTop() > 850) {
             $('.submenu').addClass('fixed');
         } else {
@@ -379,32 +409,32 @@
       //$(this).parent().
     });
 
-        $(document).on('click',".quantity-up",function() {
-          var spinner = jQuery(this),input = spinner.parent().find('input[type="number"]'),max = jQuery(this).parent().parent().attr('data-max');
-          console.log("hi",max);
-          var oldValue = parseFloat(input.val());
-          if (oldValue >= max) {
-            var newVal = oldValue;
-          } else {
-            var newVal = oldValue + 1;
-          }
-          console.log(newVal);
-          input.val(newVal);
-          input.trigger("change");
-        });
+    $(document).on('click',".quantity-up",function() {
+      var spinner = jQuery(this),input = spinner.parent().find('input[type="number"]'),max = jQuery(this).parent().parent().attr('data-max');
+      console.log("hi",max);
+      var oldValue = parseFloat(input.val());
+      if (oldValue >= max) {
+        var newVal = oldValue;
+      } else {
+        var newVal = oldValue + 1;
+      }
+      console.log(newVal);
+      input.val(newVal);
+      input.trigger("change");
+    });
 
-        $(document).on('click',".quantity-down",function() {
-          var spinner = jQuery(this),input = spinner.parent().find('input[type="number"]'),min = jQuery(this).parent().parent().attr('data-min');
-          console.log("hi",min);
-          var oldValue = parseFloat(input.val());
-          if (oldValue <= min) {
-            var newVal = oldValue;
-          } else {
-            var newVal = oldValue - 1;
-          }
-         input.val(newVal);
-         input.trigger("change");
-        });
+    $(document).on('click',".quantity-down",function() {
+      var spinner = jQuery(this),input = spinner.parent().find('input[type="number"]'),min = jQuery(this).parent().parent().attr('data-min');
+      console.log("hi",min);
+      var oldValue = parseFloat(input.val());
+      if (oldValue <= min) {
+        var newVal = oldValue;
+      } else {
+        var newVal = oldValue - 1;
+      }
+      input.val(newVal);
+      input.trigger("change");
+    });
 
       
 })(jQuery);

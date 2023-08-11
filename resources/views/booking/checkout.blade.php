@@ -41,6 +41,7 @@
                                                 <div class="form-control">
                                                     {{Auth::user()->mobile}}
                                                     <label for="mobile" style="opacity: .65;transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);display: inline-flex;position: absolute;top: 13px;left: 0;">Your Mobile</label>
+                                                    <input type="hidden" name="mobile" id="formFieldMobile" placeholder="Your Mobile" value="{{Auth::user()->mobile}}">
                                                 </div>
                                                 @else
                                                 <input type="number" class="form-control" name="mobile" id="formFieldMobile" placeholder="Your Mobile" value="" required>
@@ -110,19 +111,15 @@
                             <p class="address_review" >{{$hotel->address}}</p>
 
                             <div class="review_room" > 
-                                @php $i = 1;  $roomType = ''; $guests = '0'; @endphp
+                                @php $i = 1; $guests = '0'; @endphp
                                 @foreach($checkinRooms['rooms'] as $key => $value)
                                     @if(!empty($value))
-                                        @php 
-                                            $roomType = get_room_by_id($key)->name;
-                                            foreach($value as $key => $guest){
-                                                $guests += $guest['adult'];
-                                            }
-                                            $i++; 
-                                        @endphp
+                                        <strong> {{count($value)}}x {{get_room_by_id($key)->name}} </strong> <br>
                                     @endif
+                                   
                                 @endforeach
-                                <strong> {{ $i }}x {{$roomType}} for {{$guests}} Guest </strong>
+                               
+                                <h5> Total Guest : {{$checkinRooms['total_guest']}}
                             </div>
                         </div>
                         <div class="review_checkin text-center" >

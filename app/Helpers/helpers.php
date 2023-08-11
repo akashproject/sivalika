@@ -85,6 +85,32 @@ if (! function_exists('setCookie')) {
         return $cookie =   Cookie::queue(Cookie::make($key, $value, 60));
     }
 }
+if (! function_exists('random_strings')) {
+    function random_strings($length_of_string)
+    {
+
+        // String of all alphanumeric character
+        $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+        // Shuffle the $str_result and returns substring
+        // of specified length
+        return substr(str_shuffle($str_result),
+                        0, $length_of_string);
+    }
+}
+if (! function_exists('getTotalGuest')) {
+    function getTotalGuest($params = null){
+        $person = 0;
+        foreach ($params as $rt => $roomType) {
+            if ($roomType) {
+                foreach ($roomType as $t => $room) {
+                    $person += $room['adult'];
+                }
+            }
+        }
+        return $person;
+    }
+}
 
 if (! function_exists('get_hotels')) {
     function get_hotels($slug = null){

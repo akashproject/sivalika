@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Hotel;
+use App\Models\ReservedRooms;
 class IndexController extends Controller
 {
     //
@@ -37,7 +38,10 @@ class IndexController extends Controller
     public function thankYou(Request $request) {
         try {
             $user = Auth::user();
-            return view('booking.thank-you');
+            $booking = $request->session()->get("booking");
+            $hotel = Hotel::findOrFail($booking->hotel_id);
+            $reserve_rooms = ReservedRooms::where("booking_id",$booking->id)->get();
+            return view('booking.thank-you',compact('booking','hotel','reserve_rooms'));
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
         }

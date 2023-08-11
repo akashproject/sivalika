@@ -21,7 +21,8 @@ use Mail;
 class BookingController extends Controller
 {
     //
-
+    public $_statusOK = 200;
+    public $_statusErr = 500;
     public function __construct()
     {
         //$this->middleware('guest')->except('logout');
@@ -30,7 +31,6 @@ class BookingController extends Controller
     public function checkAvailability(Request $request) {
         try {
             $data = $request->all();
-           
             $hotel = Hotel::where('id',$data['hotel'])->first();
             $filterData = [
                 'checkin'=> $data['t-start'],
@@ -39,7 +39,13 @@ class BookingController extends Controller
             ];
             $request->session()->put('filterData', $filterData);
             setCookie('filterData',json_encode($filterData));
-            return redirect('/hotel/'.$hotel->slug);
+
+            if (isset($data['submitBy']) && $data['submitBy'] == 'ajax') {
+                return response()->json(true, $this->_statusOK);
+            } else {
+                return redirect('/hotel/'.$hotel->slug);
+            }
+            
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
         }
@@ -72,6 +78,8 @@ class BookingController extends Controller
     public function confirmBooking(Request $request){
         try {
             $data = $request->all();
+            $data = array_merge($data,$request->session()->get('checkinRooms'));
+            
             $customer = Customer::where('mobile',$data['mobile'])->first();
             if($customer === null){
                 $customerData = array(
@@ -81,11 +89,41 @@ class BookingController extends Controller
                     'passcode' => Hash::make($data['mobile']),
                 );
                 $customer = Customer::create($customerData);
-
-                
             }
             Auth::login($customer);
            
+
+            /*Create Booking*/
+            $rooms = $data['rooms'];
+            $checkinData = [
+                'user_id' => $customer->id,
+                'booking_id' => random_strings(6),
+                'booking_type' => "Online",
+                'hotel_id' => $data['hotel_id'],
+                'amount' => $data['amount'],
+                'total_guest' => getTotalGuest($data['rooms']),
+                'rooms' => (isset($data['rooms']) && $data['rooms'] != '')?json_encode($data['rooms']):null,
+                'checkin' => $data['t-start'].config('constant.checkinTime'),
+                'checkout' => $data['t-end'].config('constant.checkoutTime'),
+                'purpose' => "",
+                'payment_type' => "Upi",
+                'order_id' => '',
+                'payment_id' => '',
+                'payment' => "pending",
+                'status' => "comfirm",
+            ];  
+            $booking = Booking::create($checkinData);
+            foreach($rooms as $key => $value) {
+                if (is_array($value)) {
+                    $reservedRooms = array('booking_id'=>$booking->id,'room_id'=>$key,'total_room_book'=>count($value));
+                    $reserve_rooms = ReservedRooms::create($reservedRooms);
+                }
+            }
+            $request->session()->forget('filterData');
+            
+            $request->session()->put("booking",$booking);
+
+
             // $user = array(
             //     'name' => "Akash Dutta",
             //     'email' => "akashdutta.scriptcrown@gmail.com",
