@@ -38,7 +38,7 @@ class HotelController extends Controller
 
             $checkinTime = $filterData['checkin'].config('constant.checkinTime');
             $checkoutTime = $filterData['checkout'].config('constant.checkoutTime');
-            
+
             $todayBooking = Booking::select('id')->where('bookings.hotel_id',$hotel->id)->where('bookings.checkout','>',$checkinTime)->where('bookings.checkin','<',$checkoutTime)->get();
 
             $rooms = Room::where("hotel_id",$hotel->id)->get();
@@ -58,7 +58,10 @@ class HotelController extends Controller
                 $rooms = Room::where("hotel_id",$hotel->id)->get();
             }
 
-            return view('hotel.view',compact('hotel','rooms','filterData','bookedRoom'));
+            $diff = strtotime($checkoutTime) - strtotime($checkinTime);
+            $totalDiff = abs(round($diff / 86400));
+
+            return view('hotel.view',compact('hotel','rooms','filterData','bookedRoom','totalDiff'));
         } catch(\Illuminate\Database\QueryException $e){
         }
     }

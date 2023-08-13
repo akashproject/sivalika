@@ -106,7 +106,7 @@
                             </div>
                             <div class="col-4" >
                                 <div class="form-floating">
-                                    <input type="text" id="total_guest" class="form-control" id="name"  name="total_guest" placeholder="Enter total guests" value="{{ $filterData['total_guest'] }}">
+                                    <input type="number" id="total_guest" class="form-control" id="name"  name="total_guest" placeholder="Enter total guests" value="{{ $filterData['total_guest'] }}">
                                     <label for="name">TOTAL GUEST</label>
                                 </div>
                             </div>
@@ -145,8 +145,8 @@
                                 @endif
                             </div>
                             <div class="checkin_amount" >
-                                <span> Price Per Night </span>
-                                <h5> ₹{{$cost1}} </h5>
+                                <span> Total Cost</span>
+                                <h5> ₹{{$cost1*$totalDiff}} </h5>
                                 
                                 <span> Including GST & Taxes </span>
                             </div>
@@ -156,7 +156,7 @@
                                 <a href="#selectroom" class="color-secondary" style="font-weight: 600;" > <i class="fa fa-edit"></i> Modify Selection </a>
                             </div>
                             <div class="col-md-6">
-                                <button type="submit" class="btn btn-success w-100 py-3" type="submit">Book Now</button>
+                                <button id="book_now" type="submit" class="btn btn-success w-100 py-3" type="submit">Book Now</button>
                             </div>
                         </div>
                     </div>
@@ -204,9 +204,11 @@
                         @endphp	
                     @endforeach
                     @php 
-                        $availableRoom = $room->room_count;
+                        $availableRoom = ($room->room_count > 0)?$room->room_count:0;
+
                         $roomCount = $filterData['total_guest']/$room->person;
                         $roomCount = ($filterData['total_guest']%$room->person != 0)?$roomCount+1:$roomCount;
+                        
                     @endphp	
                     <input type="hidden" name="rooms[{{ $room->id }}]" >
                     <div class="col-md-{{12/count($rooms)}} wow fadeInUp" data-wow-delay="0.1s">
@@ -229,7 +231,7 @@
                                 <div class="d-flex mb-3">
                                     <small class="border-end me-3 pe-3"><i class="fa fa-home text-primary me-2"></i>{{$room->size}}</small>
                                     <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>{{$room->person}} Bed</small>
-                                    <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>{{$room->room_count}} Left</small>
+                                    <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>{{$availableRoom}} Left</small>
                                 </div>
                                 <div class="room_type_{{$room->id}}" >
                                     @for($i = 1; $i<=$roomCount;$i++)
@@ -261,9 +263,15 @@
                                     @endphp
                                 @endfor
                                 </div>
+                                @if($availableRoom > 0)
                                 <div class="d-flex mb-3 row">
                                     <a type="button" id="room_type_{{$room->id}}" data-max="{{$room->person}}" data-roomcount="{{ $availableRoom }}" class="addNewRoom" data-id="{{$room->id}}"> <i class="fa fa-plus text-primary me-2"></i> Add room </a>
                                 </div>
+                                @else
+                                <div class="d-flex mb-3 row">
+                                    <h5> SOLD OUT </h5>
+                                </div>
+                                @endif
                                 <div class="d-flex mb-3 row">
                                     @if($room->room_count > 1)
                                         <div class="col-md-6">
@@ -292,7 +300,7 @@
             </div>
         </div>
     </div>
-        <input type="hidden" name="amount" value="{{base64_encode($cost)}}">
+        <input type="hidden" name="amount" value="{{base64_encode($cost*$totalDiff)}}">
         <input type="hidden" name="hotel_id" value="{{$hotel->id}}">
     </form>     
     <div class="container-xxl py-5">

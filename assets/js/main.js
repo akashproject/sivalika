@@ -44,6 +44,7 @@
     
     $("#total_guest").on('keyup',function(){
       $(".update_booking").show();
+      $('#book_now').prop('disabled', true);
     });
     
     // Back to top button
@@ -219,6 +220,12 @@
           iconDate: '<i class="fa fa-calendar" aria-hidden="true"></i>',
           dateCheckIn: currentDate,
           dateCheckOut: nextDay,
+        }).on('clickDateCI',function(e, dateCI) {
+            $(".update_booking").show();
+            $('#book_now').prop('disabled', true);
+        }).on('clickDateCO',function(e, dateCO) {
+            $(".update_booking").show();
+            $('#book_now').prop('disabled', true);
         });
     });
 
