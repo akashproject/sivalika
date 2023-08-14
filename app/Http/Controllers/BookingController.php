@@ -55,6 +55,8 @@ class BookingController extends Controller
     public function proceedToCheckout(Request $request) {
         try {
             $data = $request->all();
+            // echo "<pre>"; print_r($data);
+            // exit;
             unset($data['_token']);
             $data['amount'] = base64_decode($data['amount']);
             $request->session()->put('checkinRooms', $data);
@@ -63,6 +65,33 @@ class BookingController extends Controller
             var_dump($e);
         }
     }
+
+    public function updateBooking(Request $request) {
+        try {
+            $data = $request->all();
+            $totalCost = 0;
+            foreach ($data['rooms'] as $key => $value) {
+                    if(!empty($value)){
+                        $cost = get_room_by_id($key)->cost;
+                        $totalCost += $cost*count($value);
+                    }
+                    
+                    // $cost = get_room_by_id($key)->price
+            }
+            $diff = strtotime($data['t-end']) - strtotime($data['t-start']);
+            $totalCost = $totalCost*abs(round($diff / 86400));
+
+            $response = [
+                'cost'=>"₹".$totalCost,
+                'encodedCost' => base64_encode($totalCost)
+            ];
+           return response()->json($response, $this->_statusOK);
+        } catch(\Illuminate\Database\QueryException $e){
+            var_dump($e);
+        }
+    }
+
+    
 
     public function checkout(Request $request) {
         try {

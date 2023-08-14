@@ -43,8 +43,7 @@
     });
     
     $("#total_guest").on('keyup',function(){
-      $(".update_booking").show();
-      $('#book_now').prop('disabled', true);
+      fnUpdateBooking();
     });
     
     // Back to top button
@@ -221,11 +220,9 @@
           dateCheckIn: currentDate,
           dateCheckOut: nextDay,
         }).on('clickDateCI',function(e, dateCI) {
-            $(".update_booking").show();
-            $('#book_now').prop('disabled', true);
+            fnUpdateBooking();
         }).on('clickDateCO',function(e, dateCO) {
-            $(".update_booking").show();
-            $('#book_now').prop('disabled', true);
+            fnUpdateBooking();
         });
     });
 
@@ -349,8 +346,8 @@
     });
 
     $(document).on("click",".remove-room", function(){
-      console.log("hi",$(this).parent().parent());
-      lectureField = $(this).parent().parent().remove();
+      $(this).parent().parent().remove();
+      calculate_totalGuest();
     })
 
     $(".update_booking").on("click",function(){
@@ -389,10 +386,12 @@
       if(next <= count) {
           let id = $(this).attr("data-id");
 
-          let element = '<div class="d-flex mb-3 row" data-min="1" data-max="'+max+'"><div class="col-md-3"><span> Room </span></div><div class="col-md-4"><span class="quantity-down"> <i class="fa fa-minus-circle text-primary"></i> </span><span class="guestCount quantity"> <input type="number" value="2" name="rooms['+id+']['+next+'][adult]" readonly> </span><span class="quantity-up"> <i class="fa fa-plus-circle text-primary"></i> </span>  Adult</div><div class="col-md-4"><span class="quantity-down"> <i class="fa fa-minus-circle text-primary"></i> </span><span class="guestCount quantity"> <input type="number" value="0" name="rrooms['+id+']['+next+'][child]" min="0" max="2"> </span><span class="quantity-up"> <i class="fa fa-plus-circle text-primary"></i> </span>  Child</div><div class="col-md-1"><span class="remove-room"> <i class="fa fa-trash text-primary"></i> </span></div></div>';
+          let element = '<div class="d-flex mb-3 row" data-min="1" data-max="'+max+'"><div class="col-md-3"><span> Room </span></div><div class="col-md-4"><span class="quantity-down"> <i class="fa fa-minus-circle text-primary"></i> </span><span class="guestCount quantity"> <input type="number" class="guestCount_input" value="1" name="rooms['+id+']['+next+'][adult]" readonly> </span><span class="quantity-up"> <i class="fa fa-plus-circle text-primary"></i> </span>  Adult</div><div class="col-md-4"><span class="quantity-down"> <i class="fa fa-minus-circle text-primary"></i> </span><span class="guestCount quantity"> <input type="number" value="0" name="rooms['+id+']['+next+'][child]" min="0" max="2"> </span><span class="quantity-up"> <i class="fa fa-plus-circle text-primary"></i> </span>  Child</div><div class="col-md-1"><span class="remove-room"> <i class="fa fa-trash text-primary"></i> </span></div></div>';
 
          
           $("."+$(this).attr("id")).append(element);
+          calculate_totalGuest();
+          fnBookingByAjax();
       }
     });
 
@@ -418,21 +417,20 @@
 
     $(document).on('click',".quantity-up",function() {
       var spinner = jQuery(this),input = spinner.parent().find('input[type="number"]'),max = jQuery(this).parent().parent().attr('data-max');
-      console.log("hi",max);
       var oldValue = parseFloat(input.val());
       if (oldValue >= max) {
         var newVal = oldValue;
       } else {
         var newVal = oldValue + 1;
       }
-      console.log(newVal);
       input.val(newVal);
-      input.trigger("change");
+     
+      calculate_totalGuest();
+      
     });
 
     $(document).on('click',".quantity-down",function() {
       var spinner = jQuery(this),input = spinner.parent().find('input[type="number"]'),min = jQuery(this).parent().parent().attr('data-min');
-      console.log("hi",min);
       var oldValue = parseFloat(input.val());
       if (oldValue <= min) {
         var newVal = oldValue;
@@ -440,10 +438,42 @@
         var newVal = oldValue - 1;
       }
       input.val(newVal);
-      input.trigger("change");
+      calculate_totalGuest();
     });
 
-      
+    function calculate_totalGuest(){
+      var numberInputs = $(".guestCount_input"),sum = 0;
+      numberInputs.each(function() {
+        sum += parseInt($(this).val()) || 0;
+      });
+      $("#total_guest").val(sum);
+      //fnUpdateBooking();
+    }  
+
+    function fnUpdateBooking(){
+      $(".update_booking").show();
+      $('#book_now').prop('disabled', true);
+    }
+
+    function fnBookingByAjax(){
+      $('#book_now').prop('disabled', true);
+      // $(".checkout_loader").show();
+      $.ajaxSetup({
+				headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+			$.ajax({
+				url: `${globalUrl}update-booking`,
+				type: "post",
+				data: jQuery("#proceed-to-checkout").serialize(),
+				success: function(result) {
+          $(".checkin_amount h5 snan").text(result.cost);
+          $('#book_now').prop('disabled', false);
+				}
+			});
+    }
+
 })(jQuery);
 
 // jQuery('<div class="quantity-nav"><div class="quantity-button quantity-up">+</div><div class="quantity-button quantity-down">-</div></div>').insertAfter('.quantity input');

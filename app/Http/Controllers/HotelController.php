@@ -52,6 +52,7 @@ class HotelController extends Controller
                 ->selectRaw('sum(reserved_rooms.total_room_book) as roomstake')              
                 ->whereIn('bookings.id',$todayBooking)
                 ->where('bookings.hotel_id',$hotel->id)
+                ->where('bookings.status','!=','cancel')
                 ->groupBy('reserved_rooms.room_id')
                 ->get();
             } else {
