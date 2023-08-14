@@ -78,6 +78,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/view-booking/{id}', [App\Http\Controllers\BookingController::class, 'show'])->name('view-booking');
     Route::post('/save-booking', [App\Http\Controllers\BookingController::class, 'save'])->name('save-booking');
     Route::post('/save-front-desk-booking', [App\Http\Controllers\BookingController::class, 'saveFrontDeskBooking'])->name('save-front-desk-booking');
+    Route::get('/change-status/{id}', [App\Http\Controllers\BookingController::class, 'changeStatus'])->name('change-status');
     Route::get('/delete-booking/{id}', [App\Http\Controllers\BookingController::class, 'delete'])->name('delete-room');
     
     Route::post('/check-availability', [App\Http\Controllers\BookingController::class, 'checkAvailability'])->name('check-availability');

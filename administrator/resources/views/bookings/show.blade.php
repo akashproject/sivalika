@@ -76,7 +76,7 @@
                   </li>
                 </ul>
 				<div class="tab-content tabcontent-border">
-				<div class="tab-pane active" id="checkin" role="tabpanel">
+					<div class="tab-pane active" id="checkin" role="tabpanel">
 						<div class="p-20">
 							<h4 class="card-title mt-3"> Checking Details </h4>
 							<div class="row">
@@ -208,6 +208,7 @@
 											<select name="booking_type" id="booking_type" class="select2 form-control custom-select" style="width: 100%; height:36px;" required>	
 												<option value="Walking" {{ ( 'Walking' ==  $booking->booking_type )? 'selected' : '' }} >Walking</option>
 												<option value="Phone Call" {{ ( 'Phone Call' ==  $booking->booking_type )? 'selected' : '' }} >Phone Call</option>
+												<option value="Website" {{ ( 'Website' ==  $booking->booking_type )? 'selected' : '' }} >Website</option>
 											<select>
 										</div>
 									</div>

@@ -384,8 +384,15 @@ class BookingController extends Controller
     }
 
     public function delete($id) {
-        $course = Booking::findOrFail($id);
-        $course->delete();
+        $booking = Booking::findOrFail($id);
+        $booking->delete();
+        return redirect()->back()->with('message', 'Booking deleted successfully!');
+    }
+
+    public function changeStatus($id) {
+        $booking = Booking::findOrFail($id);
+        $data = ['status'=>"cancel"];
+        $booking->update($data);
         return redirect()->back()->with('message', 'Booking deleted successfully!');
     }
 

@@ -49,9 +49,10 @@
 								<td>{{ $value->status }}</td>							
 								<td>
 									@if($user->role == 2)
-									<a href="{{ url('/view-booking/'.$value->id) }}" class="btn btn-success"> Checkin </a>
-									<a href="{{ url('/add-guests/'.$value->id) }}" class="btn btn-primary"> Guests </a>
-									<a href="{{ url('/allocate-rooms/'.$value->id) }}" class="btn btn-danger"> Rooms </a>
+									<a href="{{ url('/view-booking/'.$value->id) }}" class="btn btn-primary btn-sm"> Modify </a>
+									<a href="{{ url('/add-guests/'.$value->id) }}" class="btn btn-primary btn-sm"> Guests </a>
+									<a href="{{ url('/allocate-rooms/'.$value->id) }}" class="btn btn-primary btn-sm"> Rooms </a>
+									<a href="{{ url('/change-status/'.$value->id) }}" class="btn btn-danger btn-sm"  onclick="return confirm('Are you sure to cancel booking?')"; > Cancel </a>
 									@else
 									<a href="{{ url('view-booking') }}/{{ $value->id }}" class="btn btn-primary">Edit</a>
 									@endif
