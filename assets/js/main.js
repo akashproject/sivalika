@@ -348,6 +348,7 @@
     $(document).on("click",".remove-room", function(){
       $(this).parent().parent().remove();
       calculate_totalGuest();
+      fnBookingByAjax()
     })
 
     $(".update_booking").on("click",function(){
@@ -468,7 +469,9 @@
 				type: "post",
 				data: jQuery("#proceed-to-checkout").serialize(),
 				success: function(result) {
-          $(".checkin_amount h5 snan").text(result.cost);
+          console.log(result);
+          $(".checkin_amount h5").text(result.cost);
+          $('input[name="amount]').val(result.encodedCost);
           $('#book_now').prop('disabled', false);
 				}
 			});
