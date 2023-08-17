@@ -7,7 +7,7 @@
 	</div>
 	<!-- Spinner End -->
 	<!-- Header Start -->
-	<div class="container-fluid bg-dark px-0">
+	<div class="container-fluid bg-dark px-0 desktop-menu">
 		<div class="row gx-0">
 			<div class="col-lg-3 bg-dark d-none d-lg-block">
 				<a href="{{ url('/')}}" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center justify-content-center">
@@ -79,6 +79,16 @@
 					</div>
 				</nav>
 			</div>
+		</div>
+	</div>
+	<div class="top-mobile-menu bg-dark">
+		<div class="logo-wrapper" >
+			<a href="{{ url('/')}}" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center justify-content-center">
+				<img src="{{ url('assets/img/logo.png')}}" style="width: 28%;">
+			</a>
+		</div>
+		<div class="login-wrapper" >
+			<a href="" class="header_login_btn" > Login/Signup </a>
 		</div>
 	</div>
 	<!-- Header End -->

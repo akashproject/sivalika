@@ -281,11 +281,8 @@
         .owlCarousel({
           items: 5,
           dots: true,
-          nav: true,
-          navText: [
-            '<i class="fa fa-arrow-left" aria-hidden="true"></i>',
-            '<i class="fa fa-arrow-right" aria-hidden="true"></i>'
-          ],
+          nav: false,
+          
           smartSpeed: 200,
           slideSpeed: 500,
           slideBy: 4,
@@ -457,6 +454,8 @@
     }
 
     function fnBookingByAjax(){
+      console.log($('#encoded_cost').val());
+      
       $('#book_now').prop('disabled', true);
       // $(".checkout_loader").show();
       $.ajaxSetup({
@@ -471,7 +470,8 @@
 				success: function(result) {
           console.log(result);
           $(".checkin_amount h5").text(result.cost);
-          $('input[name="amount]').val(result.encodedCost);
+          $('#encoded_cost').val(result.encodedCost);
+          $('.review_room').html(result.roomLabel);
           $('#book_now').prop('disabled', false);
 				}
 			});

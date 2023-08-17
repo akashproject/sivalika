@@ -109,13 +109,13 @@
                                 </div>
                             </div>
                             <div class="row py-3 checkin_data">
-                                <div class="col-8" >
+                                <div class="col-md-8 mt-2" >
                                     <div class="t-datepicker">
                                         <div class="t-check-in"></div>
                                         <div class="t-check-out"></div>
                                     </div>
                                 </div>
-                                <div class="col-4" >
+                                <div class="col-md-4 mt-2" >
                                     <div class="form-floating">
                                         <input type="number" id="total_guest" class="form-control" id="name"  name="total_guest" placeholder="Enter total guests" value="{{ $filterData['total_guest'] }}">
                                         <label for="name">TOTAL GUEST</label>

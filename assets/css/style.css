@@ -21,6 +21,9 @@
     z-index: 99;
 }
 
+.top-mobile-menu {
+    display: none;
+}
 
 /*** Spinner ***/
 #spinner {
@@ -64,10 +67,11 @@
 }
 
 .checkin_data {
-    padding: 7px 20px;
+    padding: 3px 0px 14px 0px;
     background: #f9f9f9;
     margin: 0;
 }
+
 .t-datepicker {
     clear: both;
     width: 100%;
@@ -264,6 +268,7 @@ a.login-btn {
 
 .checkin_content {
     padding: 20px;
+    overflow: hidden;
 }
 .checkin_content h5 {
     margin: 0;
@@ -598,6 +603,8 @@ a.login-btn {
 
 .submenu {
     box-shadow: 2px 2px 2px 0 rgb(0 0 0 / 4%);
+    width: 100%;
+    overflow-x: scroll;
 }
 
 ul.submenu_content {
@@ -886,7 +893,7 @@ h1.booking-success-heading {
 }
 
 .hotel-image {
-    width: 17%;
+    width: 38%;
     margin-right: 20px;
     border: 1px solid;
     padding: 2px;
@@ -923,9 +930,25 @@ h1.booking-success-heading {
     display: flex;
 }
 
-
+.top-mobile-menu {
+    overflow: hidden;
+    padding: 45px 0;
+}
+.logo-wrapper{
+    position: absolute;
+    left: -60px;
+    top: 14px;
+    display: inline;
+    width: 62%;
+}
 
 @media (max-width: 768px) {
+    .top-mobile-menu{
+        display: block;
+    }
+    .desktop-menu{
+        display: none;
+    }
     h5 {
         font-size: 15px;
     }
@@ -961,4 +984,19 @@ h1.booking-success-heading {
     .hotel-thumb {
         display: block;
     }
+    .checkin_data {
+        padding: 0;
+    }
+}
+.login-wrapper {
+    position: absolute;
+    right: 21px;
+    padding: 5px 15px;
+    background: #e3b53d42;
+    border: 2px solid #e3b53d;
+    top: 20px;
+    border-radius: 16px;
+}
+.login-wrapper a {
+    color: #fff;
 }

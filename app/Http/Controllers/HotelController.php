@@ -18,6 +18,11 @@ use Illuminate\Support\Facades\File;
 class HotelController extends Controller
 {
     //
+    public $layout = '';
+    public function __construct()
+    {
+        $this->layout = (check_device('mobile'))?"mobile.":'';
+    }
 
     public function view($slug,Request $request)
     {
@@ -55,6 +60,13 @@ class HotelController extends Controller
                 ->where('bookings.status','!=','cancel')
                 ->groupBy('reserved_rooms.room_id')
                 ->get();
+                foreach($rooms as $typeKey => $room) {
+                    foreach($bookedRoom as $takeroomForBooking) {
+                        if($takeroomForBooking->room_id == $room->id){
+                            $room->room_count = $room->room_count - $takeroomForBooking->roomstake;
+                        }
+                    }
+                }
             } else {
                 $rooms = Room::where("hotel_id",$hotel->id)->get();
             }
@@ -62,7 +74,7 @@ class HotelController extends Controller
             $diff = strtotime($checkoutTime) - strtotime($checkinTime);
             $totalDiff = abs(round($diff / 86400));
 
-            return view('hotel.view',compact('hotel','rooms','filterData','bookedRoom','totalDiff'));
+            return view($this->layout.'hotel.view',compact('hotel','rooms','filterData','bookedRoom','totalDiff'));
         } catch(\Illuminate\Database\QueryException $e){
         }
     }

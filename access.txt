@@ -1,3 +1,7 @@
 email:
 	Email Address : administrator@sivalikagroup.com
 	Password : lS%&sBit%8f[
+
+cpanel : 
+   user: kaabzqsfylsu
+   password:pK@KK@4sVo0E

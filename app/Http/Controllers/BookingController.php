@@ -70,20 +70,25 @@ class BookingController extends Controller
         try {
             $data = $request->all();
             $totalCost = 0;
+            $roomLabel = '';
             foreach ($data['rooms'] as $key => $value) {
+
                     if(!empty($value)){
-                        $cost = get_room_by_id($key)->cost;
+                        $room = get_room_by_id($key);
+                        $roomLabel .= '<strong> '.count($value).'x '.$room->name.' </strong><br>';
+                        $cost = $room->cost;
                         $totalCost += $cost*count($value);
                     }
-                    
-                    // $cost = get_room_by_id($key)->price
             }
             $diff = strtotime($data['t-end']) - strtotime($data['t-start']);
             $totalCost = $totalCost*abs(round($diff / 86400));
 
+            
+
             $response = [
                 'cost'=>"₹".$totalCost,
-                'encodedCost' => base64_encode($totalCost)
+                'encodedCost' => base64_encode($totalCost),
+                'roomLabel' => $roomLabel,
             ];
            return response()->json($response, $this->_statusOK);
         } catch(\Illuminate\Database\QueryException $e){
