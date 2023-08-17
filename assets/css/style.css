@@ -943,6 +943,13 @@ h1.booking-success-heading {
 }
 
 @media (max-width: 768px) {
+
+    .highlights span {
+        border: none;       
+        background: none;
+    }
+
+
     .top-mobile-menu{
         display: block;
     }

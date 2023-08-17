@@ -3,7 +3,7 @@
     <style>
         .outer { margin:0 auto; max-width:800px;}
         #big .item {margin:2px; color: #FFF; border-radius: 3px; text-align: center; }
-        #thumbs .item { background: #C9C9C9; height:70px; line-height:70px; padding: 0px; margin:2px; color: #FFF; border-radius: 3px; text-align: center; cursor: pointer; }
+        #thumbs .item { background: #C9C9C9; line-height:70px; padding: 0px; margin:2px; color: #FFF; border-radius: 3px; text-align: center; cursor: pointer; }
         #thumbs .item h1 { font-size: 18px; }
         #thumbs .current .item { background:#FF5722; }
         .owl-theme .owl-nav [class*='owl-'] { -webkit-transition: all .3s ease; transition: all .3s ease; }
@@ -13,7 +13,6 @@
             background: #3333339c;
             width: 35px;
             line-height: 38px;
-            height: 35px;
             margin-top: -24px;
             position: absolute;
             text-align: center;
@@ -45,8 +44,8 @@
             -moz-appearance: textfield;
             appearance: textfield;
             border: none;
-            width: 36px;
-            background: #f1f8ff;
+            width: 60px;
+            background: #fff;
             color: #423c3c;
         }
 
@@ -68,34 +67,38 @@
             <div class="container">
                 <div class="text-center">
                     <h6 class="section-title text-center text-primary text-uppercase">Room Booking</h6>
-                    <h1 class="mb-5"><span class="text-primary text-uppercase">{{ $hotel->name }}</span></h1>
+                    <h3 class="mb-2"><span class="text-primary text-uppercase">{{ $hotel->name }}</span></h3>
                 </div>
-                <div class="row g-5">
-                    @if($hotel->gallery)
-                    <div class="col-lg-6">
-                        <div class="outer">
-                            <div id="big" class="owl-carousel owl-theme">
-                                @foreach(json_decode($hotel->gallery) as $thumb)
-                                <div class="item">
-                                    <img class="img-fluid rounded w-100" src="{{ getSizedImage('',$thumb); }}">
-                                </div>
-                                @endforeach
-                            </div>
-                        
-                            <div id="thumbs" class="owl-carousel owl-theme">             
-                                @foreach(json_decode($hotel->gallery) as $thumb)               
-                                <div class="item">
-                                    <img class="img-fluid rounded w-100" src="{{ getSizedImage('',$thumb); }}">
-                                </div>
-                                @endforeach
-                            </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            @if($hotel->gallery)
+                <div class="outer">
+                    <div id="big" class="owl-carousel owl-theme">
+                        @foreach(json_decode($hotel->gallery) as $thumb)
+                        <div class="item">
+                            <img class="img-fluid rounded w-100" src="{{ getSizedImage('',$thumb); }}">
                         </div>
+                        @endforeach
                     </div>
-                    @endif
+                
+                    <div id="thumbs" class="owl-carousel owl-theme">             
+                        @foreach(json_decode($hotel->gallery) as $thumb)               
+                        <div class="item">
+                            <img class="img-fluid rounded w-100" src="{{ getSizedImage('',$thumb); }}">
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+        </div>
+        <div class="container-xxl py-3">
+            <div class="container">
+                <div class="row g-5">                    
                     <div class="col-lg-6">
                         <div class="checkin_panel">
                             <div class="checkin_title" >
-                                <h5> Login Now to get Best Price  <a href="javascript:void(0)" class="login-btn" > Login </a></h5>
+                                <h5> Get Best Offer  <a href="javascript:void(0)" class="login-btn" > Login </a></h5>
                             </div>
                             <div class="row py-3 highlights" >
                                 <div class="col-md-4">
@@ -227,9 +230,9 @@
                                             </div>
                                         </div>
                                         <div class="d-flex mb-3">
-                                            <small class="border-end me-3 pe-3"><i class="fa fa-home text-primary me-2"></i>{{$room->size}}</small>
-                                            <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>{{$room->person}} Bed</small>
-                                            <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>{{$availableRoom}} Left</small>
+                                            <small class="border-end pe-3"><i class="fa fa-home text-primary me-2"></i>{{$room->size}}</small>
+                                            <small class="border-end pe-3"><i class="fa fa-bed text-primary me-2"></i>{{$room->person}} Bed</small>
+                                            <small class="border-end pe-3"><i class="fa fa-bed text-primary me-2"></i>{{$availableRoom}} Left</small>
                                         </div>
                                         <div class="room_type_{{$room->id}}" >
                                             @for($i = 1; $i<=$roomCount;$i++)
@@ -261,23 +264,22 @@
                                                 @endphp
                                             @endfor
                                         </div>
-                                        @if($availableRoom > 0)
                                         <div class="d-flex mb-3 row">
-                                            <a type="button" id="room_type_{{$room->id}}" data-max="{{$room->person}}" data-roomcount="{{ $availableRoom }}" class="addNewRoom" data-id="{{$room->id}}"> <i class="fa fa-plus text-primary me-2"></i> Add room </a>
-                                        </div>
-                                        @else
-                                        <div class="d-flex mb-3 row">
-                                            <h5> SOLD OUT </h5>
-                                        </div>
-                                        @endif
-                                        <div class="d-flex mb-3 row">
-                                            @if($room->room_count > 1)
-                                                <div class="col-md-6">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <a class="btn btn-primary clear_selection" data-id="room_type_{{$room->id}}" >Clear Selection</a>
-                                                </div>
+                                            <div class="col-6">
+                                                @if($room->room_count > 1)
+                                                    <a class="clear_selection" data-id="room_type_{{$room->id}}" > <i class="fa fa-trash text-primary me-2"></i> Remove All</a>
+                                                @endif
+                                            </div>
+                                            @if($availableRoom > 0)
+                                            <div class="col-6">
+                                                <a type="button" id="room_type_{{$room->id}}" data-max="{{$room->person}}" data-roomcount="{{ $availableRoom }}" class="addNewRoom" data-id="{{$room->id}}"> <i class="fa fa-plus text-primary me-2"></i> Add room </a>
+                                            </div>
+                                            @else
+                                            <div class="col-6">
+                                                <h5> SOLD OUT </h5>
+                                            </div>
                                             @endif
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -296,9 +298,9 @@
                     <h3 > Hotel Amenities </h3> 
                 </div>
                 <div class="section-border form-14" >
-                    <div class="row p-4">
+                    <div class="row p-2">
                         @foreach(json_decode($hotel->amenities) as $key => $value)
-                        <div class="col-md-2 py-3"  >
+                        <div class="col-4"  >
                             <i class="fa fa-check" aria-hidden="true"></i> {{ $value }}
                         </div>
                         @endforeach

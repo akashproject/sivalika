@@ -73,7 +73,6 @@ class HotelController extends Controller
 
             $diff = strtotime($checkoutTime) - strtotime($checkinTime);
             $totalDiff = abs(round($diff / 86400));
-
             return view($this->layout.'hotel.view',compact('hotel','rooms','filterData','bookedRoom','totalDiff'));
         } catch(\Illuminate\Database\QueryException $e){
         }
