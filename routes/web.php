@@ -20,3 +20,8 @@ Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'
 
 Route::get('/dashboard', function () { return view('dashboard');})->middleware('auth')->name('dashboard');
 Route::get('/logout',  [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/profile', [App\Http\Controllers\CustomerController::class, 'profile'])->name('profile');
+    Route::get('/bookings', [App\Http\Controllers\CustomerController::class, 'booking'])->name('booking');
+});

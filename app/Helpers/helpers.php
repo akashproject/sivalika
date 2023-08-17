@@ -145,6 +145,14 @@ if (! function_exists('get_room_by_id')) {
     }
 }
 
+if (! function_exists('get_hotel_by_id')) {
+    function get_hotel_by_id($value){
+        $hotel = DB::table('hotels')->where('id',$value)->first();
+        return (isset($hotel->id))?$hotel:"null";
+    }
+}
+
+
 if (! function_exists('get_reviews_ratings')) {
     function get_reviews_ratings($model="",$model_id=""){
         $reviews = DB::table('reviews');
@@ -258,32 +266,5 @@ if (! function_exists('getRadius')) {
         } catch(\Illuminate\Database\QueryException $e){
             throw $e;
         }
-    }
-}
-
-if (! function_exists('getUtmCampaign')) {
-    function getUtmCampaign($params = null){
-        if(request()->has('utm_campaign')){
-            return request()->get('utm_campaign');
-        }
-        return ($params)?$params:get_theme_setting('utm_campaign');
-    }
-}
-
-if (! function_exists('getUtmSource')) {
-    function getUtmSource($params = null){
-        if(request()->has('utm_source')){
-            return request()->get('utm_source');
-        }
-        return ($params)?$params:get_theme_setting('utm_source');
-    }
-}
-
-if (! function_exists('getCommunicationMedium')) {
-    function getCommunicationMedium($params = null){
-        if(request()->has('lead_type')){
-            return request()->get('lead_type');
-        }
-        return ($params)?$params:get_theme_setting('lead_type');
     }
 }

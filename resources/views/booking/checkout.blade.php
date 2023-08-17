@@ -98,10 +98,10 @@
                     <div class="checkout_review mb-5">
                         <div class="payment_title" > 
                             <div class="row" >
-                                <div class="col-8">
+                                <div class="col-6">
                                     <h5> Payable Amount : <span> Including GST </span></h5>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-6 text-right">
                                     <h5 class="paying_amount" style="font-size: 36px; margin-bottom: 0;color: #160e42;"><strong>₹{{$checkinRooms['amount']}} </strong></h5>
                                 </div>
                             </div>

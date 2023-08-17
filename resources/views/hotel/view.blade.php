@@ -9,7 +9,18 @@
         .owl-theme .owl-nav [class*='owl-'] { -webkit-transition: all .3s ease; transition: all .3s ease; }
         .owl-theme .owl-nav [class*='owl-'].disabled:hover { background-color: #D6D6D6; }
         #big.owl-theme { position: relative; }
-        #big.owl-theme .owl-next, #big.owl-theme .owl-prev { background:#333; width: 22px; line-height:40px; height: 40px; margin-top: -20px; position: absolute; text-align:center; top: 50%; }
+        #big.owl-theme .owl-next, #big.owl-theme .owl-prev {
+            background: #3333339c;
+            width: 35px;
+            line-height: 38px;
+            height: 35px;
+            margin-top: -24px;
+            position: absolute;
+            text-align: center;
+            top: 52%;
+            border-radius: 50%;
+            color: #fff;
+        }
         #big.owl-theme .owl-prev { left: 10px; }
         #big.owl-theme .owl-next { right: 10px; }
         #thumbs.owl-theme .owl-next, #thumbs.owl-theme .owl-prev { }
@@ -123,23 +134,16 @@
                                     <p> Our Recommandation </p>
                                     @if($rooms)
                                     <div class="review_room" > 
-                                        @php
-                                            $roomLabels = [];
-                                        @endphp
-
                                         @foreach($rooms as $typeKey => $room)
                                             @php 
                                                 $roomCount = intdiv($filterData['total_guest'], $room->person);
                                                 $roomCount = ($filterData['total_guest']%$room->person != 0)?$roomCount+1:$roomCount;
-                                                $roomLabels[$typeKey]['name'] = $room->name;
-                                                $roomLabels[$typeKey]['count'] = $roomCount;
-                                                $cost1 += $roomCount*$room->cost;
-                                                break;
+                                                $cost1 += $room->cost*$roomCount;
                                             @endphp	
-                                        @endforeach
-                                        
-                                        @foreach($roomLabels as $label)
-                                        <strong> {{$label['count']}}x {{$label['name']}} for 2 Guest </strong><br>
+                                            <strong> {{$roomCount}}x {{$room->name}} </strong><br>
+                                            @if($room->room_count > $roomCount)
+                                                @break
+                                            @endif
                                         @endforeach
                                     </div>
                                     @endif
@@ -199,18 +203,13 @@
                     @if($rooms)
                         @php $cost = 0; @endphp
                         @foreach($rooms as $typeKey => $room)
-                            @foreach($bookedRoom as $takeroomForBooking)
-                                @php
-                                    $room->room_count = ($takeroomForBooking->room_id == $room->id)?$room->room_count - $takeroomForBooking->roomstake:$room->room_count
-                                @endphp
-                            @endforeach
                             @php 
                                 $availableRoom = ($room->room_count > 0)?$room->room_count:0;
                                 $roomCount = $filterData['total_guest']/$room->person;
                                 $roomCount = ($filterData['total_guest']%$room->person != 0)?$roomCount+1:$roomCount;
                             @endphp	
                             <input type="hidden" name="rooms[{{ $room->id }}]" >
-                            <div class="col-md-{{12/count($rooms)}} wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                                 <div class="room-item shadow rounded overflow-hidden">
                                     <div class="position-relative">
                                         <img class="img-fluid" src="{{ getSizedImage('',$room->featured_image) }}" alt="">
@@ -288,7 +287,7 @@
                 </div>
             </div>
         </div>
-        <input type="hidden" name="amount" value="{{base64_encode($cost*$totalDiff)}}">
+        <input id="encoded_cost" type="hidden" name="amount" value="{{base64_encode($cost*$totalDiff)}}">
         <input type="hidden" name="hotel_id" value="{{$hotel->id}}">
     </form>  
         <div class="container-xxl py-5">
@@ -537,6 +536,285 @@
             </div>
         </div>
 
+        <div class="container-xxl py-5">
+<div class="container">
+<div class="row g-5">
+
+<div class="col-lg-8">
+<div class="row room-item m-0 mb-4 wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+<div class="col-md-5 col-lg-12 col-xl-5 p-0" style="min-height: 300px;">
+<div class="position-relative h-100">
+<img class="position-absolute w-100 h-100" src="img/room-1.jpg" alt="" style="object-fit: cover;">
+</div>
+</div>
+<div class="col-md-7 col-lg-12 col-xl-7 h-100 px-0">
+<div class="p-4">
+<div class="d-flex align-items-center justify-content-between mb-3">
+<small class="bg-primary text-white rounded py-1 px-3">$100/Night</small>
+<div class="ps-2">
+<small class="fa fa-star text-primary"></small>
+<small class="fa fa-star text-primary"></small>
+<small class="fa fa-star text-primary"></small>
+<small class="fa fa-star text-primary"></small>
+<small class="fa fa-star text-primary"></small>
+</div>
+</div>
+<h5 class="mb-3">Junior Suite</h5>
+<div class="d-flex mb-3">
+<small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+<small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+<small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
+</div>
+<p class="text-body mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
+</div>
+<div class="d-flex justify-content-between border-top mt-auto p-4">
+<a class="btn btn-sm btn-primary rounded py-2 px-4" href="">View Detail</a>
+<a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Book Now</a>
+</div>
+</div>
+</div>
+<div class="row room-item m-0 mb-4 wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+<div class="col-md-5 col-lg-12 col-xl-5 p-0" style="min-height: 300px;">
+<div class="position-relative h-100">
+<img class="position-absolute w-100 h-100" src="img/room-2.jpg" alt="" style="object-fit: cover;">
+</div>
+</div>
+<div class="col-md-7 col-lg-12 col-xl-7 h-100 px-0">
+<div class="p-4">
+<div class="d-flex align-items-center justify-content-between mb-3">
+<small class="bg-primary text-white rounded py-1 px-3">$100/Night</small>
+<div class="ps-2">
+<small class="fa fa-star text-primary"></small>
+<small class="fa fa-star text-primary"></small>
+<small class="fa fa-star text-primary"></small>
+<small class="fa fa-star text-primary"></small>
+<small class="fa fa-star text-primary"></small>
+</div>
+</div>
+<h5 class="mb-3">Junior Suite</h5>
+<div class="d-flex mb-3">
+<small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+<small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+<small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
+</div>
+<p class="text-body mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
+</div>
+<div class="d-flex justify-content-between border-top mt-auto p-4">
+<a class="btn btn-sm btn-primary rounded py-2 px-4" href="">View Detail</a>
+<a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Book Now</a>
+</div>
+</div>
+</div>
+<div class="row room-item m-0 mb-4 wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+<div class="col-md-5 col-lg-12 col-xl-5 p-0" style="min-height: 300px;">
+<div class="position-relative h-100">
+<img class="position-absolute w-100 h-100" src="img/room-3.jpg" alt="" style="object-fit: cover;">
+</div>
+</div>
+<div class="col-md-7 col-lg-12 col-xl-7 h-100 px-0">
+<div class="p-4">
+<div class="d-flex align-items-center justify-content-between mb-3">
+<small class="bg-primary text-white rounded py-1 px-3">$100/Night</small>
+<div class="ps-2">
+<small class="fa fa-star text-primary"></small>
+<small class="fa fa-star text-primary"></small>
+<small class="fa fa-star text-primary"></small>
+<small class="fa fa-star text-primary"></small>
+<small class="fa fa-star text-primary"></small>
+</div>
+</div>
+<h5 class="mb-3">Junior Suite</h5>
+<div class="d-flex mb-3">
+<small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+<small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+<small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
+</div>
+<p class="text-body mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
+</div>
+<div class="d-flex justify-content-between border-top mt-auto p-4">
+<a class="btn btn-sm btn-primary rounded py-2 px-4" href="">View Detail</a>
+<a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Book Now</a>
+</div>
+</div>
+</div>
+<div class="row room-item m-0 mb-4 wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+<div class="col-md-5 col-lg-12 col-xl-5 p-0" style="min-height: 300px;">
+<div class="position-relative h-100">
+<img class="position-absolute w-100 h-100" src="img/room-1.jpg" alt="" style="object-fit: cover;">
+</div>
+</div>
+<div class="col-md-7 col-lg-12 col-xl-7 h-100 px-0">
+<div class="p-4">
+<div class="d-flex align-items-center justify-content-between mb-3">
+<small class="bg-primary text-white rounded py-1 px-3">$100/Night</small>
+<div class="ps-2">
+<small class="fa fa-star text-primary"></small>
+<small class="fa fa-star text-primary"></small>
+<small class="fa fa-star text-primary"></small>
+<small class="fa fa-star text-primary"></small>
+<small class="fa fa-star text-primary"></small>
+</div>
+</div>
+<h5 class="mb-3">Junior Suite</h5>
+<div class="d-flex mb-3">
+<small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+<small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+<small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
+</div>
+<p class="text-body mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
+</div>
+<div class="d-flex justify-content-between border-top mt-auto p-4">
+<a class="btn btn-sm btn-primary rounded py-2 px-4" href="">View Detail</a>
+<a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Book Now</a>
+</div>
+</div>
+</div>
+<div class="row room-item m-0 mb-4 wow fadeInUp" data-wow-delay="0.1s" style="visibility: hidden; animation-delay: 0.1s; animation-name: none;">
+<div class="col-md-5 col-lg-12 col-xl-5 p-0" style="min-height: 300px;">
+<div class="position-relative h-100">
+<img class="position-absolute w-100 h-100" src="img/room-2.jpg" alt="" style="object-fit: cover;">
+</div>
+</div>
+<div class="col-md-7 col-lg-12 col-xl-7 h-100 px-0">
+<div class="p-4">
+<div class="d-flex align-items-center justify-content-between mb-3">
+<small class="bg-primary text-white rounded py-1 px-3">$100/Night</small>
+<div class="ps-2">
+<small class="fa fa-star text-primary"></small>
+<small class="fa fa-star text-primary"></small>
+<small class="fa fa-star text-primary"></small>
+<small class="fa fa-star text-primary"></small>
+<small class="fa fa-star text-primary"></small>
+</div>
+</div>
+<h5 class="mb-3">Junior Suite</h5>
+<div class="d-flex mb-3">
+<small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+<small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+<small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
+</div>
+<p class="text-body mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
+</div>
+<div class="d-flex justify-content-between border-top mt-auto p-4">
+<a class="btn btn-sm btn-primary rounded py-2 px-4" href="">View Detail</a>
+<a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Book Now</a>
+</div>
+</div>
+</div>
+<div class="row wow fadeInUp" data-wow-delay="0.1s" style="visibility: hidden; animation-delay: 0.1s; animation-name: none;">
+<div class="col-12">
+<nav aria-label="Page navigation">
+<ul class="pagination justify-content-center m-0">
+<li class="page-item disabled">
+<a class="page-link rounded-0" href="#" aria-label="Previous">
+<span aria-hidden="true"><i class="bi bi-arrow-left"></i></span>
+</a>
+</li>
+<li class="page-item active"><a class="page-link" href="#">1</a></li>
+<li class="page-item"><a class="page-link" href="#">2</a></li>
+<li class="page-item"><a class="page-link" href="#">3</a></li>
+<li class="page-item">
+<a class="page-link rounded-0" href="#" aria-label="Next">
+<span aria-hidden="true"><i class="bi bi-arrow-right"></i></span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+
+
+<div class="col-lg-4">
+
+<div class="bg-light mb-5 wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+<div class="border-bottom text-center text-dark p-3 pt-4 mb-3">
+<span class="align-top fs-4 lh-base">$</span>
+<span class="align-middle fs-1 lh-sm fw-bold">49.00</span>
+<span class="align-bottom fs-6 lh-lg">/ Night</span>
+</div>
+<div class="row g-3 p-4 pt-2">
+<div class="col-12">
+<div class="date" id="date3" data-target-input="nearest">
+<input type="text" class="form-control datetimepicker-input" placeholder="Check in" data-target="#date3" data-toggle="datetimepicker">
+</div>
+</div>
+<div class="col-12">
+<div class="date" id="date4" data-target-input="nearest">
+<input type="text" class="form-control datetimepicker-input" placeholder="Check out" data-target="#date4" data-toggle="datetimepicker">
+</div>
+</div>
+<div class="col-12">
+<select class="form-select">
+<option selected="">Adult</option>
+<option value="1">Adult 1</option>
+<option value="2">Adult 2</option>
+<option value="3">Adult 3</option>
+</select>
+</div>
+<div class="col-12">
+<select class="form-select">
+<option selected="">Child</option>
+<option value="1">Child 1</option>
+<option value="2">Child 2</option>
+<option value="3">Child 3</option>
+</select>
+</div>
+<div class="col-12">
+<select class="form-select">
+<option selected="">Night</option>
+<option value="1">Night 1</option>
+<option value="2">Night 2</option>
+<option value="3">Night 3</option>
+</select>
+</div>
+<div class="col-12">
+<button class="btn btn-primary py-3 w-100">Book Now</button>
+</div>
+</div>
+</div>
+
+
+<div class="bg-light p-4 mb-5 wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+<h4 class="mb-4">Category</h4>
+<a class="d-block position-relative mb-3" href="">
+<img class="img-fluid" src="img/cat-1.jpg" alt="">
+<div class="d-flex position-absolute top-0 start-0 w-100 h-100 p-3" style="background: rgba(0,0,0,.3);">
+<h5 class="text-white m-0 mt-auto">luxury Room</h5>
+</div>
+</a>
+<a class="d-block position-relative mb-3" href="">
+<img class="img-fluid" src="img/cat-2.jpg" alt="">
+<div class="d-flex position-absolute top-0 start-0 w-100 h-100 p-3" style="background: rgba(0,0,0,.3);">
+<h5 class="text-white m-0 mt-auto">Couple Room</h5>
+</div>
+</a>
+<a class="d-block position-relative" href="">
+<img class="img-fluid" src="img/cat-3.jpg" alt="">
+<div class="d-flex position-absolute top-0 start-0 w-100 h-100 p-3" style="background: rgba(0,0,0,.3);">
+<h5 class="text-white m-0 mt-auto">Single Room</h5>
+</div>
+</a>
+</div>
+
+
+<div class="border p-1 wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+<div class="border p-4">
+<h4 class="mb-4">Help &amp; Support</h4>
+<p>Lorem sed erat elitr magna magna labore duo elitr ipsum duo. Et sed duo rebum lorem sed stet sed</p>
+<div class="bg-primary text-center p-3">
+<h4 class="text-white m-0">+012 345 67890</h4>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+        
+        
         <div class="container newsletter mt-5 wow fadeIn" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeIn;">
             <div class="row justify-content-center">
                 <div class="col-lg-10 border rounded p-1">
@@ -552,9 +830,9 @@
                 </div>
             </div>
         </div>
-        
     @endsection
 @section('script')
+
 <!-- ============================================================== -->
 <!-- CHARTS -->
 @endsection
