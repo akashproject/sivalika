@@ -9,12 +9,12 @@
 	<!-- Header Start -->
 	<div class="container-fluid bg-dark px-0 desktop-menu">
 		<div class="row gx-0">
-			<div class="col-lg-3 bg-dark d-none d-lg-block">
+			<div class="col-lg-2 bg-dark d-none d-lg-block">
 				<a href="{{ url('/')}}" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center justify-content-center">
-					<img src="{{ url('assets/img/logo.png')}}" style="width: 28%;">
+					<img src="{{ url('assets/img/logo.png')}}" style="width: 42%;">
 				</a>
 			</div>
-			<div class="col-lg-9">
+			<div class="col-lg-10">
 				<div class="row gx-0 bg-white d-none d-lg-flex">
 					<div class="col-lg-7 px-5 text-start">
 						<div class="h-100 d-inline-flex align-items-center py-2 me-4">
@@ -52,9 +52,9 @@
 							<div class="nav-item dropdown">
 								<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">My Account</a>
 								<div class="dropdown-menu rounded-0 m-0">
-									<a href="booking.html" class="dropdown-item">Booking</a>
-									<a href="team.html" class="dropdown-item">Profile</a>
-									<a href="{{ route('logout') }}" class="dropdown-item">Logout</a>
+									<a href="{{ url('bookings') }}" class="dropdown-item">Booking</a>
+									<a href="{{ url('profile') }}" class="dropdown-item">Profile</a>
+									<a href="{{ url('logout') }}" class="dropdown-item">Logout</a>
 								</div>
 							</div>	
 						</div>
