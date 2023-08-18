@@ -35,4 +35,26 @@ class CustomerController extends Controller
         } catch(\Illuminate\Database\QueryException $e){
         }
     }
+
+    public function updateProfile(Request $request)
+    {
+        try {
+            $data = $request->all();
+            $user = Auth::user();
+            $customerData = [
+                'name' => $data['firstname'].' '.$data['lastname'],
+                'email' => $data['email'],
+                'dob' => $data['dob'],
+                'gender' => $data['gender'],
+                'marital_status' => $data['marital_status'],
+            ];
+            $customer = Customer::find($user->id);
+            $customer->update($customerData);
+            return redirect()->back()->with('message', 'Profile updated successfully!');
+           
+        } catch(\Illuminate\Database\QueryException $e){
+        }
+    }
+
+    
 }

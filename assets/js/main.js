@@ -59,6 +59,34 @@
         return false;
     });
 
+    $("#customer_login_form").validate({
+      messages: {
+        mobile: {
+          required: "Please enter valid mobile number",
+          min: "Please enter valid mobile number",
+          max: "Please enter valid mobile number",
+        },
+      },
+      submitHandler: function(form) {
+        let formId = $(form).attr('id');
+        jQuery("#" + formId + " .checkout_loader").show();
+        if(jQuery("#" + formId + " .formFieldOtpResponse").val() == ""){
+          sendMobileOtp(formId);
+          countDown()
+          return false;
+        }
+    
+        if(jQuery("#" + formId + " .verify_otp").val() != '' && jQuery("#" + formId + " .formFieldOtpResponse").val() == jQuery("#" + formId + " .verify_otp").val()){
+          form.submit();
+        } else {
+          jQuery("#" + formId + " .response_status").html("OTP is Invalid");
+          jQuery("#" + formId + " .checkout_loader").hide();
+          return false;
+        }
+        return false; // required to block normal submit since you used ajax
+      }
+    });
+
     $('#customer_ragistration_form input').on('keyup', function() {
       if ($("#customer_ragistration_form").valid()) {
           $('#customer_ragistration_form .submit_classroom_lead_generation_form').prop('disabled', false);  
@@ -124,7 +152,6 @@
         jQuery("#" + formId + " .checkout_loader").hide();
         return false;
       }
-
     }
   
     function sendMobileOtp(formId) {
@@ -249,6 +276,12 @@
         }
     });
     
+    jQuery('.open-popup-link').magnificPopup({
+      type: 'inline',
+      midClick: true,
+      mainClass: 'mfp-fade'
+    });
+
     $(document).ready(function() {
         var bigimage = $("#big");
         var thumbs = $("#thumbs");

@@ -9,44 +9,84 @@
                         <div class="category-list d-flex flex-column">
                             <a class="text-body d-flex mb-3" href="{{url('profile')}}">Profile</a>
                             <a class="text-body d-flex mb-3" href="{{url('bookings')}}">Bookings</a>
+                            <a class="text-body d-flex mb-3" href="{{url('logout')}}">Logout</a>
                             <a class="text-body d-flex mb-3" href="#">Privacy &amp; Policies</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-8">
-                    <form id="contactForm" novalidate="novalidate">
+                    @if(session()->has('message'))
+                        <div class="alert alert-success">
+                            {{ session()->get('message') }}
+                        </div>
+                    @endif
+                    <form id="contactForm" novalidate="novalidate" method="post" action="{{ url('update-profile')}}" >
+                        @csrf
                         <div class="row gx-3">
                             <div class="col-md-6 control-group">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="name" placeholder="Your Name" required="required" data-validation-required-message="Please enter your name">
-                                    <label for="name">Your Name</label>
+                                    <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Enter Name" required="required" data-validation-required-message="Please enter your name" value="{{current(explode(' ',$user->name))}}" >
+                                    <label for="name">First Name</label>
                                 </div>
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div class="col-md-6 control-group">
                                 <div class="form-floating">
-                                    <input type="email" class="form-control" id="email" placeholder="Your Email" required="required" data-validation-required-message="Please enter your email">
+                                    @php
+                                        $elem = explode(' ',$user->name);
+                                        $lastname = $elem[count($elem) - 1]
+                                    @endphp
+                                    <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Enter Name" required="required" data-validation-required-message="Please enter your name" value='{{ $lastname }}' >
+                                    <label for="name">Last Name</label>
+                                </div>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="col-md-6 control-group">
+                                <div class="form-floating">
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email" required="required" data-validation-required-message="Please enter your email" value="{{$user->email}}">
                                     <label for="email">Your Email</label>
                                 </div>
                                 <p class="help-block text-danger"></p>
                             </div>
-                            <div class="col-12 control-group">
+                            <div class="col-md-6 control-group">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="subject" placeholder="Subject" required="required" data-validation-required-message="Please enter a subject">
-                                    <label for="subject">Subject</label>
+                                    <input type="number" class="form-control" id="mobile" name="mobile" placeholder="Enter Mobile" required="required" data-validation-required-message="Please enter your email" value="{{$user->mobile}}" readonly>
+                                    <label for="email">Your Mobile</label>
                                 </div>
                                 <p class="help-block text-danger"></p>
                             </div>
-                            <div class="col-12 control-group">
+                            <div class="col-md-6 control-group">
                                 <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Leave a message here" id="message" required="required" data-validation-required-message="Please enter your message" style="height: 150px"></textarea>
-                                    <label for="message">Message</label>
+                                    <input type="date" class="form-control" id="dob" name="dob" placeholder="Enter Date of birth" required="required" data-validation-required-message="Please enter your email" value="{{$user->dob}}" >
+                                    <label for="email">Your Date of birth</label>
                                 </div>
                                 <p class="help-block text-danger"></p>
                             </div>
-                            <div class="col-12">
+                            <div class="col-md-6 control-group">
+                                <div class="form-floating">
+                                    <select class="form-select" id="gender" name="gender">
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="undisclosed">Undisclosed</option>
+                                    </select>
+                                    <label for="select2">Select Gender</label>
+                                </div>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="col-md-6 control-group">
+                                <div class="form-floating">
+                                    <select class="form-select" id="marital_status" name="marital_status">
+                                        <option value="married">Married</option>
+                                        <option value="unmarried">Unmarried</option>
+                                        <option value="undisclosed">Undisclosed</option>
+                                    </select>
+                                    <label for="select2">Select Gender</label>
+                                </div>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="col-12 mt-2">
                                 <button class="btn btn-primary w-100 py-3" type="submit" id="sendMessageButton">
-                                    <span>Send Message</span>
+                                    <span>Update Profile</span>
                                     <div class="d-none spinner-border spinner-border-sm text-light ms-3" role="status"></div>
                                 </button>
                             </div>

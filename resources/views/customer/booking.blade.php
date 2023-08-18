@@ -9,6 +9,7 @@
                         <div class="category-list d-flex flex-column">
                         <a class="text-body d-flex mb-3" href="{{url('profile')}}">Profile</a>
                             <a class="text-body d-flex mb-3" href="{{url('bookings')}}">Bookings</a>
+                            <a class="text-body d-flex mb-3" href="{{url('logout')}}">Logout</a>
                             <a class="text-body d-flex mb-3" href="#">Privacy &amp; Policies</a>
                         </div>
                     </div>

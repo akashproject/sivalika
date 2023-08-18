@@ -61,4 +61,61 @@
     <!-- Footer End -->
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+    <div id="login-form-popup" class="white-popup mfp-hide">
+        <div class="personal_info_content wow fadeInUp" data-wow-delay="0.2s">
+            <div class="personal_info_title mb-2" >
+                <h5> Login Yourself</h5>
+            </div>
+            <div class="personal_form_data" >
+                <form id="customer_login_form" method="post" action="{{ url('login')}}" >
+                    @csrf
+                    <div class="registration_process step-1 active " >
+                        <div class="row g-3">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" name="mobile" id="formFieldMobile" placeholder="Your Mobile" value="" required>
+                                <label for="mobile">Your Mobile</label>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-secondary w-100 py-3 submit_customer_ragistration_form" type="submit">Login</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="registration_process step-2 text-center" >
+                        <div class="otp-content">
+                            <h4 class="otp-heading"> OTP Verification </h4>                                   
+                            <p class="message"> <span class="message"> Enter the OTP you recive at </span> +91 XXXXXX<span class="lastDigit">0000</span> <span class="changeGivenNumber"> (Change) </span> </p>
+                            <p class="response_status" style="color: #000;"></p>
+                        </div>
+                        
+                        <div class="row justified-center">
+                            <div class="col-md-6 mb-2">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control verify_otp" name="verify_otp" id="" placeholder="Enter one time password">
+                                    <label for="email">Enter OTP</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="otp-content">
+                            <p class="message"> Did not recive OTP?
+                                <span class="countdown_label"> Resend in <span class="countdown">-1:59</span> Sec </span>
+                                <a class="resendOtp display-none" href="javascript:void(0)"> Resend OTP </a>
+                            </p>
+                        </div>
+                        <div class="row justified-center " >
+                            <div class="col-md-6">
+                                <button class="btn btn-secondary w-100 py-3 submit_customer_ragistration_form" type="submit">
+                                    Login
+                                </button>
+                                <div >
+                                    <img src="https://www.icacourse.in/wp-content/themes/scriptcrown/images/loader.gif" style="width: 42px; display:none;" class="checkout_loader">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" class="formFieldOtpResponse" value="">
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

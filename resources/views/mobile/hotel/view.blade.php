@@ -98,7 +98,7 @@
                     <div class="col-lg-6">
                         <div class="checkin_panel">
                             <div class="checkin_title" >
-                                <h5> Get Best Offer  <a href="javascript:void(0)" class="login-btn" > Login </a></h5>
+                                <h5> Get Best Offer  <a href="#login-form-popup" class="open-popup-link login-btn" > Login </a></h5>
                             </div>
                             <div class="row py-3 highlights" >
                                 <div class="col-md-4">

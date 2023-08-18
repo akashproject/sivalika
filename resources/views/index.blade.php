@@ -114,8 +114,10 @@
                     <h6 class="section-title text-start text-white text-uppercase mb-3">Luxury Living</h6>
                     <h1 class="text-white mb-4">Check IN Luxurious De Sivalika Belur</h1>
                     <p class="text-white mb-4">De Sivalika Boutique Hotel, established in 2017 by Sivalika Group is a masterpiece small luxury hotel in Belurmath, Howrah. The hotel is situated a stone away from Belurmath, 5km away from Dakhineswar Temple, 6km away from Howrah Railway station and just 12km away from Kolkata international airport. Our motto is to provide luxury service in an affordable price to the visitors of Belurmath, Dakhineswar and surrounding area. We have 28 spacious rooms with a world class kitchen which serves Chinese, Indian, Tandoor and Continental cuisines to all our guests. We also provide Take away and home delivery service.</p>
-                    <a href="{{ url('hotel/sivalika-inn-belur') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Our Rooms</a>
-                    <a href="" class="btn btn-light py-md-3 px-md-5">Book A Room</a>
+                    <div class="d-flex justify-content-between">
+                        <a class="btn btn-sm btn-primary rounded py-2 px-4" href="{{ url('hotel/sivalika-inn-belur') }}">Our Rooms</a>
+                        <a class="btn btn-sm btn-dark rounded py-2 px-4 white-outline" href="{{ url('hotel/sivalika-inn-belur') }}">Book Now</a>
+                    </div>
                 </div>
             </div>
             <div class="col-md-6">
@@ -138,8 +140,18 @@
                     <h6 class="section-title text-start text-white text-uppercase mb-3">Luxury Living</h6>
                     <h1 class="text-white mb-4">Check IN Luxurious De Sivalika INN - Howrah</h1>
                     <p class="text-white mb-4">Sivalika Inn a small premium hotel established in 2023 by Sivalika Hotels which situated very near to Howrah Railway Station- one of leading & busiest railway station in India. The hotel received a 5 * ratings in Google among its visiting guests. We welcome every guest to come and experience our service in affordable price.</p>
-                    <a href="{{ url('hotel/sivalika-inn-howrah') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Our Rooms</a>
-                    <a href="" class="btn btn-light py-md-3 px-md-5">Book A Room</a>
+                    <div class="d-flex justify-content-between">
+                        <a class="btn btn-sm btn-primary rounded py-2 px-4" href="{{ url('hotel/sivalika-inn-howrah') }}">Our Rooms</a>
+                        <a class="btn btn-sm btn-dark rounded py-2 px-4 white-outline" href="{{ url('hotel/sivalika-inn-howrah') }}">Book Now</a>
+                    </div>
+                    <!-- <div class="row">
+                        <div class="col-md-6">
+                            <a href="{{ url('hotel/sivalika-inn-howrah') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Our Rooms</a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="" class="btn btn-light py-md-3 px-md-5">Book A Room</a>
+                        </div>
+                    <div> -->
                 </div>
             </div>
         </div>

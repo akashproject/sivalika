@@ -24,4 +24,5 @@ Route::get('/logout',  [App\Http\Controllers\Auth\LoginController::class, 'logou
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/profile', [App\Http\Controllers\CustomerController::class, 'profile'])->name('profile');
     Route::get('/bookings', [App\Http\Controllers\CustomerController::class, 'booking'])->name('booking');
+    Route::post('/update-profile', [App\Http\Controllers\CustomerController::class, 'updateProfile']);
 });

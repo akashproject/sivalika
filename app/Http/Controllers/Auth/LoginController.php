@@ -50,21 +50,12 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $mobileNumber = $request->input('mobile');
-        $otp = $request->input('otp');
-    
+        $mobileNumber = $request->input('mobile');    
         $user = Customer::where('mobile', $mobileNumber)->first();
-
-        if (!$user || $otp != "123456") {
-            return back()->withErrors(['login_failed' => 'Invalid mobile number or OTP']);
-        }
-    
         Auth::login($user);
-        // $user->otp = null;
-        // $user->otp_expiry = null;
         $user->save();
     
-        return redirect()->route('thank-you'); // Replace 'dashboard' with your route
+        return redirect()->route('profile'); // Replace 'dashboard' with your route
     }
 
     public function logout(Request $request)
