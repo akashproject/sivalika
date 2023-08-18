@@ -10,7 +10,7 @@
 	<div class="container-fluid bg-dark px-0 desktop-menu">
 		<div class="row gx-0">
 			<div class="col-lg-2 bg-dark d-none d-lg-block">
-				<a href="{{ url('/')}}" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center justify-content-center">
+				<a href="{{ url('/')}}" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center justify-contgent-center">
 					<img src="{{ url('assets/img/logo.png')}}" style="width: 42%;">
 				</a>
 			</div>
