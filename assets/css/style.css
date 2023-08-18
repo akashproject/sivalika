@@ -955,8 +955,19 @@ h1.booking-success-heading {
     display: inline;
     width: 62%;
 }
+.cancel-booking-btn {
+    margin-right: 15px;
+}
 
 @media (max-width: 768px) {
+
+    .cancel-booking-btn, .pay-now-btn {
+        display: block;
+        text-align: center;
+        overflow: hidden;
+        width: 100%;
+        margin: 8px 0;
+    }
 
     .highlights span {
         border: none;       

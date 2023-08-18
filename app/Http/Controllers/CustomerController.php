@@ -56,5 +56,19 @@ class CustomerController extends Controller
         }
     }
 
+    public function cancelBooking($id)
+    {
+        try {
+            $booking = Booking::findOrFail($id);
+            $bookingData = [
+                'status'=>'cancel'
+            ];
+            $booking->update($bookingData);
+            return redirect()->back()->with('message', $booking->booking_id.' Booking has been cancelled!');
+           
+        } catch(\Illuminate\Database\QueryException $e){
+        }
+    }
+
     
 }

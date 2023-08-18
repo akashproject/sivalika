@@ -19,6 +19,11 @@
                         <div class="text-center mb-2">
                             <h6 class="section-title text-center text-primary text-uppercase">Booking Details</h6>
                         </div>
+                        @if(session()->has('message'))
+                            <div class="alert alert-success">
+                                {{ session()->get('message') }}
+                            </div>
+                        @endif
                         @foreach($bookings as $booking)
 
                         <div class="hotel-content mb-5" style="width:100%">
@@ -65,9 +70,15 @@
                                     </div>
                                 </div>
                                 <div class="text-right">
-                                @if($booking->payment == "pending")
-                                <a href="javascript:void()" class="btn-secondary text-white p-2 px-5"> Pay Now </a>
-                                @endif
+                                    @if($booking->status != "cancel")
+                                        <a href="{{ url('cancel-booking/'.$booking->id) }}" class=" btn-primary text-white p-2 px-5 mr-3 cancel-booking-btn "  onclick="return confirm('Are you sure to cancel the booking?')"; > Cancel Booking </a>
+                                    @else 
+                                    <a href="javascript:void(0)" class="p-2 px-5 mr-3 cancel-booking-btn " style="background: #ccc !important;color: #000;"> Cancelled </a>
+                                    <a href="{{ url('hotel/'.get_hotel_by_id($booking->hotel_id)->slug) }}" class="btn-secondary text-white p-2 px-5 pay-now-btn"> Book Again </a>
+                                    @endif
+                                    @if($booking->payment == "pending" && $booking->status != "cancel")
+                                        <a href="javascript:void()" class="btn-secondary text-white p-2 px-5 pay-now-btn"> Pay Now </a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -90,6 +101,20 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cancel-booking-popup" class="white-popup mfp-hide">
+        <div class="personal_info_content wow fadeInUp" data-wow-delay="0.2s">
+            <div class="personal_info_title mb-2" >
+                <h5> Login Yourself</h5>
+            </div>
+            <div class="personal_form_data" >
+                <form id="cancel-booking- method="post" action="{{ url('cancel-booking')}}" >
+                    @csrf
+                    
+                </form>
             </div>
         </div>
     </div>
