@@ -8,7 +8,7 @@ use App\Models\Media;
 use App\Models\Setting;
 use App\Models\Review;
 use App\Models\Faq;
-//use Cookie;
+use Cookie;
 
 if (! function_exists('check_device')) {
     function check_device($param = null){
@@ -81,7 +81,6 @@ if (! function_exists('get_theme_setting')) {
 
 if (! function_exists('setCookie')) {
     function setCookie($key,$value) {
-        echo $value; exit;
         return $cookie =   Cookie::queue(Cookie::make($key, $value, 60));
     }
 }

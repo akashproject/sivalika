@@ -153,25 +153,34 @@ class BookingController extends Controller
                     $reserve_rooms = ReservedRooms::create($reservedRooms);
                 }
             }
-            $request->session()->forget('filterData');
-            
+            $request->session()->forget('filterData');  
             $request->session()->put("booking",$booking);
 
 
-            // $user = array(
-            //     'name' => "Akash Dutta",
-            //     'email' => "akashdutta.scriptcrown@gmail.com",
-            // );
+            $user = array(
+                'name' => $customer->name,
+                'email' => $customer->email,
+                'booking_id' => $booking->booking_id,
+                'hotel_id' => $booking->hotel_id,
+            );
 
-            // $orderData = [
-            //     'name' => "Akash Dutta",
-            //     'email' => "akashdutta.scriptcrown@gmail.com",
-            // ];
+            $bookingData = [
+                'booking_id' => $booking->booking_id,
+                'amount' => $booking->amount,
+                'hotel_id' => $booking->hotel_id,
+                'checkin' => date("d, M",strtotime($data['t-start'])),
+                'checkout' => date("d, M",strtotime($data['t-end'])),
+                'total_guest' => $booking->total_guest,
+                'rooms' => $booking->rooms,
+                'customer_name' => $customer->name,
+            ];
 
-            // $mail = Mail::send('emails.booking', $orderData, function ($m) use ($user) {
-            //     $m->from('sivalika@scriptcrown.com', 'Sivalika Hotel Booking');
-            //     $m->to('akashdutta.scriptcrown@gmail.com', "Akash Dutta")->subject('Booking has been completed successfully - ');
-            // });
+            $mail = Mail::send('emails.booking', $bookingData, function ($m) use ($user) {
+                $m->from('bookings@sivalikagroup.com', 'Sivalika Group');
+                $m->to($user['email'], $user['name'])->subject('Reservation Confirmed at '.get_hotel_by_id($user['hotel_id'])->name.'. Booking ID: '.$user['booking_id']);
+            });
+            // print_r($mail);
+            // exit;
             return redirect('/thank-you');
         } catch(\Illuminate\Database\QueryException $e){
             var_dump($e);

@@ -45,7 +45,6 @@ class IndexController extends Controller
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
         }
-        
     }
 
     public function submitMobileOtp(Request $request){
