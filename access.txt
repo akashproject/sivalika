@@ -5,3 +5,8 @@ email:
 cpanel : 
    user: kaabzqsfylsu
    password:pK@KK@4sVo0E
+
+ftp :
+host : sivalikagroup.com
+user : dev@hotels.sivalikagroup.com
+password : E4HzI_]aCGw)
