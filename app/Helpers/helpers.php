@@ -8,7 +8,7 @@ use App\Models\Media;
 use App\Models\Setting;
 use App\Models\Review;
 use App\Models\Faq;
-use Cookie;
+//use Cookie;
 
 if (! function_exists('check_device')) {
     function check_device($param = null){

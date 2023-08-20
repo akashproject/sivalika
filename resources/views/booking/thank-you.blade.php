@@ -1,7 +1,7 @@
 @extends('layouts.main')
     @section('content')
     <!-- Booking Start -->
-    <div class="container-xxl py-3">
+    <div class="container-xxl py-5">
         <div class="container">
             <div class="thank-you-container" >
                 <div class="row justify-content-center">

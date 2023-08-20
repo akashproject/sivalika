@@ -447,7 +447,7 @@
     });
 
     $(document).on('click',".quantity-up",function() {
-      var spinner = jQuery(this),input = spinner.parent().find('input[type="text"]'),max = jQuery(this).parent().parent().attr('data-max');
+      var spinner = jQuery(this),input = spinner.parent().find('input[type="number"]'),max = jQuery(this).parent().parent().attr('data-max');
       var oldValue = parseFloat(input.val());
       if (oldValue >= max) {
         var newVal = oldValue;
@@ -461,7 +461,7 @@
     });
 
     $(document).on('click',".quantity-down",function() {
-      var spinner = jQuery(this),input = spinner.parent().find('input[type="text"]'),min = jQuery(this).parent().parent().attr('data-min');
+      var spinner = jQuery(this),input = spinner.parent().find('input[type="number"]'),min = jQuery(this).parent().parent().attr('data-min');
       var oldValue = parseFloat(input.val());
       if (oldValue <= min) {
         var newVal = oldValue;

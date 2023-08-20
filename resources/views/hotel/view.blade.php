@@ -1,70 +1,11 @@
 @extends('layouts.main')
     @section('content')
-    <style>
-        .outer { margin:0 auto; max-width:800px;}
-        #big .item {margin:2px; color: #FFF; border-radius: 3px; text-align: center; }
-        #thumbs .item { background: #C9C9C9; height:70px; line-height:70px; padding: 0px; margin:2px; color: #FFF; border-radius: 3px; text-align: center; cursor: pointer; }
-        #thumbs .item h1 { font-size: 18px; }
-        #thumbs .current .item { background:#FF5722; }
-        .owl-theme .owl-nav [class*='owl-'] { -webkit-transition: all .3s ease; transition: all .3s ease; }
-        .owl-theme .owl-nav [class*='owl-'].disabled:hover { background-color: #D6D6D6; }
-        #big.owl-theme { position: relative; }
-        #big.owl-theme .owl-next, #big.owl-theme .owl-prev {
-            background: #3333339c;
-            width: 35px;
-            line-height: 38px;
-            height: 35px;
-            margin-top: -24px;
-            position: absolute;
-            text-align: center;
-            top: 52%;
-            border-radius: 50%;
-            color: #fff;
-        }
-        #big.owl-theme .owl-prev { left: 10px; }
-        #big.owl-theme .owl-next { right: 10px; }
-        #thumbs.owl-theme .owl-next, #thumbs.owl-theme .owl-prev { }
-        #thumbs .owl-item .item:before {
-            content: '';
-            display: block;
-            background-color: rgba(38, 38, 38, 0.52);
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 1;
-            margin: 2px;
-            border-radius: 7px;
-        }
-        #thumbs .owl-item.current .item:before{
-         background-color: rgba(38, 38, 38, 0);
-        }
-        .guestCount input {
-            -webkit-appearance: textfield;
-            -moz-appearance: textfield;
-            appearance: textfield;
-            border: none;
-            width: 30px;
-            background: #ffffff;
-            color: #423c3c;
-        }
 
-        .guestCount input::-webkit-inner-spin-button,
-        .guestCount input::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            appearance: textfield;
-            border: none;
-            width: 30px;
-            background: #ffffff;
-            color: #423c3c;
-        }
-    </style>
     
     <form method="post" id="proceed-to-checkout" action="{{ url('proceed-to-checkout') }}" >
         @csrf
         <!-- Booking Start -->
-        <div class="container-xxl py-3">
+        <div class="container-xxl py-5">
             <div class="container">
                 <div class="text-center">
                     <h6 class="section-title text-center text-primary text-uppercase">Room Booking</h6>
@@ -242,12 +183,12 @@
                                                     </div>
                                                     <div class="col-md-4">
                                                         <span class="quantity-down"> <i class="fa fa-minus-circle text-primary"></i> </span>
-                                                        <span class="guestCount quantity" > <input type="number" class="guestCount_input" value="{{ ($filterData['total_guest'] < $room->person)?$filterData['total_guest']:$room->person }}" name="rooms[{{$room->id}}][{{$i}}][adult]"  min="1" max="{{ $room->person }}" readonly> </span>
+                                                        <span class="guestCount quantity" > <input type="text" class="guestCount_input" value="{{ ($filterData['total_guest'] < $room->person)?$filterData['total_guest']:$room->person }}" name="rooms[{{$room->id}}][{{$i}}][adult]"  min="1" max="{{ $room->person }}" readonly> </span>
                                                         <span class="quantity-up"> <i class="fa fa-plus-circle text-primary"></i> </span>  Adult
                                                     </div>
                                                     <div class="col-md-4">
                                                         <span class="quantity-down"> <i class="fa fa-minus-circle text-primary"></i> </span>
-                                                        <span class="guestCount quantity" > <input type="number" value="0" name="rooms[{{$room->id}}][{{$i}}][child]"  min="0" max="2"> </span>
+                                                        <span class="guestCount quantity" > <input type="text" value="0" name="rooms[{{$room->id}}][{{$i}}][child]"  min="0" max="2"> </span>
                                                         <span class="quantity-up"> <i class="fa fa-plus-circle text-primary"></i> </span>  Child
                                                     </div>
                                                     <div class="col-md-1" >

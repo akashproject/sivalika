@@ -1,7 +1,7 @@
 @extends('layouts.main')
     @section('content')
     <!-- Booking Start -->
-    <div class="container-xxl py-3">
+    <div class="container-xxl py-5">
         <div class="container">
             <div class="row">
                 <h6 class="text-uppercase"><a href="{{ url('/') }}" > <i class="fa fa-arrow-left" ></i> Back to Hotel</a> </h6>
