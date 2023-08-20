@@ -44,7 +44,8 @@ class BookingController extends Controller
             }
             
             if(request()->has('checkin')){
-                $bookings->whereDate('checkin', request()->get('checkin'));
+                $checkinTime = date('Y-m-d').config('constant.checkinTime');
+                $bookings->where('bookings.checkout','>',$checkinTime);
             }
 
             $bookings = $bookings->orderBy('id', 'DESC')->get();

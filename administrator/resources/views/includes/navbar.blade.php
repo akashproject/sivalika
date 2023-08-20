@@ -13,7 +13,7 @@
                         <b class="logo-icon p-l-10">
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
-                            <img src="{{ url('/assets/images/logo.png') }}" alt="homepage" class="light-logo" style="width: 84px;"/>
+                            <img src="https://hotels.sivalikagroup.com/assets/img/logo.png" alt="homepage" class="light-logo" style="width: 20%;"/>
                            
                         </b>
                         <!--End Logo icon -->
