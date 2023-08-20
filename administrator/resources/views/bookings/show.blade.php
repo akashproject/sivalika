@@ -88,58 +88,44 @@
 										@php
 											$cost = 0;
 										@endphp
-											@foreach($rooms as $typeKey => $room)
-											@php 
-												$roomCount = $filterData['total_guest']/$room->person;
-												$roomCount = ($filterData['total_guest']%$room->person != 0)?$roomCount+1:$roomCount;
-											@endphp											
-											<input type="hidden" name="rooms[{{ $room->id }}]" >
+											@foreach($booking->rooms as $typeKey => $rooms)
+											<input type="hidden" name="rooms[{{ $typeKey }}]" >
 											<div class="card" style="border: 1px solid #ccc;">
 												<div class="card-body">
-													<h4 class="card-title text-center">{{ $room->name }}</h4>
-													<div class="room_type_{{$room->id}}" >
-														@for($i = 1; $i<=$roomCount;$i++)
-															
+													<h4 class="card-title text-center">{{ get_room_by_id($typeKey)->name }}</h4>
+													<div class="room_type_{{$typeKey}}" >
+														@php
+														$i = 0;
+														@endphp	
+														@if(!empty($rooms))
+														@foreach($rooms as $room)
 															<div class="row mt-2">
 																<div class="col-sm-5">
 																	<span class="room-label">Adult</span>
 																	<span class="room-guest">
-																		<input value="{{ ($filterData['total_guest'] < $room->person)?$filterData['total_guest']:$room->person }}" class="form-control" name="rooms[{{$room->id}}][{{$i}}][adult]" type="number" min="1" max="{{ $room->person }}">
+																		<input value="{{ ($booking->total_guest < $room['adult'])?$booking->total_guest:$room['adult'] }}" class="form-control" name="rooms[{{$typeKey}}][{{$i}}][adult]" type="number" min="1" max="{{ get_room_by_id($typeKey)->person }}">
 																	</span>
 																</div>
 																<div class="col-sm-5">
 																	<span class="room-label">Child</span>
 																	<span class="room-guest">
-																		<input class="form-control" type="number" name="rooms[{{$room->id}}][{{$i}}][child]" value="0" max="2">
+																		<input class="form-control" type="number" name="rooms[{{$typeKey}}][{{$i}}][child]" value="0" max="2">
 																	</span>
 																</div>
 																<div class="col-sm-2">
 																	<button type="button" class="btn btn-danger btn remove-room"><i class="mdi mdi-delete"></i></button>
 																</div>
 															</div>
-															@php
-																$cost += $room->cost;
-																$room->room_count-- ;
-																$filterData['total_guest'] -= $room->person;
-															@endphp
-															@if($room->room_count < 1)
-																@break;
-															@endif
-														@endfor
+															
+														@endforeach
+														@endif
 													</div>
 													<div class="row mt-2 text-right">
-														<button type="button" id="room_type_{{$room->id}}" data-roomcount="{{ $room->room_count }}" class="btn btn-primary addNewRoom" data-id="{{$room->id}}"> Add Room </button>
+														<button type="button" id="room_type_{{$typeKey}}" data-roomcount="{{ get_room_by_id($typeKey)->room_count }}" class="btn btn-primary addNewRoom" data-id="{{$typeKey}}"> Add Room </button>
 													</div>
 												</div>
 											</div>
-											@endforeach	
-											@if($filterData['total_guest'] > 1)
-											<div class="card" style="border: 1px solid #ccc;">
-												<div class="card-body">
-													<h4 class="card-title text-center">{{$filterData['total_guest']}} Guest Extra</h4>
-												</div>
-											</div>
-											@endif
+											@endforeach
 										@endif
 										</div>
 									</div>
