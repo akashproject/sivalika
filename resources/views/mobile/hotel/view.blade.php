@@ -218,8 +218,8 @@
                                         <img class="img-fluid" src="{{ getSizedImage('',$room->featured_image) }}" alt="">
                                         <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">₹{{$room->cost}}/Night</small>
                                     </div>
-                                    <div class="p-4 mt-2 pb-2">
-                                        <div class="d-flex justify-content-between mb-3">
+                                    <div class="mt-2 pb-2">
+                                        <div class="pt-4 px-2 d-flex justify-content-between">
                                             <h5 class="mb-0">{{$room->name}}</h5>
                                             <div class="ps-2">
                                                 <small class="fa fa-star text-primary"></small>
@@ -229,31 +229,31 @@
                                                 <small class="fa fa-star text-primary"></small>
                                             </div>
                                         </div>
-                                        <div class="d-flex mb-3">
-                                            <small class="border-end pe-3"><i class="fa fa-home text-primary me-2"></i>{{$room->size}}</small>
-                                            <small class="border-end pe-3"><i class="fa fa-bed text-primary me-2"></i>{{$room->person}} Bed</small>
-                                            <small class="border-end pe-3"><i class="fa fa-bed text-primary me-2"></i>{{$availableRoom}} Left</small>
+                                        <div class="px-2 d-flex mb-3">
+                                            <small class="border-end pe-1"><i class="fa fa-home text-primary me-2"></i>{{$room->size}}</small>
+                                            <small class="border-end pe-1"><i class="fa fa-bed text-primary me-2"></i>{{$room->person}} Bed</small>
+                                            <small class="border-end pe-1" style="color:red"><i class="fa fa-bed text-primary me-2"></i>{{$availableRoom}} Rooms Left</small>
                                         </div>
-                                        <div class="room_type_{{$room->id}}" >
+                                        <div class="px-2 room_type_{{$room->id}}" >
                                             @for($i = 1; $i<=$roomCount;$i++)
                                                 @if($room->room_count < 1)
                                                     @break;
                                                 @endif
-                                                <div class="d-flex mb-3 row" data-min="1" data-max="{{ $room->person }}">
-                                                    <div class="col-md-3" >
+                                                <div class="d-flex mb-3 row font-size-14" data-min="1" data-max="{{ $room->person }}">
+                                                    <div class="col-md-3 col-12" >
                                                         <span> Room :</span>
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-4 col-5 ">
                                                         <span class="quantity-down"> <i class="fa fa-minus-circle text-primary"></i> </span>
-                                                        <span class="guestCount quantity" > <input type="number" class="guestCount_input" value="{{ ($filterData['total_guest'] < $room->person)?$filterData['total_guest']:$room->person }}" name="rooms[{{$room->id}}][{{$i}}][adult]"  min="1" max="{{ $room->person }}" readonly> </span>
+                                                        <span class="guestCount quantity" > <input type="text" class="guestCount_input" value="{{ ($filterData['total_guest'] < $room->person)?$filterData['total_guest']:$room->person }}" name="rooms[{{$room->id}}][{{$i}}][adult]"  min="1" max="{{ $room->person }}" readonly> </span>
                                                         <span class="quantity-up"> <i class="fa fa-plus-circle text-primary"></i> </span>  Adult
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-4 col-5">
                                                         <span class="quantity-down"> <i class="fa fa-minus-circle text-primary"></i> </span>
-                                                        <span class="guestCount quantity" > <input type="number" value="0" name="rooms[{{$room->id}}][{{$i}}][child]"  min="0" max="2"> </span>
+                                                        <span class="guestCount quantity" > <input type="text" value="0" name="rooms[{{$room->id}}][{{$i}}][child]"  min="0" max="2"> </span>
                                                         <span class="quantity-up"> <i class="fa fa-plus-circle text-primary"></i> </span>  Child
                                                     </div>
-                                                    <div class="col-md-1" >
+                                                    <div class="col-md-1 col-2" >
                                                         <span class="remove-room" > <i class="fa fa-trash text-primary"></i> </span>
                                                     </div>
                                                 </div>
@@ -264,7 +264,7 @@
                                                 @endphp
                                             @endfor
                                         </div>
-                                        <div class="d-flex mb-3 row">
+                                        <div class="px-2 d-flex mb-3 row">
                                             <div class="col-6">
                                                 @if($room->room_count > 1)
                                                     <a class="clear_selection" data-id="room_type_{{$room->id}}" > <i class="fa fa-trash text-primary me-2"></i> Remove All</a>

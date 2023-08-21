@@ -1015,7 +1015,7 @@ h1.booking-success-heading {
     -moz-appearance: textfield;
     appearance: textfield;
     border: none;
-    width: 30px;
+    width: 13px;
     background: #ffffff;
     color: #423c3c;
 }
@@ -1037,8 +1037,18 @@ input::-webkit-inner-spin-button {
 .header-padding {
     height: 100px;
 }
+.quantity-down, .quantity-up {
+    font-size: 14px;
+    padding: 6px;
+}
 @media (max-width: 768px) {
+    .font-size-14 {
+        font-size: 14px;
+    }
 
+    .header-padding {
+        display: none;
+    }
     .cancel-booking-btn, .pay-now-btn {
         display: block;
         text-align: center;

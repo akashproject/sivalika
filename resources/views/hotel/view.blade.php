@@ -172,26 +172,26 @@
                                             <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>{{$room->person}} Bed</small>
                                             <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>{{$availableRoom}} Left</small>
                                         </div>
-                                        <div class="room_type_{{$room->id}}" >
+                                        <div class="px-2 room_type_{{$room->id}}" >
                                             @for($i = 1; $i<=$roomCount;$i++)
                                                 @if($room->room_count < 1)
                                                     @break;
                                                 @endif
                                                 <div class="d-flex mb-3 row" data-min="1" data-max="{{ $room->person }}">
-                                                    <div class="col-md-3" >
+                                                    <div class="col-md-3 col-12" >
                                                         <span> Room :</span>
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-4 col-5">
                                                         <span class="quantity-down"> <i class="fa fa-minus-circle text-primary"></i> </span>
                                                         <span class="guestCount quantity" > <input type="text" class="guestCount_input" value="{{ ($filterData['total_guest'] < $room->person)?$filterData['total_guest']:$room->person }}" name="rooms[{{$room->id}}][{{$i}}][adult]"  min="1" max="{{ $room->person }}" readonly> </span>
                                                         <span class="quantity-up"> <i class="fa fa-plus-circle text-primary"></i> </span>  Adult
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-4 col-5">
                                                         <span class="quantity-down"> <i class="fa fa-minus-circle text-primary"></i> </span>
                                                         <span class="guestCount quantity" > <input type="text" value="0" name="rooms[{{$room->id}}][{{$i}}][child]"  min="0" max="2"> </span>
                                                         <span class="quantity-up"> <i class="fa fa-plus-circle text-primary"></i> </span>  Child
                                                     </div>
-                                                    <div class="col-md-1" >
+                                                    <div class="col-md-1 col-2" >
                                                         <span class="remove-room" > <i class="fa fa-trash text-primary"></i> </span>
                                                     </div>
                                                 </div>

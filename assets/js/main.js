@@ -417,7 +417,7 @@
       if(next <= count) {
           let id = $(this).attr("data-id");
 
-          let element = '<div class="d-flex mb-3 row" data-min="1" data-max="'+max+'"><div class="col-md-3"><span> Room </span></div><div class="col-md-4"><span class="quantity-down"> <i class="fa fa-minus-circle text-primary"></i> </span><span class="guestCount quantity"> <input type="text" class="guestCount_input" value="1" name="rooms['+id+']['+next+'][adult]" readonly> </span><span class="quantity-up"> <i class="fa fa-plus-circle text-primary"></i> </span>  Adult</div><div class="col-md-4"><span class="quantity-down"> <i class="fa fa-minus-circle text-primary"></i> </span><span class="guestCount quantity"> <input type="text" value="0" name="rooms['+id+']['+next+'][child]" min="0" max="2"> </span><span class="quantity-up"> <i class="fa fa-plus-circle text-primary"></i> </span>  Child</div><div class="col-md-1"><span class="remove-room"> <i class="fa fa-trash text-primary"></i> </span></div></div>';
+          let element = '<div class="d-flex mb-3 row font-size-14" data-min="1" data-max="'+max+'"><div class="col-md-3 col-12"><span> Room </span></div><div class="col-md-4 col-5"><span class="quantity-down"> <i class="fa fa-minus-circle text-primary"></i> </span><span class="guestCount quantity"> <input type="text" class="guestCount_input" value="1" name="rooms['+id+']['+next+'][adult]" readonly> </span><span class="quantity-up"> <i class="fa fa-plus-circle text-primary"></i> </span>  Adult</div><div class="col-md-4 col-5"><span class="quantity-down"> <i class="fa fa-minus-circle text-primary"></i> </span><span class="guestCount quantity"> <input type="text" value="0" name="rooms['+id+']['+next+'][child]" min="0" max="2"> </span><span class="quantity-up"> <i class="fa fa-plus-circle text-primary"></i> </span>  Child</div><div class="col-md-1 col-2"><span class="remove-room"> <i class="fa fa-trash text-primary"></i> </span></div></div>';
 
          
           $("."+$(this).attr("id")).append(element);
@@ -437,6 +437,7 @@
     $(".clear_selection").on("click",function(){
         let id = $(this).attr("data-id");
         $("."+id).html("");
+        fnBookingByAjax();
     });
 
     $('.add-guest').on("click",function(){

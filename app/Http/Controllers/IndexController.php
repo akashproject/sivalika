@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Hotel;
 use App\Models\ReservedRooms;
+use Mail;
 class IndexController extends Controller
 {
     //
@@ -33,6 +34,35 @@ class IndexController extends Controller
     {
         // Middleware will check if the user is authenticated
         return view('dashboard');
+    }
+
+    public function testMail()
+    {
+        $user = array(
+            'name' => "Akash Dutta",
+            'email' => "akashdutta.scriptcrown@gmail.com",
+            'booking_id' => "CNMZA7",
+            'hotel_id' => 2,
+        );
+
+        $bookingData = [
+            'booking_id' => "CNMZA7",
+            'amount' => "14000",
+            'hotel_id' => 2,
+            'checkin' => "30 Aug",
+            'checkout' => "31 Aug",
+            'total_guest' => "7",
+            'rooms' => '{"4":{"1":{"adult":"2","child":"0"},"2":{"adult":"2","child":"0"}},"5":{"1":{"adult":"3","child":"0"}}}',
+            'customer_name' => "Akash Dutta",
+        ];  
+
+        $mail = Mail::send('emails.booking', $bookingData, function ($m) use ($user) {
+            $m->from('bookings@sivalikagroup.com', 'Sivalika Group');
+            $m->to($user['email'], $user['name'])->subject('Reservation Confirmed at '.get_hotel_by_id($user['hotel_id'])->name.'. Booking ID: '.$user['booking_id']);
+        });
+
+        print_r($mail);
+
     }
 
     public function thankYou(Request $request) {

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
+Route::get('/test-mail', [App\Http\Controllers\IndexController::class, 'testMail'])->name('test-mail');
 //Route::get('/{slug}', [App\Http\Controllers\PageController::class, 'index'])->where('slug', '([A-Za-z0-9\-]+)');
 Route::post('/check-availability', [App\Http\Controllers\BookingController::class, 'checkAvailability'])->name('check-availability');
 Route::get('/hotel/{slug}', [App\Http\Controllers\HotelController::class, 'view'])->name('hotel');
