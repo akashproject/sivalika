@@ -23,7 +23,7 @@
 				@endif
 				<ul class="nav nav-tabs" role="tablist">
                   <li class="nav-item">				  
-                    <a class="nav-link disabled" data-toggle="tab" href="#checking" role="tab"><span class="hidden-sm-up"></span>
+                    <a class="nav-link" href="{{ url('view-booking/'.$booking_id)}}"><span class="hidden-sm-up"></span>
                       <span class="hidden-xs-down">Checking Details</span></a>
                   </li>
                   <li class="nav-item ">
@@ -31,7 +31,7 @@
                       <span class="hidden-xs-down">Guest Details</span></a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link disabled" data-toggle="tab" href="#rooms" role="tab"><span class="hidden-sm-up"></span>
+                    <a class="nav-link" href="{{ url('allocate-rooms/'.$booking_id)}}"><span class="hidden-sm-up"></span>
                       <span class="hidden-xs-down">Room Allotment</span></a>
                   </li>
                 </ul>

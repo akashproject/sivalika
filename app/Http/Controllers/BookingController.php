@@ -132,7 +132,6 @@ class BookingController extends Controller
             $checkinData = [
                 'user_id' => $customer->id,
                 'booking_id' => random_strings(6),
-                'booking_type' => "Online",
                 'hotel_id' => $data['hotel_id'],
                 'amount' => $data['amount'],
                 'total_guest' => getTotalGuest($data['rooms']),
@@ -140,6 +139,7 @@ class BookingController extends Controller
                 'checkin' => $data['t-start'].config('constant.checkinTime'),
                 'checkout' => $data['t-end'].config('constant.checkoutTime'),
                 'purpose' => "",
+                'booking_type' => "Website",
                 'payment_type' => "Upi",
                 'order_id' => '',
                 'payment_id' => '',

@@ -45,7 +45,7 @@
 		<form class="form-horizontal" method="post" action="{{ url('save-booking') }}" enctype="multipart/form-data">
 			@csrf
 			<div class="card-body">
-				<h4 class="card-title"> Add Booking </h4>
+				<h4 class="card-title"> Booking #{{ $booking->booking_id }}</h4>
 				@if ($errors->any())
 					<div class="alert alert-danger">
 						<ul>
@@ -67,11 +67,11 @@
                       <span class="hidden-xs-down">Checking Details</span></a>
                   </li>
                   <li class="nav-item ">
-                    <a class="nav-link disabled" data-toggle="tab" href="#guest" role="tab"><span class="hidden-sm-up"></span>
+                    <a class="nav-link" href="{{ url('add-guests/'.$booking->bookingId)}}"><span class="hidden-sm-up"></span>
                       <span class="hidden-xs-down">Guest Details</span></a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link disabled" data-toggle="tab" href="#rooms" role="tab"><span class="hidden-sm-up"></span>
+                    <a class="nav-link" href="{{ url('allocate-rooms/'.$booking->bookingId)}}"><span class="hidden-sm-up"></span>
                       <span class="hidden-xs-down">Room Allotment</span></a>
                   </li>
                 </ul>
@@ -206,6 +206,7 @@
 												<option value="comfirm" {{ ( 'comfirm' ==  $booking->bookingStatus )? 'selected' : '' }} > Comfirm</option>
 												<option value="arrvied" {{ ( 'arrvied' ==  $booking->bookingStatus )? 'selected' : '' }} > Arrived</option>
 												<option value="cancel" {{ ( 'cancel' ==  $booking->bookingStatus )? 'selected' : '' }} > Cancel </option>
+												<option value="completed" {{ ( 'completed' ==  $booking->bookingStatus )? 'selected' : '' }} > Completed </option>
 											<select>
 										</div>
 									</div>

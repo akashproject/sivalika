@@ -24,11 +24,11 @@
 				<ul class="nav nav-tabs" role="tablist">
                   <li class="nav-item">
 				  
-                    <a class="nav-link disabled" data-toggle="tab" role="tab"><span class="hidden-sm-up"></span>
+                    <a class="nav-link" href="{{ url('view-booking/'.$booking_id)}}"><span class="hidden-sm-up"></span>
                       <span class="hidden-xs-down">Checking Details</span></a>
                   </li>
                   <li class="nav-item ">
-                    <a class="nav-link disabled" data-toggle="tab" href="#guest" role="tab"><span class="hidden-sm-up"></span>
+                    <a class="nav-link" href="{{ url('add-guests/'.$booking_id)}}"><span class="hidden-sm-up"></span>
                       <span class="hidden-xs-down">Guest Details</span></a>
                   </li>
                   <li class="nav-item">

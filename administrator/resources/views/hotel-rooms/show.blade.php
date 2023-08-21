@@ -41,7 +41,6 @@
 							<label for="status" class="col-sm-4 text-right control-label col-form-label">Status</label>
 							<div class="col-sm-8">
 								<select name="status" id="status" class="select2 form-control custom-select" style="width: 100%; height:36px;">	
-									<option value="">Update Status</option>
 									<option value="active" {{ ( $hotelRoom->status ==  'active' )? 'selected' : '' }}> Active</option>
 									<option value="blocked" {{ ( $hotelRoom->status ==  'blocked' )? 'selected' : '' }}> Blocked </option>
 									<option value="not-cleaned" {{ ( $hotelRoom->status ==  'not-cleaned' )? 'selected' : '' }}> Not Cleaned </option>

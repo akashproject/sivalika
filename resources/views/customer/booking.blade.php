@@ -70,12 +70,22 @@
                                     </div>
                                 </div>
                                 <div class="text-right">
-                                    @if($booking->status != "cancel")
-                                        <a href="{{ url('cancel-booking/'.$booking->id) }}" class=" btn-primary text-white p-2 px-5 mr-3 cancel-booking-btn "  onclick="return confirm('Are you sure to cancel the booking?')"; > Cancel Booking </a>
-                                    @else 
-                                    <a href="javascript:void(0)" class="p-2 px-5 mr-3 cancel-booking-btn " style="background: #ccc !important;color: #000;"> Cancelled </a>
-                                    <a href="{{ url('hotel/'.get_hotel_by_id($booking->hotel_id)->slug) }}" class="btn-secondary text-white p-2 px-5 pay-now-btn"> Book Again </a>
-                                    @endif
+                                    @switch($booking->status)
+                                        @case("cancel")
+                                            <a href="javascript:void(0)" class="p-2 px-5 mr-3 cancel-booking-btn " style="background: #ccc !important;color: #000;"> Cancelled </a>
+                                            <a href="{{ url('hotel/'.get_hotel_by_id($booking->hotel_id)->slug) }}" class="btn-secondary text-white p-2 px-5 pay-now-btn"> Book Again </a>
+                                        @break
+                                        @case("comfirm")
+                                            <a href="{{ url('cancel-booking/'.$booking->id) }}" class=" btn-primary text-white p-2 px-5 mr-3 cancel-booking-btn "  onclick="return confirm('Are you sure to cancel the booking?')"; > Cancel Booking </a>
+                                        @break
+                                        @case("arrvied")
+                                            <a href="javascript:void(0)" class=" btn-secondary text-white p-2 px-5 mr-3 cancel-booking-btn " > Active </a>
+                                        @break
+                                        @case("completed")
+                                            <a href="javascript:void(0)" class=" btn-primary text-white p-2 px-5 mr-3 cancel-booking-btn" > Completed </a>
+                                        @break
+                                    @endswitch
+
                                     @if($booking->payment == "pending" && $booking->status != "cancel")
                                         <a href="javascript:void()" class="btn-secondary text-white p-2 px-5 pay-now-btn"> Pay Now </a>
                                     @endif

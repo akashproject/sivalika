@@ -44,8 +44,8 @@ class BookingController extends Controller
             }
             
             if(request()->has('checkin')){
-                $checkinTime = date('Y-m-d').config('constant.checkinTime');
-                $bookings->where('bookings.checkout','>',$checkinTime);
+                $bookings->whereDate('checkin', request()->get('checkin'));
+                
             }
 
             $bookings = $bookings->orderBy('id', 'DESC')->get();
@@ -146,7 +146,7 @@ class BookingController extends Controller
             
             $booking = DB::table('bookings')
             ->join('customers', 'bookings.user_id', '=', 'customers.id')
-            ->select('bookings.*','customers.*','bookings.status as bookingStatus')
+            ->select('bookings.*','customers.*','bookings.status as bookingStatus','bookings.id as bookingId','customers.id as customerId')
             ->where('bookings.id', $id)->first();
 
             if($booking == null) return redirect()->route('bookings')->with('message', 'No Record found');
@@ -266,7 +266,7 @@ class BookingController extends Controller
             $data['checkout'] = $filterData['checkout'].config('constant.checkoutTime');
             $booking->update($data);     
 
-            DB::table('reserved_rooms')->where('booking_id', $booking)->delete();
+            DB::table('reserved_rooms')->where('booking_id', $booking->id)->delete();
 
             foreach($rooms as $key => $value) {
                 if (is_array($value)) {
