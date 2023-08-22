@@ -97,7 +97,7 @@
 											<label for="identity" class="">Identity Number</label>
 											<input type="text" class="form-control" name="guest[{{$key}}][identity]" id="identity" placeholder="Identity Number" value="{{$guest['identity']}}">
 										</div>		
-										@if(isset($guest['identity_image']))
+										@if(isset($guest['identity_image']) && $guest['identity_image'] != '')
 										<div class="col-sm-2">	
 											<img src="{{ url($guest['identity_image'])}}" style="width:100%">
 										</div>	
