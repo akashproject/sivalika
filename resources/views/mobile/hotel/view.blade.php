@@ -292,121 +292,120 @@
         <input id="encoded_cost" type="hidden" name="amount" value="{{base64_encode($cost*$totalDiff)}}">
         <input type="hidden" name="hotel_id" value="{{$hotel->id}}">
     </form>  
-        <div class="container-xxl py-5">
-            <div class="container">
-                <div id="amenities" class="row g-4 justified-center">
-                    <h3 > Hotel Amenities </h3> 
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div id="amenities" class="row g-4 justified-center">
+                <h3 > Hotel Amenities </h3> 
+            </div>
+            <div class="section-border form-14" >
+                <div class="row p-2">
+                    @foreach(json_decode($hotel->amenities) as $key => $value)
+                    <div class="col-4"  >
+                        <i class="fa fa-check" aria-hidden="true"></i> {{ $value }}
+                    </div>
+                    @endforeach
                 </div>
-                <div class="section-border form-14" >
-                    <div class="row p-2">
-                        @foreach(json_decode($hotel->amenities) as $key => $value)
-                        <div class="col-4"  >
-                            <i class="fa fa-check" aria-hidden="true"></i> {{ $value }}
+            </div>
+        </div>
+    </div>
+
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div id="about" class="row g-4 justified-center">
+                <h3 > About Hotel </h3> 
+            </div>
+            <div class="section-border form-14" >
+                <div class="row p-4">
+                {!! $hotel->description !!}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div id="location" class="row g-4 justified-center">
+                <h3 > Hotel Location </h3> 
+            </div>
+            <div class="section-border form-14" >
+                <div class="row p-4">
+                    <div class="col-md-6" >
+                        {!! $hotel->gmap !!}
+                    </div>
+                    <div class="col-md-6" > 
+                        <h6> {{ $hotel->name }} </h5>
+                        <p> {{ $hotel->address }}
+
+                        <div class=" my-3" >
+                            <a target="_blank" href="https://www.google.com/maps/dir//{{$hotel->address}}" class="btn btn-small btn-secondary" > <i class="fa fa-map-marker"></i> Get Direction </a>
                         </div>
-                        @endforeach
+                        <div class=" my-3" >
+                            <p class="color-secondary" >
+                                <strong> Call Hotel : <a href="tel:{{ get_theme_setting('mobile') }}" ><i class="fa fa-phone"></i> {{ get_theme_setting('mobile') }} </a> </strong> 
+                            </p>
+                            <p class="color-secondary">
+                                <strong> Conntent whatsapp : <a href="tel:{{ get_theme_setting('whatsapp') }}" ><i class="fa fa-whatsapp"></i> {{ get_theme_setting('whatsapp') }} </a> </strong>
+                            </p>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="container-xxl py-5">
-            <div class="container">
-                <div id="about" class="row g-4 justified-center">
-                    <h3 > About Hotel </h3> 
+    <div id="reviews" class="container-xxl py-5">
+        <div class="container">
+                <div id="policies" class="row g-4 justified-center">
+                    <h3 > Customer Reviews </h3> 
                 </div>
                 <div class="section-border form-14" >
-                    <div class="row p-4">
-                    {!! $hotel->description !!}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="container-xxl py-5">
-            <div class="container">
-                <div id="location" class="row g-4 justified-center">
-                    <h3 > Hotel Location </h3> 
-                </div>
-                <div class="section-border form-14" >
-                    <div class="row p-4">
-                        <div class="col-md-6" >
-                            {!! $hotel->gmap !!}
-                        </div>
-                        <div class="col-md-6" > 
-                            <h6> {{ $hotel->name }} </h5>
-                            <p> {{ $hotel->address }}
-
-                            <div class=" my-3" >
-                                <a target="_blank" href="https://www.google.com/maps/dir//{{$hotel->address}}" class="btn btn-small btn-secondary" > <i class="fa fa-map-marker"></i> Get Direction </a>
-                            </div>
-                            <div class=" my-3" >
-                                <p class="color-secondary" >
-                                    <strong> Call Hotel : <a href="tel:{{ get_theme_setting('mobile') }}" ><i class="fa fa-phone"></i> {{ get_theme_setting('mobile') }} </a> </strong> 
-                                </p>
-                                <p class="color-secondary">
-                                    <strong> Conntent whatsapp : <a href="tel:{{ get_theme_setting('whatsapp') }}" ><i class="fa fa-whatsapp"></i> {{ get_theme_setting('whatsapp') }} </a> </strong>
-                                </p>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="reviews" class="container-xxl py-5">
-            <div class="container">
-                    <div id="policies" class="row g-4 justified-center">
-                        <h3 > Customer Reviews </h3> 
-                    </div>
-                    <div class="section-border form-14" >
-                        <div class="course-review">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="ratting-preview">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="avrg-rating ul-li">
-                                                    <b>Average Rating</b>
-                                                    <span class="avrg-rate">5.0</span>
-                                                    <ul>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                    </ul>
-                                                    <b>55 Ratings</b>
-                                                </div>
+                    <div class="course-review">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="ratting-preview">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="avrg-rating ul-li">
+                                                <b>Average Rating</b>
+                                                <span class="avrg-rate">5.0</span>
+                                                <ul>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                </ul>
+                                                <b>55 Ratings</b>
                                             </div>
-                                            <div class="col-md-8">
-                                                <div class="avrg-rating ul-li">
-                                                    <span>Details</span>
-                                                    <div class="rating-overview">
-                                                        <span class="start-item">5 Starts</span>
-                                                        <span class="start-bar"></span>
-                                                        <span class="start-count">1.225</span>
-                                                    </div>
-                                                    <div class="rating-overview">
-                                                        <span class="start-item">4 Starts</span>
-                                                        <span class="start-bar"></span>
-                                                        <span class="start-count">0</span>
-                                                    </div>
-                                                    <div class="rating-overview">
-                                                        <span class="start-item">3 Starts</span>
-                                                        <span class="start-bar"></span>
-                                                        <span class="start-count">0</span>
-                                                    </div>
-                                                    <div class="rating-overview">
-                                                        <span class="start-item">2 Starts</span>
-                                                        <span class="start-bar"></span>
-                                                        <span class="start-count">0</span>
-                                                    </div>
-                                                    <div class="rating-overview">
-                                                        <span class="start-item">1 Starts</span>
-                                                        <span class="start-bar"></span>
-                                                        <span class="start-count">0</span>
-                                                    </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="avrg-rating ul-li">
+                                                <span>Details</span>
+                                                <div class="rating-overview">
+                                                    <span class="start-item">5 Starts</span>
+                                                    <span class="start-bar"></span>
+                                                    <span class="start-count">1.225</span>
+                                                </div>
+                                                <div class="rating-overview">
+                                                    <span class="start-item">4 Starts</span>
+                                                    <span class="start-bar"></span>
+                                                    <span class="start-count">0</span>
+                                                </div>
+                                                <div class="rating-overview">
+                                                    <span class="start-item">3 Starts</span>
+                                                    <span class="start-bar"></span>
+                                                    <span class="start-count">0</span>
+                                                </div>
+                                                <div class="rating-overview">
+                                                    <span class="start-item">2 Starts</span>
+                                                    <span class="start-bar"></span>
+                                                    <span class="start-count">0</span>
+                                                </div>
+                                                <div class="rating-overview">
+                                                    <span class="start-item">1 Starts</span>
+                                                    <span class="start-bar"></span>
+                                                    <span class="start-count">0</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -414,147 +413,146 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="couse-comment">
-                            <div class="blog-comment-area ul-li about-teacher-2">
-                                <ul class="comment-list">
-                                    <li>
-                                        <div class=" comment-avater">
-                                            <img src="{{ url('assets/img/user.png')}}" alt="">
-                                        </div>
-
-                                        <div class="author-name-rate">
-                                            <div class="author-name float-left">
-                                                BY: <span>Bapi Patra</span> 
-                                            </div>
-                                            <div class="comment-ratting float-right ul-li">
-                                                <ul>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                </ul>
-                                            </div>
-                                            <div class="time-comment float-right">55 Days ago</div>
-                                        </div>
-                                        <div class="author-designation-comment">
-                                            <p>Fantastic hotel has come up near Howrah Railway Station. The property is belonged to Sivalika Group. Excellent facilities. Come and experience once
-                                                
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class=" comment-avater">
-                                            <img src="{{ url('assets/img/user.png')}}" alt="">
-                                        </div>
-
-                                        <div class="author-name-rate">
-                                            <div class="author-name float-left">
-                                                BY: <span>Brijesh Pandey</span> 
-                                            </div>
-                                            <div class="comment-ratting float-right ul-li">
-                                                <ul>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                </ul>
-                                            </div>
-                                            <div class="time-comment float-right">30 Days ago</div>
-                                        </div>
-                                        <div class="author-designation-comment">
-                                            <p>
-                                                Excellent hotel in Howrah we were regular to Howrah but never seen this type of hotel ever. Clean rooms great location and pleasant stay overall. We will visit again
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class=" comment-avater">
-                                            <img src="{{ url('assets/img/user.png')}}" alt="">
-                                        </div>
-
-                                        <div class="author-name-rate">
-                                            <div class="author-name float-left">
-                                                BY: <span>Manoj Gupta</span> 
-                                            </div>
-                                            <div class="comment-ratting float-right ul-li">
-                                                <ul>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                </ul>
-                                            </div>
-                                            <div class="time-comment float-right">2 Days ago</div>
-                                        </div>
-                                        <div class="author-designation-comment">
-                                            <p> Very beautiful and well-maintained property, staff behavior is quite decent, nice location, locality is good market place
-                                            </p>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
                     </div>
-            </div>
-        </div>
 
-        <div class="container-xxl py-5">
-            <div class="container">
-                <div id="policies" class="row g-4 justified-center">
-                    <h3 > {{ $hotel->name }} Policies </h3> 
-                </div>
-                <div class="section-border form-14" >
-                    <div class="row p-4">
-                        <div class="col-md-3 py-3"  >
-                            <span> Check-in </span>
-                            <p> 12:00 PM </p>
-                        </div>
-                        <div class="col-md-3 py-3"  >
-                            <span> Check-out </span>
-                            <p> 11:00 AM </p>
-                        </div>
-                        <div class="col-md-3 py-3"  >
-                            <span> Children and Extra Beds </span>
-                            <p> Child upto 8 years is Allowed </p>
-                        </div>
-                        <div class="col-md-3 py-3"  >
-                            <span> Local ID </span>
-                            <p> Allowed </p>
-                        </div>
-                        <div class="col-md-3 py-3"  >
-                            <span> Couple Friendly </span>
-                            <p> Allowed </p>
-                        </div>
-                        <div class="col-md-3 py-3"  >
-                            <span> Foreign Guest </span>
-                            <p> Not allowed </p>
+                    <div class="couse-comment">
+                        <div class="blog-comment-area ul-li about-teacher-2">
+                            <ul class="comment-list">
+                                <li>
+                                    <div class=" comment-avater">
+                                        <img src="{{ url('assets/img/user.png')}}" alt="">
+                                    </div>
+
+                                    <div class="author-name-rate">
+                                        <div class="author-name float-left">
+                                            BY: <span>Bapi Patra</span> 
+                                        </div>
+                                        <div class="comment-ratting float-right ul-li">
+                                            <ul>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                            </ul>
+                                        </div>
+                                        <div class="time-comment float-right">55 Days ago</div>
+                                    </div>
+                                    <div class="author-designation-comment">
+                                        <p>Fantastic hotel has come up near Howrah Railway Station. The property is belonged to Sivalika Group. Excellent facilities. Come and experience once
+                                            
+                                        </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class=" comment-avater">
+                                        <img src="{{ url('assets/img/user.png')}}" alt="">
+                                    </div>
+
+                                    <div class="author-name-rate">
+                                        <div class="author-name float-left">
+                                            BY: <span>Brijesh Pandey</span> 
+                                        </div>
+                                        <div class="comment-ratting float-right ul-li">
+                                            <ul>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                            </ul>
+                                        </div>
+                                        <div class="time-comment float-right">30 Days ago</div>
+                                    </div>
+                                    <div class="author-designation-comment">
+                                        <p>
+                                            Excellent hotel in Howrah we were regular to Howrah but never seen this type of hotel ever. Clean rooms great location and pleasant stay overall. We will visit again
+                                        </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class=" comment-avater">
+                                        <img src="{{ url('assets/img/user.png')}}" alt="">
+                                    </div>
+
+                                    <div class="author-name-rate">
+                                        <div class="author-name float-left">
+                                            BY: <span>Manoj Gupta</span> 
+                                        </div>
+                                        <div class="comment-ratting float-right ul-li">
+                                            <ul>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                            </ul>
+                                        </div>
+                                        <div class="time-comment float-right">2 Days ago</div>
+                                    </div>
+                                    <div class="author-designation-comment">
+                                        <p> Very beautiful and well-maintained property, staff behavior is quite decent, nice location, locality is good market place
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
+        </div>
+    </div>
+
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div id="policies" class="row g-4 justified-center">
+                <h3 > {{ $hotel->name }} Policies </h3> 
+            </div>
+            <div class="section-border form-14" >
+                <div class="row p-4">
+                    <div class="col-md-3 py-3"  >
+                        <span> Check-in </span>
+                        <p> 12:00 PM </p>
+                    </div>
+                    <div class="col-md-3 py-3"  >
+                        <span> Check-out </span>
+                        <p> 11:00 AM </p>
+                    </div>
+                    <div class="col-md-3 py-3"  >
+                        <span> Children and Extra Beds </span>
+                        <p> Child upto 8 years is Allowed </p>
+                    </div>
+                    <div class="col-md-3 py-3"  >
+                        <span> Local ID </span>
+                        <p> Allowed </p>
+                    </div>
+                    <div class="col-md-3 py-3"  >
+                        <span> Couple Friendly </span>
+                        <p> Allowed </p>
+                    </div>
+                    <div class="col-md-3 py-3"  >
+                        <span> Foreign Guest </span>
+                        <p> Not allowed </p>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
 
-        
-        
-        <div class="container newsletter mt-5 wow fadeIn" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeIn;">
-            <div class="row justify-content-center">
-                <div class="col-lg-10 border rounded p-1">
-                    <div class="border rounded text-center p-1">
-                        <div class="bg-white rounded text-center p-5">
-                            <h4 class="mb-4">Subscribe Our <span class="text-primary text-uppercase">Newsletter</span></h4>
-                            <div class="position-relative mx-auto" style="max-width: 400px;">
-                                <input class="form-control w-100 py-3 ps-4 pe-5" type="text" placeholder="Enter your email">
-                                <button type="button" class="btn btn-primary py-2 px-3 position-absolute top-0 end-0 mt-2 me-2">Submit</button>
-                            </div>
+    <div class="container newsletter mt-5 wow fadeIn" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeIn;">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 border rounded p-1">
+                <div class="border rounded text-center p-1">
+                    <div class="bg-white rounded text-center p-5">
+                        <h4 class="mb-4">Subscribe Our <span class="text-primary text-uppercase">Newsletter</span></h4>
+                        <div class="position-relative mx-auto" style="max-width: 400px;">
+                            <input class="form-control w-100 py-3 ps-4 pe-5" type="text" placeholder="Enter your email">
+                            <button type="button" class="btn btn-primary py-2 px-3 position-absolute top-0 end-0 mt-2 me-2">Submit</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     @endsection
 @section('script')
 

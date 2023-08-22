@@ -46,9 +46,7 @@
 						</h5>
 
 						<div class="table-responsive">
-
 							<table id="zero_config" class="table table-striped table-bordered">
-
 								<thead>
 									<tr>
 										<th>Booking</th>
@@ -61,7 +59,6 @@
 										<th>Options</th>
 									</tr>
 								</thead>
-
 								<tbody>
 									@foreach ($bookings as $value)
 									<tr>												
@@ -74,14 +71,19 @@
 										<td>{{ $value->status }}</td>							
 										<td>
 											@if($user->role == 2)
-											<a href="{{ url('/view-booking/'.$value->id) }}" class="btn btn-primary btn-sm"> View </a>
-											<a href="{{ url('/add-guests/'.$value->id) }}" class="btn btn-primary btn-sm"> Guests </a>
-											<a href="{{ url('/allocate-rooms/'.$value->id) }}" class="btn btn-primary btn-sm"> Rooms </a>
-											<a href="{{ url('/change-status/'.$value->id) }}" class="btn btn-danger btn-sm"  onclick="return confirm('Are you sure to cancel booking?')"; > Cancel </a>
+											<a href="{{ url('/view-booking/'.$value->id) }}" class="btn btn-primary"> View </a>
+											<div style="display: inline-block;">
+												<select name="status" id="status" class="select2 form-control change-status" style="width: 100%; height:38px;" onChange="changeBookingStatus(this,{{$value->id}});">
+													<option value="pending" {{ ( 'pending' ==  $value->status )? 'selected' : '' }} > Pending</option>
+													<option value="comfirm" {{ ( 'comfirm' ==  $value->status )? 'selected' : '' }} > Comfirm</option>
+													<option value="arrvied" {{ ( 'arrvied' ==  $value->status )? 'selected' : '' }} > Arrived</option>
+													<option value="cancel" {{ ( 'cancel' ==  $value->status )? 'selected' : '' }} > Cancel </option>
+													<option value="completed" {{ ( 'completed' ==  $value->status )? 'selected' : '' }} > Completed </option>
+												<select>
+											</div>
 											@else
 											<a href="{{ url('view-booking') }}/{{ $value->id }}" class="btn btn-primary">Edit</a>
 											@endif
-											
 										</td>
 									</tr>
 									@endforeach							

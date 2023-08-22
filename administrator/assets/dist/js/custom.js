@@ -303,6 +303,26 @@ function getCitiesByStateId(event){
     });
 }
 
+function changeBookingStatus(event,booking_id){
+    let status = event.value;
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: `${globalUrl}administrator/change-status/`+booking_id,
+        type: "get",
+        data: {
+            status: status,
+        },
+        success: function(result) {
+            location.reload();
+        }
+    });
+}
+
 function getRoomsByHotelId(event){
     let hotel_id = event.value;
     $.ajaxSetup({

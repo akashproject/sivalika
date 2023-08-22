@@ -336,11 +336,13 @@ class BookingController extends Controller
         try {
             $data = $request->all();
             foreach ($data['guest'] as $key => $value) {
+                print_r($value);
                 if(isset($value['identity_image']) && $value['identity_image'] != null){
+                    //echo "hi".$value['identity_image']; exit;
                     $imageFile = strtolower(str_replace(" ","_",$value['name'])).'_identity_'.time().'.'.$value['identity_image']->extension(); 
                     $image = Image::make($value['identity_image']->getRealPath());
-                    $image->save(public_path('identity_image',$imageFile));
-                    $data['guest'][$key]['identity_image'] = config('constant.relativeMediaPath')."/".$imageFile;
+                    $image->fit(340, 340)->save('public/identity/' . $imageFile);
+                    $data['guest'][$key]['identity_image'] = config('constant.identityMediaPath')."/".$imageFile;
                 }                    
             }
             $guestMeta = get_booking_meta_row($data['bookingId'],'guest');
@@ -391,11 +393,19 @@ class BookingController extends Controller
         return redirect()->back()->with('message', 'Booking deleted successfully!');
     }
 
-    public function changeStatus($id) {
-        $booking = Booking::findOrFail($id);
-        $data = ['status'=>"cancel"];
-        $booking->update($data);
+    public function changeStatus(Request $request,$id) {
+        try {
+            $status = request()->get('status');
+            $booking = Booking::findOrFail($id);
+            if ($status == 'cancel' || $status == 'completed') {
+                DB::table('reserved_rooms')->where('booking_id', $id)->delete();
+            }
+            $data = ['status'=>$status];
+            $booking->update($data);
         return redirect()->back()->with('message', 'Booking deleted successfully!');
+        } catch(\Illuminate\Database\QueryException $e){
+            var_dump($e);
+        }
     }
 
     public function random_strings($length_of_string)

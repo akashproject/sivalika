@@ -198,7 +198,7 @@
 											<select>
 										</div>
 									</div>
-									<div class="form-group row">
+									<!-- <div class="form-group row">
 										<label for="state" class="col-sm-4 text-right control-label col-form-label">Booking Status</label>
 										<div class="col-sm-8">
 											<select name="status" id="status" class="select2 form-control custom-select" style="width: 100%; height:36px;" required>	
@@ -209,7 +209,7 @@
 												<option value="completed" {{ ( 'completed' ==  $booking->bookingStatus )? 'selected' : '' }} > Completed </option>
 											<select>
 										</div>
-									</div>
+									</div> -->
 								</div>
 							</div>				
 						</div>

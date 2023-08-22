@@ -41,6 +41,7 @@
 			</div>
 		</form>
 	</div>
+	@if(session()->has('filterData'))
 	<div class="card">
 		<form class="form-horizontal" method="post" action="{{ url('save-front-desk-booking') }}" enctype="multipart/form-data">
 			@csrf
@@ -206,7 +207,7 @@
 									<div class="form-group row">
 										<label for="payment_type" class="col-sm-4 text-right control-label col-form-label">Payment Type</label>
 										<div class="col-sm-8">
-											<select name="payment_type" id="payment_type" class="select2 form-control custom-select" style="width: 100%; height:36px;" required>	
+											<select name="payment_type" id="payment_type" class="select2 form-control custom-select" style="width: 100%; height:36px;">	
 												<option value="" > Select Payment Type</option>
 												<option value="Cash" > Cash</option>
 												<option value="Upi" > Upi </option>
@@ -265,6 +266,7 @@
 		</form>
 
 	</div>
+	@endif
 </div>              
 
 @endsection
