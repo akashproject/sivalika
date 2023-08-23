@@ -15,7 +15,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Razorpay\Api\Api;
 
+use Session;
+use Exception;
 use Mail;
 
 class BookingController extends Controller
@@ -188,4 +191,7 @@ class BookingController extends Controller
         
     }
 
+    public function payment(Request $request){
+        return view('customer.payment');
+    }
 }
