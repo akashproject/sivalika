@@ -99,13 +99,17 @@ class BookingController extends Controller
         }
     }
 
-    
-
     public function checkout(Request $request) {
         try {
             $checkinRooms = $request->session()->get('checkinRooms');
-           
+            if ($checkinRooms === null) {
+                return redirect('/');
+            }
+
             $hotel = Hotel::findOrFail($checkinRooms['hotel_id']);
+            if ($hotel === null) {
+                return redirect('/');
+            }
             return view('booking.checkout',compact('checkinRooms','hotel'));
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
@@ -129,6 +133,18 @@ class BookingController extends Controller
             }
             Auth::login($customer);
            
+            if($data['payTime'] = 'book_now'){
+                $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+                $order = $api->order->create(
+                    array(
+                        'receipt' => 'order_'.random_strings(6),
+                        'amount' => $data['hotel_id'] * 100,
+                        'currency' => 'INR'
+                    )
+                );
+                $request->session()->put('order_id',$order['id']);
+                return redirect('/payment-process');
+            }
 
             /*Create Booking*/
             $rooms = $data['rooms'];

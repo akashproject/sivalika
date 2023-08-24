@@ -123,7 +123,7 @@
                 <h5> Login Yourself</h5>
             </div>
             <div class="personal_form_data" >
-                <form id="cancel-booking- method="post" action="{{ url('cancel-booking')}}" >
+                <form id="cancel-booking" method="post" action="{{ url('cancel-booking')}}" >
                     @csrf
                     
                 </form>

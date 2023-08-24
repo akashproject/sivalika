@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Laravel - Razorpay Payment Gateway Integration</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-</head>
-<body>
-    <div id="app">
-        <main class="py-4">
+@extends('layouts.main')
+    @section('content')
+        <div class="container-xxl py-5">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 offset-3 col-md-offset-6">
@@ -40,7 +29,7 @@
                             </div>
   
                             <div class="card-body text-center">
-                                <form action="{{ route('razorpay.payment.store') }}" method="POST" >
+                                <form action="{{ route('confirm-booking') }}" method="POST" >
                                     @csrf
                                     <script src="https://checkout.razorpay.com/v1/checkout.js"
                                             data-key="{{ env('RAZORPAY_KEY') }}"
@@ -60,7 +49,24 @@
                     </div>
                 </div>
             </div>
-        </main>
-    </div>
-</body>
-</html>
+        </div>
+        <div class="container newsletter mt-5 wow fadeIn" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeIn;">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 border rounded p-1">
+                    <div class="border rounded text-center p-1">
+                        <div class="bg-white rounded text-center p-5">
+                            <h4 class="mb-4">Subscribe Our <span class="text-primary text-uppercase">Newsletter</span></h4>
+                            <div class="position-relative mx-auto" style="max-width: 400px;">
+                                <input class="form-control w-100 py-3 ps-4 pe-5" type="text" placeholder="Enter your email">
+                                <button type="button" class="btn btn-primary py-2 px-3 position-absolute top-0 end-0 mt-2 me-2">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endsection
+@section('script')
+<!-- ============================================================== -->
+<!-- CHARTS -->
+@endsection

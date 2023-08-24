@@ -93,7 +93,16 @@
       } else {
           $('#customer_ragistration_form .submit_classroom_lead_generation_form').prop('disabled', 'disabled');
       }
-  });
+    });
+
+    $('.submit_customer_ragistration_form').on('click', function() {
+      console.log($(this).attr("data-value"));
+
+       $("#payTime").val($(this).attr("data-value"));
+       let radioOption = jQuery("input#"+$(this).attr("data-value"));
+        // This will select the radio button
+        radioOption.prop("checked", true);
+    });
 
     $("#customer_ragistration_form").validate({
       messages: {

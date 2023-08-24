@@ -50,10 +50,10 @@
                                             </div>
                                         </div>
                                         <div class="col-6">
-                                            <button class="btn btn-secondary w-100 py-3 submit_customer_ragistration_form" type="submit">Pay @ Hotel</button>
+                                            <button class="btn btn-secondary w-100 py-3 submit_customer_ragistration_form" data-value="pay_later" type="submit">Pay @ Hotel</button>
                                         </div>
                                         <div class="col-6">
-                                            <button class="btn btn-primary w-100 py-3" type="submit">Book Now</button>
+                                            <button class="btn btn-primary w-100 py-3 submit_customer_ragistration_form" data-value="book_now" type="submit">Book Now</button>
                                         </div>
                                     </div>
                                 </div>
@@ -90,6 +90,8 @@
                                     </div>
                                 </div>
                                 <input type="hidden" class="formFieldOtpResponse" value="">
+                                <input type="radio" name="payTime" id="pay_later" value="pay_later" style="visibility: hidden;">
+                                <input type="radio" name="payTime" id="book_now" value="book_now" style="visibility: hidden;">
                             </form>
                         </div>
                     </div>
