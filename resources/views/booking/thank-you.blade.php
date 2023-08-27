@@ -74,7 +74,7 @@
                         </div>
                         <div class="text-right">
                         @if($booking->payment == "pending")
-                        <a href="javascript:void()" class="btn-secondary text-white p-2 px-5"> Pay Now </a>
+                        <a href="{{ url('payment-process/'.$booking->booking_id) }}" class="btn-secondary text-white p-2 px-5"> Pay Now </a>
                         @endif
                         </div>
                     </div>

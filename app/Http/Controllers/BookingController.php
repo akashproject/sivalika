@@ -55,20 +55,6 @@ class BookingController extends Controller
         
     }
 
-    public function proceedToCheckout(Request $request) {
-        try {
-            $data = $request->all();
-            // echo "<pre>"; print_r($data);
-            // exit;
-            unset($data['_token']);
-            $data['amount'] = base64_decode($data['amount']);
-            $request->session()->put('checkinRooms', $data);
-            return redirect('/checkout');
-        } catch(\Illuminate\Database\QueryException $e){
-            var_dump($e);
-        }
-    }
-
     public function updateBooking(Request $request) {
         try {
             $data = $request->all();
@@ -99,8 +85,23 @@ class BookingController extends Controller
         }
     }
 
+    public function proceedToCheckout(Request $request) {
+        try {
+            $data = $request->all();
+            // echo "<pre>"; print_r($data);
+            // exit;
+            unset($data['_token']);
+            $data['amount'] = base64_decode($data['amount']);
+            $request->session()->put('checkinRooms', $data);
+            return redirect('/checkout');
+        } catch(\Illuminate\Database\QueryException $e){
+            var_dump($e);
+        }
+    }
+
     public function checkout(Request $request) {
         try {
+            
             $checkinRooms = $request->session()->get('checkinRooms');
             if ($checkinRooms === null) {
                 return redirect('/');
@@ -116,37 +117,36 @@ class BookingController extends Controller
         }
     }
 
-    public function confirmBooking(Request $request){
+    public function bookingProcess(Request $request){
         try {
             $data = $request->all();
             $data = array_merge($data,$request->session()->get('checkinRooms'));
             
-            $customer = Customer::where('mobile',$data['mobile'])->first();
-            if($customer === null){
-                $customerData = array(
-                    'name'=>$data['firstname'].' '.$data['lastname'],
-                    'mobile'=>$data['mobile'],
-                    'email'=>$data['email'],
-                    'passcode' => Hash::make($data['mobile']),
-                );
-                $customer = Customer::create($customerData);
-            }
-            Auth::login($customer);
-           
-            if($data['payTime'] = 'book_now'){
-                $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
-                $order = $api->order->create(
-                    array(
-                        'receipt' => 'order_'.random_strings(6),
-                        'amount' => $data['hotel_id'] * 100,
-                        'currency' => 'INR'
-                    )
-                );
-                $request->session()->put('order_id',$order['id']);
-                return redirect('/payment-process');
+            if (Auth::check()) {
+                $customer = Auth::user();
+            } else {
+                $customer = Customer::where('mobile',$data['mobile'])->first();
+                if($customer === null){
+                    $customerData = array(
+                        'name'=>$data['firstname'].' '.$data['lastname'],
+                        'mobile'=>$data['mobile'],
+                        'email'=>$data['email'],
+                        'passcode' => Hash::make($data['mobile']),
+                    );
+                    $customer = Customer::create($customerData);
+                }
+                Auth::login($customer);
             }
 
-            /*Create Booking*/
+            $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+            $order = $api->order->create(
+                array(
+                    'receipt' => 'order_'.random_strings(6),
+                    'amount' => $data['amount'] * 100,
+                    'currency' => 'INR'
+                )
+            );
+            
             $rooms = $data['rooms'];
             $checkinData = [
                 'user_id' => $customer->id,
@@ -160,7 +160,7 @@ class BookingController extends Controller
                 'purpose' => "",
                 'booking_type' => "Website",
                 'payment_type' => "Upi",
-                'order_id' => '',
+                'order_id' => $order['id'],
                 'payment_id' => '',
                 'payment' => "pending",
                 'status' => "comfirm",
@@ -173,9 +173,33 @@ class BookingController extends Controller
                 }
             }
             $request->session()->forget('filterData');  
+
+            if($data['payTime'] == 'book_now'){
+                return redirect('/payment-process/'.$booking->booking_id);
+            }
+
+            if($data['payTime'] == 'pay_later'){
+                return redirect('/confirm-booking/'.$booking->booking_id);
+            }
+
+        } catch(\Illuminate\Database\QueryException $e){
+            var_dump($e);
+        }
+        
+    }
+
+
+    public function confirmBooking($booking_id,Request $request){
+        try {
+
+            /*get Booking*/
+            $booking = Booking::where('booking_id',$booking_id)->first();
+            if ($booking === null) {
+                return redirect()->back()->with('message', 'Invalid booking!');
+            }
+
+            $customer = Auth::user();
             $request->session()->put("booking",$booking);
-
-
             $user = array(
                 'name' => $customer->name,
                 'email' => $customer->email,
@@ -187,8 +211,8 @@ class BookingController extends Controller
                 'booking_id' => $booking->booking_id,
                 'amount' => $booking->amount,
                 'hotel_id' => $booking->hotel_id,
-                'checkin' => date("d, M",strtotime($data['t-start'])),
-                'checkout' => date("d, M",strtotime($data['t-end'])),
+                'checkin' => date("d, M",strtotime($booking->checkin)),
+                'checkout' => date("d, M",strtotime($booking->checkout)),
                 'total_guest' => $booking->total_guest,
                 'rooms' => $booking->rooms,
                 'customer_name' => $customer->name,
@@ -198,8 +222,7 @@ class BookingController extends Controller
                 $m->from('bookings@sivalikagroup.com', 'Sivalika Group');
                 $m->to($user['email'], $user['name'])->subject('Reservation Confirmed at '.get_hotel_by_id($user['hotel_id'])->name.'. Booking ID: '.$user['booking_id']);
             });
-            // print_r($mail);
-            // exit;
+            
             return redirect('/thank-you');
         } catch(\Illuminate\Database\QueryException $e){
             var_dump($e);
@@ -207,7 +230,43 @@ class BookingController extends Controller
         
     }
 
-    public function payment(Request $request){
-        return view('customer.payment');
+    public function payment($booking_id,Request $request){
+        try {
+            
+            $user = Auth::user();
+            $booking = Booking::where('booking_id',$booking_id)->first();
+            if ($booking === null) {
+                return redirect()->back()->with('message', 'Invalid booking!');
+            }
+            $booking->amount = $booking->amount*100;
+            return view('customer.payment',compact('booking','user'));
+        } catch(\Illuminate\Database\QueryException $e){
+            var_dump($e);
+        }
     }
+
+    public function paymentSuccess($payment_id,Request $request){
+        try {
+            $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+            $payment = $api->payment->fetch($payment_id);
+           // $payment = $payment->capture(array('amount' => $payment->amount));
+
+            // if($payment['captured']  != "1") {
+            //     return view('customer.payment-failed');
+            // } 
+            $method = $payment['method'];
+            $paymentData = [
+                'payment_id'=>$payment_id,
+                'payment_type'=>$method,
+                'payment' => 'success'
+            ];
+            $booking = Booking::where('order_id', $payment['order_id']);
+            $booking->update($paymentData);
+            $booking = Booking::where('order_id', $payment['order_id'])->first();
+            return redirect('/confirm-booking/'.$booking->booking_id);
+        } catch(\Illuminate\Database\QueryException $e){
+            var_dump($e);
+        }
+    }
+    
 }

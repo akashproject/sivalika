@@ -13,19 +13,20 @@
                             <h5> Enter your booking details</h5>
                         </div>
                         <div class="personal_form_data" >
-                            <form id="customer_ragistration_form" method="post" action="{{ url('confirm-booking')}}" >
+                            <form id="customer_ragistration_form" method="post" action="{{ url('booking-process')}}" >
                                 @csrf
                                 <div class="registration_process step-1 active " >
                                     <div class="row g-3">
                                         <div class="col-md-6 mb-2">
                                             <div class="form-floating">
-                                                <input type="text" class="form-control" name="firstname" id="formFieldFirstName" placeholder="Your Name" value="{{(Auth::check())?Auth::user()->name:''}}" required>
+                                                <input type="text" class="form-control" name="firstname" id="formFieldFirstName" placeholder="Your Name" value="{{(Auth::check())?current(explode(' ',Auth::user()->name)):''}}" required>
                                                 <label for="name">First Name</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-2">
                                             <div class="form-floating">
-                                                <input type="text" class="form-control" name="lastname" id="formFieldLastName" placeholder="Your Name" value="{{(Auth::check())?Auth::user()->name:''}}" required>
+                                                @php $arr = explode(' ',Auth::user()->name); @endphp
+                                                <input type="text" class="form-control" name="lastname" id="formFieldLastName" placeholder="Your Name" value="{{(Auth::check())?end($arr):''}}" required>
                                                 <label for="name">Last Name</label>
                                             </div>
                                         </div>

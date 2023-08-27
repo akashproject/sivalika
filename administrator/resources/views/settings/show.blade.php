@@ -73,6 +73,20 @@
 										</div>
 
 										<div class="form-group row">
+											<label for="razorpay_key" class="col-sm-3 text-right control-label col-form-label">Razorpay Key</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" name="razorpay_key" id="razorpay_key" value="{{ (isset($settings['razorpay_key']))?$settings['razorpay_key']:'' }}" >
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<label for="razorpay_secret" class="col-sm-3 text-right control-label col-form-label">Razorpay Secret</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" name="razorpay_secret" id="razorpay_secret" value="{{ (isset($settings['razorpay_secret']))?$settings['razorpay_secret']:'' }}" >
+											</div>
+										</div>
+
+										<div class="form-group row">
 											<label for="footer_about" class="col-sm-3 text-right control-label col-form-label">Footer About</label>
 											<div class="col-sm-9">
 												<textarea class="form-control" name="footer_about" id="footer_about" placeholder="Enter footer about Here" >{{ (isset($settings['footer_description']))?$settings['footer_about']:'' }}</textarea>

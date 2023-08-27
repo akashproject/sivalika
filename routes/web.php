@@ -10,9 +10,10 @@ Route::post('/check-availability', [App\Http\Controllers\BookingController::clas
 Route::get('/hotel/{slug}', [App\Http\Controllers\HotelController::class, 'view'])->name('hotel');
 Route::post('/proceed-to-checkout', [App\Http\Controllers\BookingController::class, 'proceedToCheckout'])->name('proceed-to-checkout');
 Route::post('/update-booking', [App\Http\Controllers\BookingController::class, 'updateBooking'])->name('update-booking');
-
 Route::get('/checkout', [App\Http\Controllers\BookingController::class, 'checkout'])->name('checkout');
-Route::post('/confirm-booking', [App\Http\Controllers\BookingController::class, 'confirmBooking'])->name('confirm-booking');
+
+Route::post('/booking-process', [App\Http\Controllers\BookingController::class, 'bookingProcess'])->name('booking-process');
+Route::get('/confirm-booking/{booking_id}', [App\Http\Controllers\BookingController::class, 'confirmBooking'])->name('confirm-booking');
 Route::post('/submit-mobile-otp', [App\Http\Controllers\IndexController::class, 'submitMobileOtp'])->name('submit-mobile-otp');
 Route::get('/thank-you', [App\Http\Controllers\IndexController::class, 'thankYou'])->name('thank-you');
 
@@ -23,7 +24,8 @@ Route::get('/dashboard', function () { return view('dashboard');})->middleware('
 Route::get('/logout',  [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 
-Route::get('/payment-process',  [App\Http\Controllers\BookingController::class, 'payment'])->name('payment');
+Route::get('/payment-process/{booking_id}',  [App\Http\Controllers\BookingController::class, 'payment'])->name('payment');
+Route::get('/payment-success/{payment_id}',  [App\Http\Controllers\BookingController::class, 'paymentSuccess'])->name('payment');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/profile', [App\Http\Controllers\CustomerController::class, 'profile'])->name('profile');

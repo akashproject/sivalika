@@ -78,13 +78,13 @@
                                         @case("comfirm")
                                             <a href="{{ url('cancel-booking/'.$booking->id) }}" class=" btn-primary text-white p-2 px-5 mr-3 cancel-booking-btn "  onclick="return confirm('Are you sure to cancel the booking?')"; > Cancel Booking </a>
                                             @if($booking->payment == "pending" && $booking->status != "cancel")
-                                                <a href="javascript:void()" class="btn-secondary text-white p-2 px-5 pay-now-btn"> Pay Now </a>
+                                                <a href="{{ url('payment-process/'.$booking->booking_id) }}" class="btn-secondary text-white p-2 px-5 pay-now-btn"> Pay Now </a>
                                             @endif
                                         @break
                                         @case("arrvied")
                                             <a href="javascript:void(0)" class=" btn-secondary text-white p-2 px-5 mr-3 cancel-booking-btn " > Active </a>
                                             @if($booking->payment == "pending" && $booking->status != "cancel")
-                                                <a href="javascript:void()" class="btn-secondary text-white p-2 px-5 pay-now-btn"> Pay Now </a>
+                                                <a href="{{ url('payment-process/'.$booking->booking_id) }}" class="btn-secondary text-white p-2 px-5 pay-now-btn"> Pay Now </a>
                                             @endif
                                         @break
                                         @case("completed")

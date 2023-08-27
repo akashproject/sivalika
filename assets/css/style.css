@@ -618,7 +618,7 @@ a.login-btn {
 .submenu {
     box-shadow: 2px 2px 2px 0 rgb(0 0 0 / 4%);
     width: 100%;
-    overflow-x: scroll;
+    overflow: hidden;
 }
 
 ul.submenu_content {
@@ -1042,6 +1042,9 @@ input::-webkit-inner-spin-button {
     padding: 6px;
 }
 @media (max-width: 768px) {
+    .submenu {
+        overflow-x: scroll;
+    }
     .font-size-14 {
         font-size: 14px;
     }

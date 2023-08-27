@@ -67,8 +67,17 @@ class IndexController extends Controller
 
     public function thankYou(Request $request) {
         try {
+            
+            if (!Auth::check()) {
+                return redirect('/');
+            }
+
             $user = Auth::user();
+            
             $booking = $request->session()->get("booking");
+            if (!$booking) {
+                return redirect('/');
+            }
             $hotel = Hotel::findOrFail($booking->hotel_id);
             $reserve_rooms = ReservedRooms::where("booking_id",$booking->id)->get();
             return view('booking.thank-you',compact('booking','hotel','reserve_rooms'));
