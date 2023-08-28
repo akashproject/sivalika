@@ -40,5 +40,10 @@
 
         }
     </script>
+    <div style="text-align:center" >
+        <h3> Please Wait </h3>
+        <h5> Your Transaction is Processing </h5>
+        <h5 style="color:red"> DO NOT CLOSE YOUR BROWSER </h5>
+    </div>
 </body>
 </html>

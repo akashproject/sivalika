@@ -25,7 +25,7 @@
                                         </div>
                                         <div class="col-md-6 mb-2">
                                             <div class="form-floating">
-                                                @php $arr = explode(' ',Auth::user()->name); @endphp
+                                                @php $arr = (Auth::check())?explode(' ',Auth::user()->name):''; @endphp
                                                 <input type="text" class="form-control" name="lastname" id="formFieldLastName" placeholder="Your Name" value="{{(Auth::check())?end($arr):''}}" required>
                                                 <label for="name">Last Name</label>
                                             </div>

@@ -171,8 +171,11 @@
 										<div class="col-sm-8">
 											<select name="payment_type" id="payment_type" class="select2 form-control custom-select" style="width: 100%; height:36px;" required>	
 												<option value="" > Select Payment Type</option>
+												<option value="card" {{ ( 'card' ==  $booking->payment_type )? 'selected' : '' }}> Credit/Debit Card</option>
+												<option value="netbanking" {{ ( 'netbanking' ==  $booking->payment_type )? 'selected' : '' }}> Net Banking</option>
+												<option value="credit" {{ ( 'credit' ==  $booking->payment_type )? 'selected' : '' }}> Credit Card</option>
 												<option value="Cash" {{ ( 'Cash' ==  $booking->payment_type )? 'selected' : '' }}> Cash</option>
-												<option value="Upi" {{ ( 'Upi' ==  $booking->payment_type )? 'selected' : '' }} > Upi </option>
+												<option value="upi" {{ ( 'upi' ==  $booking->payment_type )? 'selected' : '' }} > Upi </option>
 												<option value="Bank Transfer" {{ ( 'Bank Transfer' ==  $booking->payment_type )? 'selected' : '' }} > Bank Transfer </option>
 												<option value="Card Mechine" {{ ( 'Card Mechine' ==  $booking->payment_type )? 'selected' : '' }} > Card Mechine </option>
 											<select>

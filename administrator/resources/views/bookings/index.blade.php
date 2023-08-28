@@ -39,7 +39,7 @@
 
 						<h5 class="card-title">
 							@if($user->role == 2)
-							<a href="{{ url('/add-booking-from-front-desk') }}" class="btn btn-success"> New Checkin </a>
+							<a href="{{ url('/add-booking-from-front-desk') }}" class="btn btn-success"> New Booking </a>
 							@else
 							<a href="{{ url('/add-booking') }}" class="btn btn-primary"> Create New Booking </a>
 							@endif

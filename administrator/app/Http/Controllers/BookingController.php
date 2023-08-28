@@ -176,6 +176,7 @@ class BookingController extends Controller
         try {
             $booking = Booking::find($booking_id); 
             if($booking == null) return redirect()->route('bookings')->with('message', 'No Record found');
+            if($booking->status != 'arrvied') return redirect()->route('view-booking',['id'=>$booking_id])->with('message', 'Customer not CHECK IN yet');
 
             $guestData = json_decode(get_booking_meta($booking_id,'guest'),true);        
             $guestCount = (isset($booking))?$booking->total_guest:$filterData['total_guest']; 
@@ -203,7 +204,7 @@ class BookingController extends Controller
         try {
             $booking = Booking::find($booking_id);    
             if($booking == null) return redirect()->route('bookings')->with('message', 'No Record found');
-
+            if($booking->status != 'arrvied') return redirect()->route('view-booking',['id'=>$booking_id])->with('message', 'Customer not CHECK IN yet');
             $rooms = json_decode(get_booking_meta($booking_id,'room'),true);    
             
             $checkinTime = $booking->checkin; // request()->get('checkin').config('constant.checkinTime');
@@ -326,7 +327,7 @@ class BookingController extends Controller
                 }
             }
             $request->session()->forget('filterData');
-            return redirect()->route('add-guests', $booking->id)->with('message', 'Booking Created Step 2');
+            return redirect()->route('view-booking', $booking->id)->with('message', 'Booking has been created!!');
         } catch(\Illuminate\Database\QueryException $e){
             var_dump($e);
         }
@@ -336,7 +337,6 @@ class BookingController extends Controller
         try {
             $data = $request->all();
             foreach ($data['guest'] as $key => $value) {
-                print_r($value);
                 if(isset($value['identity_image']) && $value['identity_image'] != null){
                     //echo "hi".$value['identity_image']; exit;
                     $imageFile = strtolower(str_replace(" ","_",$value['name'])).'_identity_'.time().'.'.$value['identity_image']->extension(); 
