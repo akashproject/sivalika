@@ -250,12 +250,23 @@ $(function() {
     })
 
     $(document).on("click",".removeLecture",function() {
-        lectureField = $(this).parent().parent().remove();
+        $(this).parent().parent().remove();
     })
 
     $(document).on("click",".remove-room", function(){
-        lectureField = $(this).parent().parent().remove();
+        $(this).parent().parent().remove();
     })
+
+    $(document).on("click",".addNewItem", function(){
+        let elem = $(".item_content .row:first").clone();
+        $(".item_content").append(elem);
+    })
+
+    $(document).on("click",".removeDiningItem", function(){
+        $(this).parent().parent().remove();
+    })
+
+    
 
     $(document).on("click",".addNewRoom", function(){
         let count = $(this).attr("data-roomcount");

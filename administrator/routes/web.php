@@ -90,6 +90,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/allocate-rooms/{id}', [App\Http\Controllers\BookingController::class, 'allocateRooms'])->name('allocate-rooms');
     Route::post('/assign-rooms', [App\Http\Controllers\BookingController::class, 'assignRooms'])->name('assign-rooms');
 
+    Route::get('/add-dining/{id}', [App\Http\Controllers\BookingController::class, 'addDining'])->name('add-dining');
+    Route::post('/save-dining', [App\Http\Controllers\BookingController::class, 'saveDining'])->name('save-dining');
+    
     //Route::get('/check-availability', [App\Http\Controllers\RoomController::class, 'availability'])->name('customers');
 
     //Add Gallery

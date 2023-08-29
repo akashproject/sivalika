@@ -387,6 +387,50 @@ class BookingController extends Controller
         }
     }
 
+    public function addDining($booking_id,Request $request){
+        try {
+            $booking = Booking::find($booking_id); 
+            if($booking == null) return redirect()->route('bookings')->with('message', 'No Record found');
+            if($booking->status != 'arrvied') return redirect()->route('view-booking',['id'=>$booking_id])->with('message', 'Customer not CHECK IN yet');
+
+            $roomType = array();
+            foreach(json_decode($booking->rooms,true) as $key => $value) {
+                if ($value) {
+                    $roomType[] = $key;
+                }
+            }
+
+            $roomMeta = json_decode(get_booking_meta_row($booking->id,'room')->meta_value,true);
+            $hotelRooms = HotelRoom::where("hotel_id",$booking->hotel_id)
+            ->whereIn('id',$roomMeta)->get(); 
+            
+            return view('bookings.addDining',compact('hotelRooms','booking_id'));
+        } catch(\Illuminate\Database\QueryException $e){
+            //throw $th;
+        }
+    }
+
+    public function saveDining(Request $request){
+        try {
+            $data = $request->all();
+            echo "<pre>"; print_r($data);
+            $arr = array();
+            $i = 0;
+            $key = '';
+            foreach ($data['item'] as $key => $value) {
+                $arr[$i][array_key_first($value)]= $value[array_key_first($value)];
+                if ($key != array_key_first($value) ) {
+                    $key = array_key_first($value);
+                    $i++;
+                }
+            }
+
+            print_r($arr);
+            exit;
+        } catch(\Illuminate\Database\QueryException $e){
+            //throw $th;
+        }
+    }
     public function delete($id) {
         $booking = Booking::findOrFail($id);
         $booking->delete();

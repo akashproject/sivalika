@@ -74,6 +74,10 @@
                     <a class="nav-link" href="{{ url('allocate-rooms/'.$booking->bookingId)}}"><span class="hidden-sm-up"></span>
                       <span class="hidden-xs-down">Room Allotment</span></a>
                   </li>
+				  <li class="nav-item">
+                    <a class="nav-link" href="{{ url('add-dining/'.$booking->bookingId)}}"><span class="hidden-sm-up"></span>
+                      <span class="hidden-xs-down">Dining</span></a>
+                  </li>
                 </ul>
 				<div class="tab-content tabcontent-border">
 					<div class="tab-pane active" id="checkin" role="tabpanel">
