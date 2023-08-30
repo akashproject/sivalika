@@ -43,6 +43,40 @@
 					<div class="tab-pane active" id="rooms" role="tabpanel">
 						<div class="p-20">
 							<h4 class="card-title mt-3"> Dining Service </h4>
+                            <div class="row py-3" style="background: #cccccc6b;">
+                                @if($diningMeta != null)
+                                <div class="col-md-3">
+                                    <h5>Room</h5>
+                                    @foreach($diningMeta['room'] as $value)
+                                        <p> {{$value}} </p>
+                                    @endforeach
+                                </div>
+                                <div class="col-md-3">
+                                    <h5>Item</h5>
+                                    @foreach($diningMeta['name'] as $value)
+                                        <p> {{$value}} </p>
+                                    @endforeach
+                                </div>
+                                <div class="col-md-3">
+                                    <h5>Qty</h5>
+                                    @foreach($diningMeta['qty'] as $value)
+                                        <p> {{$value}} </p>
+                                    @endforeach
+                                </div>
+                                <div class="col-md-3">
+                                    <h5>Price</h5>
+                                    @foreach($diningMeta['price'] as $value)
+                                        <p> {{$value}} </p>
+                                    @endforeach
+                                </div>
+                                @endif
+                            </div>
+                            <div class="row py-3" style="background: #cccccc6b;">
+                                <div class="col-12 text-right" >
+                                    <h3> Total Cost </h3>
+                                    <p> {{array_sum($diningMeta['price'])}}/- </p>
+                                </div>
+                            </div>
 							<div class="row order_row">
                                 <label class="col-sm-1 text-right control-label col-form-label">Order 1 </label>
                                 <div class="col-md-11">
@@ -50,10 +84,10 @@
                                         <div class="row mb-4">	
                                             <div class="col-sm-2 mb-2">
                                                 <label for="room" class="">Select Room :</label>
-                                                <select name="item[][room_id]" class="select2 form-control custom-select" style="width: 100%; height:36px;" required="">	
+                                                <select name="item[][room]" class="select2 form-control custom-select" style="width: 100%; height:36px;" required="">	
                                                     <option value=""> Select Room</option>
                                                     @foreach($hotelRooms as $value)
-                                                    <option value="{{$value->id}}"> {{$value->hotel_room_no}}</option>
+                                                    <option value="{{$value->hotel_room_no}}"> {{$value->hotel_room_no}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>										

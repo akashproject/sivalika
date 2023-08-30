@@ -377,7 +377,7 @@ class BookingController extends Controller
                 ->update(['meta_value' => json_encode($data['hotel_room'])]);
             } else {
                 DB::table('booking_meta')->insert(
-                    ['booking_id' => $data['bookingId'], 'meta_key' => 'guest', 'meta_value' => json_encode($data['hotel_room'])]
+                    ['booking_id' => $data['bookingId'], 'meta_key' => 'room', 'meta_value' => json_encode($data['hotel_room'])]
                 );
             }
 
@@ -399,12 +399,20 @@ class BookingController extends Controller
                     $roomType[] = $key;
                 }
             }
+            if(get_booking_meta_row($booking->id,'room') == null) return redirect()->route('view-booking',['id'=>$booking_id])->with('message', 'Room not allocated to customer yet');
 
+            //Existing Order
+            $diningMeta = null;
+            if(get_booking_meta_row($booking->id,'dining') != null) {
+                $diningMeta = json_decode(get_booking_meta_row($booking->id,'dining')->meta_value,true);
+            }
+
+            // Get Rooms
             $roomMeta = json_decode(get_booking_meta_row($booking->id,'room')->meta_value,true);
             $hotelRooms = HotelRoom::where("hotel_id",$booking->hotel_id)
             ->whereIn('id',$roomMeta)->get(); 
             
-            return view('bookings.addDining',compact('hotelRooms','booking_id'));
+            return view('bookings.addDining',compact('hotelRooms','booking_id','diningMeta'));
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
         }
@@ -413,20 +421,28 @@ class BookingController extends Controller
     public function saveDining(Request $request){
         try {
             $data = $request->all();
-            echo "<pre>"; print_r($data);
             $arr = array();
             $i = 0;
-            $key = '';
+            
             foreach ($data['item'] as $key => $value) {
-                $arr[$i][array_key_first($value)]= $value[array_key_first($value)];
-                if ($key != array_key_first($value) ) {
-                    $key = array_key_first($value);
-                    $i++;
-                }
+                $arr[array_key_first($value)][$i]= $value[array_key_first($value)];
+                $i++;
             }
 
-            print_r($arr);
-            exit;
+            $diningMeta = get_booking_meta_row($data['bookingId'],'dining');
+            if($diningMeta !== null){
+                echo "<pre>"; print_r(json_decode($diningMeta));
+                print_r($arr); exit;
+                DB::table('booking_meta')
+                ->where('id', $diningMeta->id)
+                ->update(['meta_value' => json_encode($data['hotel_room'])]);
+            } else {
+                DB::table('booking_meta')->insert(
+                    ['booking_id' => $data['bookingId'], 'meta_key' => 'dining', 'meta_value' => json_encode($arr)]
+                );
+            }
+
+            return redirect()->back()->with('message', 'Order updated successfully!');
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
         }
