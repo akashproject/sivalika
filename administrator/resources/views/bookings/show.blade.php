@@ -78,6 +78,10 @@
                     <a class="nav-link" href="{{ url('add-dining/'.$booking->bookingId)}}"><span class="hidden-sm-up"></span>
                       <span class="hidden-xs-down">Dining</span></a>
                   </li>
+				  <li class="nav-item">
+                    <a class="nav-link" href="{{ url('add-additonal-charge/'.$booking->bookingId)}}"><span class="hidden-sm-up"></span>
+                      <span class="hidden-xs-down">Additional Charge</span></a>
+                  </li>
                 </ul>
 				<div class="tab-content tabcontent-border">
 					<div class="tab-pane active" id="checkin" role="tabpanel">
@@ -203,6 +207,12 @@
 												<option value="Phone Call" {{ ( 'Phone Call' ==  $booking->booking_type )? 'selected' : '' }} >Phone Call</option>
 												<option value="Website" {{ ( 'Website' ==  $booking->booking_type )? 'selected' : '' }} >Website</option>
 											<select>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="booking_type" class="col-sm-4 text-right control-label col-form-label"></label>
+										<div class="col-sm-8">
+											<a href="{{ url('/view-report/'.$booking->id) }}" class="btn btn-primary"> Generate Report </a>
 										</div>
 									</div>
 									<!-- <div class="form-group row">
