@@ -92,6 +92,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/add-dining/{id}', [App\Http\Controllers\BookingController::class, 'addDining'])->name('add-dining');
     Route::post('/save-dining', [App\Http\Controllers\BookingController::class, 'saveDining'])->name('save-dining');
+
+    Route::get('/add-additonal-charge/{id}', [App\Http\Controllers\BookingMetaController::class, 'addAdditionalCharge'])->name('add-additonal-charge');
+    Route::post('/save-additonal-charge', [App\Http\Controllers\BookingMetaController::class, 'saveAdditionalCharge'])->name('save-additonal-charge');
     
     //Route::get('/check-availability', [App\Http\Controllers\RoomController::class, 'availability'])->name('customers');
 
