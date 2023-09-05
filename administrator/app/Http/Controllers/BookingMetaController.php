@@ -61,13 +61,12 @@ class BookingMetaController extends Controller
     public function saveAdditionalCharge(Request $request){
         try {
             $data = $request->all();            
-            
-            $diningMeta = get_booking_meta_row($data['bookingId'],'additionalCharge');
-            if($diningMeta !== null){
-                $existing = json_decode($diningMeta->meta_value,true);
+            $additionalChargeMeta = get_booking_meta_row($data['bookingId'],'additionalCharge');
+            if($additionalChargeMeta !== null){
+                $existing = json_decode($additionalChargeMeta->meta_value,true);
                 $arr = array_merge_recursive($existing,$data['item']);
                 DB::table('booking_meta')
-                ->where('id', $diningMeta->id)
+                ->where('id', $additionalChargeMeta->id)
                 ->update(['meta_value' => json_encode($arr)]);
             } else {
                 DB::table('booking_meta')->insert(
@@ -81,4 +80,16 @@ class BookingMetaController extends Controller
         }
     }
 
+    public function previewBooking($id,Request $request){
+        try {
+            $booking = Booking::find($id); 
+            $hotel = Hotel::find($booking->hotel_id)->name;
+            $diningMeta = get_booking_meta_row($id,'dining');
+            $additionalCharge = get_booking_meta_row($id,'additionalCharge');
+          
+            return view('bookingMeta.previewBooking',compact('booking','diningMeta','additionalCharge','hotel'));
+        } catch(\Illuminate\Database\QueryException $e){
+            //throw $th;
+        }
+    }
 }

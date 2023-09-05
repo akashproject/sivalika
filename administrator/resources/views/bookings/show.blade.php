@@ -45,7 +45,7 @@
 		<form class="form-horizontal" method="post" action="{{ url('save-booking') }}" enctype="multipart/form-data">
 			@csrf
 			<div class="card-body">
-				<h4 class="card-title"> Booking #{{ $booking->booking_id }}</h4>
+				<h4 class="card-title"> Booking #{{ $booking->booking_id }} <a href="{{ url('/preview-booking/'.$booking->bookingId) }}" class="btn btn-success"> Preview </a></h4>
 				@if ($errors->any())
 					<div class="alert alert-danger">
 						<ul>
@@ -81,6 +81,10 @@
 				  <li class="nav-item">
                     <a class="nav-link" href="{{ url('add-additonal-charge/'.$booking->bookingId)}}"><span class="hidden-sm-up"></span>
                       <span class="hidden-xs-down">Additional Charge</span></a>
+                  </li>
+				  <li class="nav-item">
+                    <a class="nav-link" href="{{ url('payment-history/'.$booking->bookingId)}}"><span class="hidden-sm-up"></span>
+                      <span class="hidden-xs-down">Payment History</span></a>
                   </li>
                 </ul>
 				<div class="tab-content tabcontent-border">
@@ -209,12 +213,6 @@
 											<select>
 										</div>
 									</div>
-									<div class="form-group row">
-										<label for="booking_type" class="col-sm-4 text-right control-label col-form-label"></label>
-										<div class="col-sm-8">
-											<a href="{{ url('/view-report/'.$booking->id) }}" class="btn btn-primary"> Generate Report </a>
-										</div>
-									</div>
 									<!-- <div class="form-group row">
 										<label for="state" class="col-sm-4 text-right control-label col-form-label">Booking Status</label>
 										<div class="col-sm-8">
@@ -238,7 +236,7 @@
 
 				<div class="card-body">
 					<button type="submit" class="btn btn-primary">Submit</button>
-					<input type="hidden" name="bookingId" id="bookingId" value="{{$booking->id}}" >
+					<input type="hidden" name="bookingId" id="bookingId" value="{{$booking->bookingId}}" >
 				</div>
 
 			</div>

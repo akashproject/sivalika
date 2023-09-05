@@ -38,13 +38,17 @@
                         <a class="nav-link active" data-toggle="tab" href="#dining" role="tab"><span class="hidden-sm-up"></span>
                         <span class="hidden-xs-down">Add Dining</span></a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('add-additonal-charge/'.$booking_id)}}"><span class="hidden-sm-up"></span>
+                        <span class="hidden-xs-down">Additional Charge</span></a>
+                    </li>
                 </ul>
 				<div class="tab-content tabcontent-border">
 					<div class="tab-pane active" id="rooms" role="tabpanel">
 						<div class="p-20">
 							<h4 class="card-title mt-3"> Dining Service </h4>
-                            <div class="row py-3" style="background: #cccccc6b;">
-                                @if($diningMeta != null)
+                            @if($diningMeta != null)
+                            <div class="row py-3" style="">
                                 <div class="col-md-3">
                                     <h5>Room</h5>
                                     @foreach($diningMeta['room'] as $value)
@@ -69,14 +73,14 @@
                                         <p> {{$value}} </p>
                                     @endforeach
                                 </div>
-                                @endif
                             </div>
-                            <div class="row py-3" style="background: #cccccc6b;">
+                            <div class="row py-3" style="">
                                 <div class="col-12 text-right" >
                                     <h3> Total Cost </h3>
                                     <p> {{array_sum($diningMeta['price'])}}/- </p>
                                 </div>
                             </div>
+                            @endif
 							<div class="row order_row">
                                 <label class="col-sm-1 text-right control-label col-form-label">Order 1 </label>
                                 <div class="col-md-11">
@@ -84,7 +88,7 @@
                                         <div class="row mb-4">	
                                             <div class="col-sm-2 mb-2">
                                                 <label for="room" class="">Select Room :</label>
-                                                <select name="item[][room]" class="select2 form-control custom-select" style="width: 100%; height:36px;" required="">	
+                                                <select name="item[room][]" class="select2 form-control custom-select" style="width: 100%; height:36px;" required="">	
                                                     <option value=""> Select Room</option>
                                                     @foreach($hotelRooms as $value)
                                                     <option value="{{$value->hotel_room_no}}"> {{$value->hotel_room_no}}</option>
@@ -92,16 +96,16 @@
                                                 </select>
                                             </div>										
                                             <div class="col-sm-3 mb-2">
-                                                <label for="item[][name]" class="">Item Name :</label>
-                                                <input type="text" class="form-control" name="item[][name]" value="" >
+                                                <label for="item[name][]" class="">Item Name :</label>
+                                                <input type="text" class="form-control" name="item[name][]" value="" >
                                             </div>
                                             <div class="col-sm-1 mb-2">
                                                 <label for="qty" class="">QTY :</label>
-                                                <input type="number" class="form-control" name="item[][qty]" value="" min="0">
+                                                <input type="number" class="form-control" name="item[qty][]" value="" min="0">
                                             </div>
                                             <div class="col-sm-2 mb-2">
                                                 <label for="price" class="">Price:</label>
-                                                <input type="number" class="form-control" name="item[][price]" value="" >
+                                                <input type="number" class="form-control" name="item[price][]" value="" >
                                             </div>
                                             <div class="col-sm-1 mb-2">
                                                 <label for="item_name" class=""></label>

@@ -30,6 +30,19 @@ CREATE TABLE `adpages` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `booking_meta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `booking_meta` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `booking_id` int(11) NOT NULL,
+  `meta_key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meta_value` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `bookings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -39,13 +52,12 @@ CREATE TABLE `bookings` (
   `booking_type` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `hotel_id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `guest_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `guest_mobile` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `amount` int(11) DEFAULT NULL,
   `total_guest` int(11) DEFAULT NULL,
+  `purpose` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `rooms` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `checkin` date DEFAULT NULL,
-  `checkout` date DEFAULT NULL,
+  `checkin` datetime DEFAULT NULL,
+  `checkout` datetime DEFAULT NULL,
   `payment_type` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `order_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `payment_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -140,6 +152,27 @@ CREATE TABLE `gallery` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `hotel_id` int(11) NOT NULL,
   `image_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `guests`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `guests` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mobile` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `perpose` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `identity_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `identity_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `state_id` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city_id` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pincode` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nationality` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dob` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -388,24 +421,26 @@ CREATE TABLE `users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-INSERT INTO `migrations` VALUES (1,'2014_10_12_000000_create_users_table',1);
-INSERT INTO `migrations` VALUES (2,'2014_10_12_100000_create_password_reset_tokens_table',1);
-INSERT INTO `migrations` VALUES (3,'2019_08_19_000000_create_failed_jobs_table',1);
-INSERT INTO `migrations` VALUES (4,'2019_12_14_000001_create_personal_access_tokens_table',1);
-INSERT INTO `migrations` VALUES (5,'2022_11_25_055617_create_pages_table',1);
-INSERT INTO `migrations` VALUES (6,'2022_12_15_104615_create_states_table',1);
-INSERT INTO `migrations` VALUES (7,'2022_12_15_104917_create_cities_table',1);
-INSERT INTO `migrations` VALUES (8,'2022_12_29_070141_create_reviews_table',1);
-INSERT INTO `migrations` VALUES (9,'2022_12_29_082756_create_settings_table',1);
-INSERT INTO `migrations` VALUES (10,'2023_01_17_103910_create_faqs_table',1);
-INSERT INTO `migrations` VALUES (11,'2023_01_24_101839_create_media_table',1);
-INSERT INTO `migrations` VALUES (12,'2023_03_14_110002_create_contacts_table',1);
-INSERT INTO `migrations` VALUES (13,'2023_04_22_064246_create_adpages_table',1);
-INSERT INTO `migrations` VALUES (14,'2023_02_20_123712_create_gallery_table',2);
-INSERT INTO `migrations` VALUES (15,'2023_06_19_083624_create_hotels_table',2);
-INSERT INTO `migrations` VALUES (17,'2023_06_20_101838_create_rooms_table',3);
-INSERT INTO `migrations` VALUES (18,'2023_06_21_070204_create_bookings_table',4);
-INSERT INTO `migrations` VALUES (19,'2023_06_21_122243_create_customers_table',4);
-INSERT INTO `migrations` VALUES (20,'2023_06_26_101214_create_reserved_rooms_table',5);
-INSERT INTO `migrations` VALUES (21,'2023_07_02_075514_create_user_meta_table',6);
-INSERT INTO `migrations` VALUES (22,'2023_07_05_074414_create_hotel_rooms_table',7);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (1,'2014_10_12_000000_create_users_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (2,'2014_10_12_100000_create_password_reset_tokens_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (3,'2019_08_19_000000_create_failed_jobs_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (4,'2019_12_14_000001_create_personal_access_tokens_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (5,'2022_11_25_055617_create_pages_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (6,'2022_12_15_104615_create_states_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (7,'2022_12_15_104917_create_cities_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (8,'2022_12_29_070141_create_reviews_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (9,'2022_12_29_082756_create_settings_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (10,'2023_01_17_103910_create_faqs_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (11,'2023_01_24_101839_create_media_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (12,'2023_03_14_110002_create_contacts_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (13,'2023_04_22_064246_create_adpages_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (14,'2023_02_20_123712_create_gallery_table',2);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (15,'2023_06_19_083624_create_hotels_table',2);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (17,'2023_06_20_101838_create_rooms_table',3);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (18,'2023_06_21_070204_create_bookings_table',4);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (19,'2023_06_21_122243_create_customers_table',4);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (20,'2023_06_26_101214_create_reserved_rooms_table',5);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (21,'2023_07_02_075514_create_user_meta_table',6);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (22,'2023_07_05_074414_create_hotel_rooms_table',7);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (23,'2023_07_08_174009_create_guests_table',8);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (24,'2023_07_11_152214_create_booking_meta_table',8);

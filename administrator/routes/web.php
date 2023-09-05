@@ -96,6 +96,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/add-additonal-charge/{id}', [App\Http\Controllers\BookingMetaController::class, 'addAdditionalCharge'])->name('add-additonal-charge');
     Route::post('/save-additonal-charge', [App\Http\Controllers\BookingMetaController::class, 'saveAdditionalCharge'])->name('save-additonal-charge');
     
+    Route::get('/preview-booking/{id}', [App\Http\Controllers\BookingMetaController::class, 'previewBooking'])->name('preview-booking');
+    
+    //Payment
+    Route::get('/payment-history/{id}', [App\Http\Controllers\PaymentController::class, 'index'])->name('payment-history');
+    Route::get('/add-payment-history/{id}', [App\Http\Controllers\PaymentController::class, 'add'])->name('add-payment-history');
+    Route::post('/save-payment', [App\Http\Controllers\PaymentController::class, 'save'])->name('save-payment');
     //Route::get('/check-availability', [App\Http\Controllers\RoomController::class, 'availability'])->name('customers');
 
     //Add Gallery

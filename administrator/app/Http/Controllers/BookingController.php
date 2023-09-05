@@ -406,6 +406,7 @@ class BookingController extends Controller
             if(get_booking_meta_row($booking->id,'dining') != null) {
                 $diningMeta = json_decode(get_booking_meta_row($booking->id,'dining')->meta_value,true);
             }
+            //print_r($diningMeta);
 
             // Get Rooms
             $roomMeta = json_decode(get_booking_meta_row($booking->id,'room')->meta_value,true);
@@ -420,25 +421,18 @@ class BookingController extends Controller
 
     public function saveDining(Request $request){
         try {
-            $data = $request->all();
-            $arr = array();
-            $i = 0;
+            $data = $request->all();            
             
-            foreach ($data['item'] as $key => $value) {
-                $arr[array_key_first($value)][$i]= $value[array_key_first($value)];
-                $i++;
-            }
-
             $diningMeta = get_booking_meta_row($data['bookingId'],'dining');
             if($diningMeta !== null){
-                echo "<pre>"; print_r(json_decode($diningMeta));
-                print_r($arr); exit;
+                $existing = json_decode($diningMeta->meta_value,true);
+                $arr = array_merge_recursive($existing,$data['item']);
                 DB::table('booking_meta')
                 ->where('id', $diningMeta->id)
-                ->update(['meta_value' => json_encode($data['hotel_room'])]);
+                ->update(['meta_value' => json_encode($arr)]);
             } else {
                 DB::table('booking_meta')->insert(
-                    ['booking_id' => $data['bookingId'], 'meta_key' => 'dining', 'meta_value' => json_encode($arr)]
+                    ['booking_id' => $data['bookingId'], 'meta_key' => 'dining', 'meta_value' => json_encode($data['item'])]
                 );
             }
 
