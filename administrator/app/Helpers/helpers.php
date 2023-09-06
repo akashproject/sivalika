@@ -285,3 +285,50 @@ if (! function_exists('get_booking_meta_row')) {
         return $meta = DB::table('booking_meta')->where('booking_id',$id)->where('meta_key',$key)->first();
     }
 }
+
+function numberToWords($number) {
+    $thousands = ["", "thousand", "million", "billion"];
+
+    $words = [];
+
+    if ($number == 0) {
+        return "zero";
+    }
+
+    for ($i = 0; $number > 0; $i++) {
+        if ($number % 1000 != 0) {
+            $words[] = numberToWordsHelper($number % 1000) . ' ' . $thousands[$i];
+        }
+        $number /= 1000;
+    }
+
+    return implode(' ', array_reverse($words));
+}
+
+function numberToWordsHelper($number) {
+    $units = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+    $teens = ["", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+    $tens = ["", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+    $thousands = ["", "thousand", "million", "billion"];
+
+
+    $words = [];
+
+    if ($number >= 100) {
+        $words[] = $units[floor($number / 100)] . ' hundred';
+        $number %= 100;
+    }
+
+    if ($number >= 11 && $number <= 19) {
+        $words[] = $teens[$number - 10];
+    } elseif ($number >= 20) {
+        $words[] = $tens[floor($number / 10)];
+        $number %= 10;
+    }
+
+    if ($number > 0) {
+        $words[] = $units[$number];
+    }
+
+    return implode(' ', $words);
+}

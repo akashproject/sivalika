@@ -30,9 +30,8 @@
         </div>
         <div class="col-sm-6 text-right control-label col-form-label">
             <p style="margin:0"> Invoice Date : {{ date("d/m/Y") }} </p>
-            <p style="margin:0"> Check in Date : Akash Dutta </p>
-            <p style="margin:0"> Check out Date : 9836555023 </p>
-            <p style="margin:0"> Payment type : {{ $booking->payment_type}} </p>
+            <p style="margin:0"> Check in Date : {{ date("d M, Y",strtotime($booking->checkin)) }} </p>
+            <p style="margin:0"> Check out Date : {{ date("d M, Y",strtotime($booking->checkout)) }} </p>
         </div>
     </div>
     <div class="row" style="border-bottom: 1px solid #ccc;background: #f3f2f2;">
@@ -113,9 +112,23 @@
         <div class="col-sm-4 text-left control-label col-form-label">
         </div>
         <div class="col-sm-4 text-left control-label col-form-label">
+            <p style="margin:0">Paid : <strong>₹{{$paidAmount}}</strong>/-</p>
+            <p style="margin:0">Due : <strong>₹{{$total-$paidAmount}}</strong>/-</p>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-4 text-left control-label col-form-label">
+        </div>
+        <div class="col-sm-4 text-left control-label col-form-label">
+        </div>
+        <div class="col-sm-4 text-left control-label col-form-label">
             <h4 >Total Price</h4 >
-           
-            <h4>  {{$total}}/- </h4 >
+            <h4>  ₹{{number_format($total)}}/- </h4 >
+        </div>
+    </div>
+    <div class="form-group row" style="border: 1px solid #ccc;background: #f3f2f2;">
+        <div class="col-sm-12 text-left control-label col-form-label">
+            <h4> Amount in Words : {{ ucfirst(numberToWords($total)) }}</h4 >
         </div>
     </div>
 

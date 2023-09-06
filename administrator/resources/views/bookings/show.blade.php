@@ -164,45 +164,10 @@
 											<input type="text" class="form-control" name="purpose" id="purpose" placeholder="Enter Purpose of visit" value="{{$booking->purpose}}" required>
 										</div>
 									</div>
-									<div class="form-group row">
-										<label for="order_id" class="col-sm-3 text-right control-label col-form-label">Order id</label>
-										<div class="col-sm-9">
-											<input type="text" class="form-control" name="order_id" id="datepicker order_id" placeholder="Enter Payment Getway Order Id" value="{{$booking->order_id}}" >
-										</div>
-									</div>
-									<div class="form-group row">
-										<label for="payment_id" class="col-sm-3 text-right control-label col-form-label">Payment id</label>
-										<div class="col-sm-9">
-											<input type="text" class="form-control" name="payment_id" id="payment_id" placeholder="Enter Payment Id" value="{{$booking->payment_id}}">
-										</div>
-									</div>
+									
+									
 								</div>
 								<div class="col-md-5">
-									<div class="form-group row">
-										<label for="payment_type" class="col-sm-4 text-right control-label col-form-label">Payment Type</label>
-										<div class="col-sm-8">
-											<select name="payment_type" id="payment_type" class="select2 form-control custom-select" style="width: 100%; height:36px;" required>	
-												<option value="" > Select Payment Type</option>
-												<option value="card" {{ ( 'card' ==  $booking->payment_type )? 'selected' : '' }}> Credit/Debit Card</option>
-												<option value="netbanking" {{ ( 'netbanking' ==  $booking->payment_type )? 'selected' : '' }}> Net Banking</option>
-												<option value="credit" {{ ( 'credit' ==  $booking->payment_type )? 'selected' : '' }}> Credit Card</option>
-												<option value="Cash" {{ ( 'Cash' ==  $booking->payment_type )? 'selected' : '' }}> Cash</option>
-												<option value="upi" {{ ( 'upi' ==  $booking->payment_type )? 'selected' : '' }} > Upi </option>
-												<option value="Bank Transfer" {{ ( 'Bank Transfer' ==  $booking->payment_type )? 'selected' : '' }} > Bank Transfer </option>
-												<option value="Card Mechine" {{ ( 'Card Mechine' ==  $booking->payment_type )? 'selected' : '' }} > Card Mechine </option>
-											<select>
-										</div>
-									</div>
-									<div class="form-group row">
-										<label for="state" class="col-sm-4 text-right control-label col-form-label">Payment Status</label>
-										<div class="col-sm-8">
-											<select name="payment" id="payment" class="select2 form-control custom-select" style="width: 100%; height:36px;">	
-												<option value="" > Select Payment Status</option>
-												<option value="pending" {{ ( 'pending' ==  $booking->payment )? 'selected' : '' }} > Pending</option>
-												<option value="success" {{ ( 'success' ==  $booking->payment )? 'selected' : '' }} > Success </option>
-											<select>
-										</div>
-									</div>
 									<div class="form-group row">
 										<label for="booking_type" class="col-sm-4 text-right control-label col-form-label">Booking Type</label>
 										<div class="col-sm-8">

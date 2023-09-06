@@ -10,6 +10,7 @@ use App\Models\HotelRoom;
 use App\Models\Hotel;
 use App\Models\Room;
 use App\Models\Customer;
+use App\Models\Payment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -86,8 +87,8 @@ class BookingMetaController extends Controller
             $hotel = Hotel::find($booking->hotel_id)->name;
             $diningMeta = get_booking_meta_row($id,'dining');
             $additionalCharge = get_booking_meta_row($id,'additionalCharge');
-          
-            return view('bookingMeta.previewBooking',compact('booking','diningMeta','additionalCharge','hotel'));
+            $paidAmount = Payment::where('payment', '=', 'success')->where('booking_id', $id)->sum('amount');
+            return view('bookingMeta.previewBooking',compact('booking','diningMeta','additionalCharge','hotel','paidAmount'));
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
         }

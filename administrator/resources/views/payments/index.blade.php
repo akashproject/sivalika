@@ -41,6 +41,7 @@
 								<table id="zero_config" class="table table-striped table-bordered">
 									<thead>
 										<tr>
+											<th>Amount</th>
 											<th>Payment ID</th>
 											<th>Order ID</th>
 											<th>Payment Type</th>
@@ -50,13 +51,11 @@
 									<tbody>
 										@foreach ($payments as $value)
 										<tr>
-											<td>{{ $value->name }}</td>													
-											<td>{{ $value->slug }}</td>													
-											<td>
-												<a href="{{ url($value->slug) }}" class="btn btn-success btn-lg">View</a>
-												<a href="{{ url('view-payment') }}/{{ $value->id }}" class="btn btn-primary btn-lg">Edit</a>
-												<a href="{{ url('delete-payment') }}/{{ $value->id }}" class="btn btn-danger btn-lg" onclick="return confirm('Are you sure?')"; >Delete </a>
-											</td>
+											<td>{{ $value->amount }}</td>													
+											<td>{{ ($value->payment_id)?$value->payment_id:"N/A" }}</td>													
+											<td>{{ ($value->order_id)?$value->order_id:"N/A" }}</td>													
+											<td>{{ $value->payment_type }}</td>													
+											<td>{{ $value->payment }}</td>													
 										</tr>
 										@endforeach							
 									</tbody>

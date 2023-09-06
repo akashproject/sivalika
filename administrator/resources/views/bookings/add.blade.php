@@ -97,30 +97,9 @@
 								<input type="text" class="form-control" name="amount" id="amount" placeholder="Enter Booking Amount" >
 							</div>
 						</div>
-						
-						<div class="form-group row">
-							<label for="order_id" class="col-sm-3 text-right control-label col-form-label">Order id</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control" name="order_id" id="datepicker order_id" placeholder="Enter Payment Getway Order Id" >
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="payment_id" class="col-sm-3 text-right control-label col-form-label">Payment id</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control" name="payment_id" id="payment_id" placeholder="Enter Payment Id" >
-							</div>
-						</div>
 					</div>
 					<div class="col-md-5">
-						<div class="form-group row">
-							<label for="state" class="col-sm-4 text-right control-label col-form-label">Payment Status</label>
-							<div class="col-sm-8">
-								<select name="status" id="status" class="select2 form-control custom-select" style="width: 100%; height:36px;">	
-									<option value="pending" > Pending</option>
-									<option value="success" > Success </option>
-								<select>
-							</div>
-						</div>
+						
 						<div class="form-group row">
 							<label for="state" class="col-sm-4 text-right control-label col-form-label">Booking Status</label>
 							<div class="col-sm-8">

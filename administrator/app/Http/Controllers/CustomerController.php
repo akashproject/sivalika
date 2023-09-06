@@ -19,10 +19,11 @@ class CustomerController extends Controller
             $customers = DB::table('customers')
                 ->join('bookings', 'bookings.user_id', '=', 'customers.id')
                 ->select('customers.*');
+                
             if(Auth::user()->role == 2){
                 $customers->where('bookings.hotel_id', get_user_meta('hotel_id'));
             }
-            $customers = $customers->get();
+            $customers = $customers->distinct()->get();
             return view('customers.index',compact('customers'));
         } catch(\Illuminate\Database\QueryException $e){
             throw $e;
