@@ -5,6 +5,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
 Route::get('/test-mail', [App\Http\Controllers\IndexController::class, 'testMail'])->name('test-mail');
+Route::get('/privacy-policy', [App\Http\Controllers\IndexController::class, 'privacyPolicy'])->name('privacy-policy');
+Route::get('/terms-conditions', [App\Http\Controllers\IndexController::class, 'termConditions'])->name('terms-conditions');
+Route::get('/contact-us', [App\Http\Controllers\IndexController::class, 'contactUs'])->name('contact-us');
+Route::get('/refund-cancellation', [App\Http\Controllers\IndexController::class, 'refundCancellation'])->name('refund-cancellation');
+Route::get('/shipping-delivery', [App\Http\Controllers\IndexController::class, 'shippingDelivery'])->name('shipping-delivery');
+
 //Route::get('/{slug}', [App\Http\Controllers\PageController::class, 'index'])->where('slug', '([A-Za-z0-9\-]+)');
 Route::post('/check-availability', [App\Http\Controllers\BookingController::class, 'checkAvailability'])->name('check-availability');
 Route::get('/hotel/{slug}', [App\Http\Controllers\HotelController::class, 'view'])->name('hotel');

@@ -31,10 +31,11 @@
                         <div class="col-md-6">
                             <h6 class="section-title text-start text-primary text-uppercase mb-4">Company</h6>
                             <a class="btn btn-link" href="">About Us</a>
-                            <a class="btn btn-link" href="">Contact Us</a>
-                            <a class="btn btn-link" href="">Privacy Policy</a>
-                            <a class="btn btn-link" href="">Terms & Condition</a>
-                            <a class="btn btn-link" href="">Support</a>
+                            <a class="btn btn-link" href="{{ route('contact-us') }}">Contact Us</a>
+                            <a class="btn btn-link" href="{{ route('privacy-policy') }}">Privacy Policy</a>
+                            <a class="btn btn-link" href="{{ route('terms-conditions') }}">Terms & Condition</a>
+                            <a class="btn btn-link" href="{{ route('refund-cancellation') }}">Refund & Cancellation</a>
+                            <a class="btn btn-link" href="{{ route('shipping-delivery') }}">Shipping & Delivery</a>
                         </div>
                         <div class="col-md-6">
                             <h6 class="section-title text-start text-primary text-uppercase mb-4">Services</h6>

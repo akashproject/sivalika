@@ -138,5 +138,45 @@ class IndexController extends Controller
                         0, $length_of_string);
     }
 
+    public function privacyPolicy(Request $request) {
+        try {
+            return view('page.privacy-policy');
+        } catch(\Illuminate\Database\QueryException $e){
+            //throw $th;
+        }  
+    }
+
+    public function termConditions(Request $request) {
+        try {
+            return view('page.terms-conditions');
+        } catch(\Illuminate\Database\QueryException $e){
+            //throw $th;
+        }  
+    }
+
+    public function contactUs(Request $request) {
+        try {
+            return view('page.contact-us');
+        } catch(\Illuminate\Database\QueryException $e){
+            //throw $th;
+        }  
+    }
+
+    public function refundCancellation(Request $request) {
+        try {
+            return view('page.refund-cancellation');
+        } catch(\Illuminate\Database\QueryException $e){
+            //throw $th;
+        }  
+    }
+
+    public function shippingDelivery(Request $request) {
+        try {
+            return view('page.shipping-delivery');
+        } catch(\Illuminate\Database\QueryException $e){
+            //throw $th;
+        }  
+    }
+
 }
 
