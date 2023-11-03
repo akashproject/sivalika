@@ -75,7 +75,7 @@
 											<div style="display: inline-block;">
 												<select name="status" id="status" class="select2 form-control change-status" style="width: 100%; height:38px;" onChange="changeBookingStatus(this,{{$value->id}});">
 													<option value="pending" {{ ( 'pending' ==  $value->status )? 'selected' : '' }} > Pending</option>
-													<option value="comfirm" {{ ( 'comfirm' ==  $value->status )? 'selected' : '' }} > Comfirm</option>
+													<option value="confirm" {{ ( 'confirm' ==  $value->status )? 'selected' : '' }} > Confirm</option>
 													<option value="arrvied" {{ ( 'arrvied' ==  $value->status )? 'selected' : '' }} > Arrived</option>
 													<option value="cancel" {{ ( 'cancel' ==  $value->status )? 'selected' : '' }} > Cancel </option>
 													<option value="completed" {{ ( 'completed' ==  $value->status )? 'selected' : '' }} > Completed </option>

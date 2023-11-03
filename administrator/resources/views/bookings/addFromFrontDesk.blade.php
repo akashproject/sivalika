@@ -187,10 +187,16 @@
 									<div class="form-group row">
 										<label for="purpose" class="col-sm-3 text-right control-label col-form-label">Visit Purpose</label>
 										<div class="col-sm-9">
-											<input type="text" class="form-control" name="purpose" id="purpose" placeholder="Enter Purpose of visit" required>
+											<select name="purpose" id="purpose" class="select2 form-control custom-select">	
+												<option value="" > Select Payment Type</option>
+												<option value="Official" > Official</option>
+												<option value="Tour" > Tour </option>
+												<option value="Personal" > Personal </option>
+												<option value="Miscellaneous" > Miscellaneous </option>
+											</select>
 										</div>
 									</div>
-									<div class="form-group row">
+									<!-- <div class="form-group row">
 										<label for="order_id" class="col-sm-3 text-right control-label col-form-label">Order id</label>
 										<div class="col-sm-9">
 											<input type="text" class="form-control" name="order_id" id="datepicker order_id" placeholder="Enter Payment Getway Order Id" >
@@ -201,10 +207,10 @@
 										<div class="col-sm-9">
 											<input type="text" class="form-control" name="payment_id" id="payment_id" placeholder="Enter Payment Id" >
 										</div>
-									</div>
+									</div> -->
 								</div>
 								<div class="col-md-5">
-									<div class="form-group row">
+									<!-- <div class="form-group row">
 										<label for="payment_type" class="col-sm-4 text-right control-label col-form-label">Payment Type</label>
 										<div class="col-sm-8">
 											<select name="payment_type" id="payment_type" class="select2 form-control custom-select" style="width: 100%; height:36px;">	
@@ -215,8 +221,8 @@
 												<option value="Card Mechine" > Card Mechine </option>
 											<select>
 										</div>
-									</div>
-									<div class="form-group row">
+									</div> -->
+									<!-- <div class="form-group row">
 										<label for="state" class="col-sm-4 text-right control-label col-form-label">Payment Status</label>
 										<div class="col-sm-8">
 											<select name="payment" id="payment" class="select2 form-control custom-select" style="width: 100%; height:36px;">	
@@ -225,14 +231,17 @@
 												<option value="success" > Success </option>
 											<select>
 										</div>
-									</div>
+									</div> -->
 									<div class="form-group row">
 										<label for="booking_type" class="col-sm-4 text-right control-label col-form-label">Booking Type</label>
 										<div class="col-sm-8">
 											<select name="booking_type" id="booking_type" class="select2 form-control custom-select" style="width: 100%; height:36px;" required>	
 												<option value="Walking" >Walking</option>
 												<option value="Phone Call" >Phone Call</option>
-											<select>
+												<option value="Gommt" >Gommt</option>
+												<option value="Google" >Google</option>
+												<option value="Fabhotels" >Fabhotels</option>
+											</select>
 										</div>
 									</div>
 									<div class="form-group row">
@@ -243,7 +252,7 @@
 												<option value="comfirm" > Comfirm</option>
 												<option value="arrvied" > Arrived</option>
 												<option value="cancel" > Cancel </option>
-											<select>
+											</select>
 										</div>
 									</div>
 								</div>

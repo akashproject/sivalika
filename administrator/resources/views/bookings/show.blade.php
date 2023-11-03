@@ -161,7 +161,12 @@
 									<div class="form-group row">
 										<label for="purpose" class="col-sm-3 text-right control-label col-form-label">Visit Purpose</label>
 										<div class="col-sm-9">
-											<input type="text" class="form-control" name="purpose" id="purpose" placeholder="Enter Purpose of visit" value="{{$booking->purpose}}" required>
+											<select name="purpose" id="purpose" class="select2 form-control custom-select" style="width: 100%; height:36px;" required>	
+												<option value="Official" {{ ( 'Official' ==  $booking->purpose )? 'selected' : '' }} >Official</option>
+												<option value="Tour" {{ ( 'Tour' ==  $booking->purpose )? 'selected' : '' }} >Tour</option>
+												<option value="Personal" {{ ( 'Personal' ==  $booking->purpose )? 'selected' : '' }} >Personal</option>
+												<option value="Miscellaneous" {{ ( 'Miscellaneous' ==  $booking->purpose )? 'selected' : '' }} >Miscellaneous</option>
+											</select>
 										</div>
 									</div>
 									
@@ -172,10 +177,13 @@
 										<label for="booking_type" class="col-sm-4 text-right control-label col-form-label">Booking Type</label>
 										<div class="col-sm-8">
 											<select name="booking_type" id="booking_type" class="select2 form-control custom-select" style="width: 100%; height:36px;" required>	
-												<option value="Walking" {{ ( 'Walking' ==  $booking->booking_type )? 'selected' : '' }} >Walking</option>
+												<option value="Walking" {{ ( 'Walking' ==  $booking->booking_type )? 'selected' : '' }} >Walk IN</option>
 												<option value="Phone Call" {{ ( 'Phone Call' ==  $booking->booking_type )? 'selected' : '' }} >Phone Call</option>
 												<option value="Website" {{ ( 'Website' ==  $booking->booking_type )? 'selected' : '' }} >Website</option>
-											<select>
+												<option value="Gommt" {{ ( 'Gommt' ==  $booking->booking_type )? 'selected' : '' }} >Gommt</option>
+												<option value="Google" {{ ( 'Google' ==  $booking->booking_type )? 'selected' : '' }} >Google</option>
+												<option value="Fabhotels" {{ ( 'Fabhotels' ==  $booking->booking_type )? 'selected' : '' }} >Fabhotels</option>
+											</select>
 										</div>
 									</div>
 									<!-- <div class="form-group row">

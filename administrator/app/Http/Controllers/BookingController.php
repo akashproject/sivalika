@@ -313,10 +313,10 @@ class BookingController extends Controller
                 'checkin' => $filterData['checkin'].config('constant.checkinTime'),
                 'checkout' => $filterData['checkout'].config('constant.checkoutTime'),
                 'purpose' => $data['purpose'],
-                'payment_type' => $data['payment_type'],
-                'order_id' => $data['order_id'],
-                'payment_id' => $data['payment_id'],
-                'payment' => $data['payment'],
+                // 'payment_type' => $data['payment_type'],
+                //'order_id' => $data['order_id'],
+                //'payment_id' => $data['payment_id'],
+                //'payment' => $data['payment'],
                 'status' => $data['status'],
             ];  
             $booking = Booking::create($checkinData);
