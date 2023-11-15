@@ -35,6 +35,7 @@ class BookingController extends Controller
                             ->join('hotels', 'bookings.hotel_id', '=', 'hotels.id')
                             ->select('bookings.id','hotels.name as hotel','bookings.booking_id','bookings.user_id','customers.name','customers.mobile','bookings.amount','bookings.payment','bookings.status');
             
+            $checkin = date("Y-m-d");
             if(request()->has('cust_id')){
                 $bookings->where('user_id', request()->get('cust_id'));
             }
@@ -44,9 +45,9 @@ class BookingController extends Controller
             }
             
             if(request()->has('checkin')){
-                $bookings->whereDate('checkin', request()->get('checkin'));
-                
+                $checkin = request()->get('checkin');
             }
+            $bookings->whereDate('checkin', $checkin);
 
             $bookings = $bookings->orderBy('id', 'DESC')->get();
             return view('bookings.index',compact('bookings'));

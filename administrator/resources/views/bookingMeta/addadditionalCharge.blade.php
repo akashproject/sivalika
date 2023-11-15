@@ -6,6 +6,7 @@
 		<form class="form-horizontal" method="post" action="{{ url('save-additonal-charge') }}" enctype="multipart/form-data">
 			@csrf
 			<div class="card-body">
+            <h4 class="card-title"> Booking #{{ $booking_id }} <a href="{{ url('/preview-booking/'.$booking_id) }}" class="btn btn-success"> Preview </a></h4>
                 <h4 class="card-title mt-3"> Additional Service </h4>
 				@if($errors->any())
 					<div class="alert alert-danger">

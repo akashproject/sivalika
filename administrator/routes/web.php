@@ -20,6 +20,10 @@ Route::get('/', function () {
 Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'create'])->name('register');
 Route::get('/login', [App\Http\Controllers\AdminAuthController::class, 'login'])->name('login');
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'authenticate'])->name('verify-login');
+Route::get('/forgot-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showForgotPasswordForm'])->name('admin-password.request');
+Route::post('/forgot-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('/reset-password/{token}', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showResetPasswordForm'])->name('password.reset');
+Route::post('/reset-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'resetPassword'])->name('password.update');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('administrator');

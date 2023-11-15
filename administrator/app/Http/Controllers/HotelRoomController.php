@@ -22,29 +22,31 @@ class HotelRoomController extends Controller
             $hotel_id = $request->session()->get('hotel_id');
             $rooms = HotelRoom::where("hotel_id",$hotel_id)->get();
             $reservedRooms = array();
-            if(request()->has('checkin')){
-                
-                $checkinTime = request()->get('checkin').config('constant.checkinTime');
-                $checkoutTime = date('Y-m-d', strtotime(request()->get('checkin').' +1 day')).config('constant.checkoutTime');
-                
-                $todayBooking = DB::table('bookings')
-                                ->join('booking_meta', 'bookings.id', '=', 'booking_meta.booking_id')
-                                ->join('customers', 'customers.id', '=', 'bookings.user_id')
-                                ->where('bookings.checkout','>',$checkinTime)
-                                ->where('bookings.checkin','<',$checkoutTime)
-                                ->where('booking_meta.meta_key','room')
-                                ->select('booking_meta.meta_value as rooms','booking_meta.booking_id','customers.name')
-                                ->get();
-                
-                foreach ($todayBooking as $value) {
-                    foreach (json_decode($value->rooms,true) as $room) {
-                        $reservedRooms[$room]['booking_id'] = $value->booking_id;
-                        $reservedRooms[$room]['name'] = $value->name;
-                    }
+            $checkin = date("Y-m-d");
+            if(request()->has('checkin')){   
+                $checkin = request()->get('checkin');
+            }
+            
+            $checkinTime = $checkin.config('constant.checkinTime');
+            $checkoutTime = date('Y-m-d', strtotime($checkin.' +1 day')).config('constant.checkoutTime');
+            $todayBooking = DB::table('bookings')
+                            ->join('booking_meta', 'bookings.id', '=', 'booking_meta.booking_id')
+                            ->join('customers', 'customers.id', '=', 'bookings.user_id')
+                            ->where('bookings.checkout','>',$checkinTime)
+                            ->where('bookings.checkin','<',$checkoutTime)
+                            ->where('booking_meta.meta_key','room')
+                            ->select('booking_meta.meta_value as rooms','booking_meta.booking_id','customers.name')
+                            ->get();
+            
+            foreach ($todayBooking as $value) {
+                foreach (json_decode($value->rooms,true) as $room) {
+                    $reservedRooms[$room]['booking_id'] = $value->booking_id;
+                    $reservedRooms[$room]['name'] = $value->name;
                 }
             }
+            
 
-            return view('hotel-rooms.index',compact('rooms','hotel_id','reservedRooms'));
+            return view('hotel-rooms.index',compact('rooms','checkin','hotel_id','reservedRooms'));
 
         } catch(\Illuminate\Database\QueryException $e){
             throw $e;

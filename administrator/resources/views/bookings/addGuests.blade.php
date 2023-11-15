@@ -6,6 +6,7 @@
 		<form class="form-horizontal" method="post" action="{{ url('save-guests') }}" enctype="multipart/form-data">
 			@csrf
 			<div class="card-body">
+				<h4 class="card-title"> Booking #{{ $booking_id }} <a href="{{ url('/preview-booking/'.$booking_id) }}" class="btn btn-success"> Preview </a></h4>
 				<h4 class="card-title"> Add Booking </h4>
 				@if ($errors->any())
 					<div class="alert alert-danger">
@@ -34,6 +35,18 @@
                     <a class="nav-link" href="{{ url('allocate-rooms/'.$booking_id)}}"><span class="hidden-sm-up"></span>
                       <span class="hidden-xs-down">Room Allotment</span></a>
                   </li>
+				  <li class="nav-item">
+                    <a class="nav-link" href="{{ url('add-dining/'.$booking_id)}}"><span class="hidden-sm-up"></span>
+                      <span class="hidden-xs-down">Dining</span></a>
+                  </li>
+				  <li class="nav-item">
+                    <a class="nav-link" href="{{ url('add-additonal-charge/'.$booking_id)}}"><span class="hidden-sm-up"></span>
+                      <span class="hidden-xs-down">Additional Charge</span></a>
+                  </li>
+				  <li class="nav-item">
+                    <a class="nav-link" href="{{ url('payment-history/'.$booking_id)}}"><span class="hidden-sm-up"></span>
+                      <span class="hidden-xs-down">Payment History</span></a>
+                  </li>
                 </ul>
 				<div class="tab-content tabcontent-border">
 					<input type="hidden" name="tab" value="guest" >
@@ -51,7 +64,7 @@
 										</div>
 										<div class="col-sm-2">
 											<label for="dob" class="">Enter DOB :</label>
-											<input type="text" class="form-control" name="guest[{{$key}}][dob]" id="dob" value="{{$guest['dob']}}" >
+											<input type="date" class="form-control" name="guest[{{$key}}][dob]" id="dob" value="{{$guest['dob']}}" >
 										</div>		
 										<div class="col-sm-2">
 											<label for="gander" class="">Select Gander :</label>
@@ -71,8 +84,14 @@
 										</div>		
 										<div class="col-sm-2">
 											<label for="state" class="">Enter State :</label>
-											<input type="text" class="form-control" name="guest[{{$key}}][state]" id="state" value="{{$guest['state']}}">
+											<select name="guest[{{$key}}][state]" id="state" class="select2 form-control custom-select" style="width: 100%; height:36px;">	
+												<option value="" >Select State</option>
+												@foreach(getStates() as $state)
+												<option value="{{$state->name}}" > {{$state->name}} </option>
+												@endforeach
+											<select>
 										</div>
+										
 										<div class="col-sm-2">
 											<label for="pincode" class="">Enter Pincode :</label>
 											<input type="text" class="form-control" name="guest[{{$key}}][pincode]" id="pincode" value="{{$guest['pincode']}}">

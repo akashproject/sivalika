@@ -48,6 +48,9 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             return redirect()->intended('administrator/assessments');
         }
+        else {
+            return back()->with('error','Whoops! invalid email and password.');
+        }
     }
 
     public function logout () {

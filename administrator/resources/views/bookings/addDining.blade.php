@@ -6,6 +6,7 @@
 		<form class="form-horizontal" method="post" action="{{ url('save-dining') }}" enctype="multipart/form-data">
 			@csrf
 			<div class="card-body">
+                <h4 class="card-title"> Booking #{{ $booking_id }} <a href="{{ url('/preview-booking/'.$booking_id) }}" class="btn btn-success"> Preview </a></h4>
 				<h4 class="card-title"> Assign Rooms </h4>
 				@if($errors->any())
 					<div class="alert alert-danger">
@@ -31,7 +32,7 @@
                         <span class="hidden-xs-down">Guest Details</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#rooms" role="tab"><span class="hidden-sm-up"></span>
+                        <a class="nav-link" href="{{ url('allocate-rooms/'.$booking_id)}}"><span class="hidden-sm-up"></span>
                         <span class="hidden-xs-down">Room Allotment</span></a>
                     </li>
                     <li class="nav-item">
