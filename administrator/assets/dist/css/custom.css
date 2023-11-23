@@ -14961,3 +14961,14 @@ table#zero_config tr td:last-child {
   background: #cdc7ff;
   margin: 15px 0;
 }
+.image_preview {
+  height: 130px;
+  border: 1px solid #9f9d9d;
+  padding: 5px 5px;
+}
+.updateImageType {
+  display: block;
+  width: 39%;
+  margin: 4px auto;
+  font-weight: 600;
+}

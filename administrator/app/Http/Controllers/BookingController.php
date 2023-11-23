@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use App\Models\Payment;
 use Image;
 
 class BookingController extends Controller
@@ -338,13 +339,23 @@ class BookingController extends Controller
         try {
             $data = $request->all();
             foreach ($data['guest'] as $key => $value) {
-                if(isset($value['identity_image']) && $value['identity_image'] != null){
-                    //echo "hi".$value['identity_image']; exit;
+                
+                //echo is_object($value['identity_image']); exit;
+                if(isset($value['identity_image']) && is_object($value['identity_image'])){
+                    //echo "<pre>";print_r(is_object($value['identity_image'])); exit;
                     $imageFile = strtolower(str_replace(" ","_",$value['name'])).'_identity_'.time().'.'.$value['identity_image']->extension(); 
                     $image = Image::make($value['identity_image']->getRealPath());
-                    $image->fit(340, 340)->save('public/identity/' . $imageFile);
+                    $image->save('public/identity/' . $imageFile);
                     $data['guest'][$key]['identity_image'] = config('constant.identityMediaPath')."/".$imageFile;
-                }                    
+                } 
+                
+                if(isset($value['profile_image']) && is_object($value['profile_image'])){
+                    //echo "hi".$value['profile_image']; exit;
+                    $imageFile = strtolower(str_replace(" ","_",$value['name'])).'_identity_'.time().'.'.$value['profile_image']->extension(); 
+                    $image = Image::make($value['profile_image']->getRealPath());
+                    $image->save('public/identity/' . $imageFile);
+                    $data['guest'][$key]['profile_image'] = config('constant.identityMediaPath')."/".$imageFile;
+                } 
             }
             $guestMeta = get_booking_meta_row($data['bookingId'],'guest');
             if($guestMeta !== null){
@@ -456,8 +467,32 @@ class BookingController extends Controller
                 DB::table('reserved_rooms')->where('booking_id', $id)->delete();
             }
             $data = ['status'=>$status];
+            if ($status == 'completed') {
+                $diningMeta = get_booking_meta_row($id,'dining');
+                $additionalCharge = get_booking_meta_row($id,'additionalCharge');
+                $paidAmount = Payment::where('payment', '=', 'success')->where('booking_id', $id)->sum('amount');
+                $total = $booking->amount;
+                if($diningMeta !== null) {
+                    $diningMeta = json_decode($diningMeta->meta_value,true);
+                    $total += array_sum($diningMeta['price']);
+                }
+
+                if($additionalCharge !== null) {
+                    $additionalChargeData = json_decode($additionalCharge->meta_value,true);
+                    $total += array_sum($additionalChargeData['price']);
+                }
+
+                $leftAmount = $total - $paidAmount;
+                if($leftAmount >= 0) {
+                    return response()->json(['status'=>false,'message' => "Rs. ".$leftAmount."/- Payment Pending"], 200);
+                }   
+                
+            } else{
+                return response()->json(['status'=>true,'message' => "Booking has successfully checked out"], 200);
+            }
+
             $booking->update($data);
-        return redirect()->back()->with('message', 'Booking deleted successfully!');
+            return response()->json(['status'=>true,'message' => "Booking has been successfully updated"],200);
         } catch(\Illuminate\Database\QueryException $e){
             var_dump($e);
         }

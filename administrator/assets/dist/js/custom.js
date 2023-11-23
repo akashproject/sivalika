@@ -283,6 +283,10 @@ $(function() {
         }
     })
 
+    $(document).on("click",".updateImageType", function(){
+        $(this).parent().children(".form-control").attr('type','file')
+    })
+
 });
 
 function setMedia(){
@@ -329,8 +333,9 @@ function changeBookingStatus(event,booking_id){
             status: status,
         },
         success: function(result) {
-            location.reload();
-        }
+           alert(result.message);
+            //location.reload();
+        },
     });
 }
 

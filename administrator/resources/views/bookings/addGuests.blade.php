@@ -115,15 +115,38 @@
 										<div class="col-sm-2 text-center">
 											<label for="identity" class="">Identity Number</label>
 											<input type="text" class="form-control" name="guest[{{$key}}][identity]" id="identity" placeholder="Identity Number" value="{{$guest['identity']}}">
-										</div>		
+										</div>
+
 										@if(isset($guest['identity_image']) && $guest['identity_image'] != '')
 										<div class="col-sm-2">	
-											<img src="{{ url($guest['identity_image'])}}" style="width:100%">
+											<label for="identity" class="">Identity Image</label>
+											<input type="hidden" class="form-control" name="guest[{{$key}}][identity_image]" id="identity_image" placeholder="Identity Image" value="{{$guest['identity_image']}}">
+											<div class="image_preview" >
+												<img src="{{ url($guest['identity_image'])}}" style="width:100%">
+											</div>
+											<a href="javascript:void(0)" class="updateImageType" > Update </a>
 										</div>	
 										@else
 										<div class="col-sm-2">
 											<label for="identity" class="">Identity Image</label>
 											<input type="file" class="form-control" name="guest[{{$key}}][identity_image]" id="identity_image" placeholder="Identity Image">
+										</div>
+										@endif	
+
+										@if(isset($guest['profile_image']) && $guest['profile_image'] != '')
+										<div class="col-sm-2">	
+											<label for="identity" class="">Customer Photo</label>
+											<input type="hidden" class="form-control" name="guest[{{$key}}][profile_image]" id="identity_image" placeholder="Profile Image" value="{{$guest['profile_image']}}">
+											<div class="image_preview" >
+												<img src="{{ url($guest['profile_image'])}}" style="width:100%">
+											</div>
+											<a href="javascript:void(0)" class="updateImageType" > Update </a>
+										</div>	
+										@else
+										<div class="col-sm-2">
+											<label for="identity" class="">Customer Photo</label>
+											<input type="file" class="form-control" name="guest[{{$key}}][profile_image]" id="profile_image" placeholder="Customer Photo">
+											
 										</div>
 										@endif		
 									</div>
