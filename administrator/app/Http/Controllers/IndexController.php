@@ -42,7 +42,17 @@ class IndexController extends Controller
         $booking = Booking::where('hotel_id',$hotel_id)
                 ->whereDate('checkin', date("Y-m-d"))->count();
 
-        return view('hotel-dashboard',compact('booking'));
+        $bookedRoom = DB::table('bookings')
+        ->join('reserved_rooms', 'reserved_rooms.booking_id', '=', 'bookings.id')
+        ->join('rooms', 'reserved_rooms.room_id', '=', 'rooms.id')
+        //->select('reserved_rooms.room_id')
+        ->selectRaw('sum(reserved_rooms.total_room_book) as roomstake')              
+        //->whereIn('bookings.id',$todayBooking)
+        ->where('bookings.hotel_id',get_user_meta('hotel_id'))
+        ->whereDate('bookings.checkin',date("Y-m-d"))
+        ->where('bookings.status','!=','cancel')
+        ->first();
+        return view('hotel-dashboard',compact('booking','bookedRoom'));
     }
 
 }

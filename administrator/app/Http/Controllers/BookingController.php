@@ -36,7 +36,7 @@ class BookingController extends Controller
                             ->join('hotels', 'bookings.hotel_id', '=', 'hotels.id')
                             ->select('bookings.id','hotels.name as hotel','bookings.booking_id','bookings.user_id','customers.name','customers.mobile','bookings.amount','bookings.payment','bookings.status');
             
-            $checkin = date("Y-m-d");
+            //$checkin = date("Y-m-d");
             if(request()->has('cust_id')){
                 $bookings->where('user_id', request()->get('cust_id'));
             }
@@ -47,9 +47,9 @@ class BookingController extends Controller
             
             if(request()->has('checkin')){
                 $checkin = request()->get('checkin');
+                $bookings->whereDate('checkin', $checkin);
             }
-            $bookings->whereDate('checkin', $checkin);
-
+            
             $bookings = $bookings->orderBy('id', 'DESC')->get();
             return view('bookings.index',compact('bookings'));
         } catch(\Illuminate\Database\QueryException $e){
@@ -329,7 +329,8 @@ class BookingController extends Controller
                 }
             }
             $request->session()->forget('filterData');
-            return redirect()->route('view-booking', $booking->id)->with('message', 'Booking has been created!!');
+            //return redirect()->route('view-booking', $booking->id)->with('message', 'Booking has been created!!');
+            return redirect()->route('bookings');
         } catch(\Illuminate\Database\QueryException $e){
             var_dump($e);
         }
@@ -485,14 +486,13 @@ class BookingController extends Controller
                 $leftAmount = $total - $paidAmount;
                 if($leftAmount >= 0) {
                     return response()->json(['status'=>false,'message' => "Rs. ".$leftAmount."/- Payment Pending"], 200);
-                }   
-                
-            } else{
-                return response()->json(['status'=>true,'message' => "Booking has successfully checked out"], 200);
+                } else{
+                    return response()->json(['status'=>true,'message' => "Booking has successfully checked out"], 200);
+                }
             }
 
             $booking->update($data);
-            return response()->json(['status'=>true,'message' => "Booking has been successfully updated"],200);
+            return response()->json(['status'=>true,'message' => "Booking status has been successfully updated"],200);
         } catch(\Illuminate\Database\QueryException $e){
             var_dump($e);
         }

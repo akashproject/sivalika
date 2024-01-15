@@ -15,6 +15,16 @@
 				</div>
 			</div>
 			<!-- Column -->
+			<!-- Column -->
+			<div class="col-md-4 col-lg-2 col-xlg-3">
+				<div class="card card-hover">
+					<a class="box bg-danger text-center" href="{{ url('hotel-rooms') }}?checkin={{ date('Y-m-d') }}">
+						<h1 class="font-light text-white"><i class="mdi mdi-hotel"></i></h1>
+						<h6 class="text-white">Rooms ({{$bookedRoom->roomstake}})</h6>
+					</a>
+				</div>
+			</div>
+			<!-- Column -->
 			<div class="col-md-6 col-lg-2 col-xlg-3">
 				<div class="card card-hover">
 					<a class="box bg-success text-center" href="{{ url('customers') }}">
@@ -32,16 +42,7 @@
 					</a>
 				</div>
 			</div>
-			<!-- Column -->
-			<div class="col-md-4 col-lg-2 col-xlg-3">
-				<div class="card card-hover">
-					<a class="box bg-danger text-center" href="{{ url('hotel-rooms') }}?checkin={{ date('Y-m-d') }}">
-						<h1 class="font-light text-white"><i class="mdi mdi-hotel"></i></h1>
-						<h6 class="text-white">Rooms</h6>
-					</a>
-				</div>
-			</div>
-			<!-- Column -->
+			
 			
 		</div>
 		<!-- ============================================================== -->

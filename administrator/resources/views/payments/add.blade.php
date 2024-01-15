@@ -55,9 +55,9 @@
 							<div class="row">
 								<div class="col-md-7" >
 									<div class="form-group row">
-										<label for="amount" class="col-sm-3 text-right control-label col-form-label">Booking Amount</label>
+										<label for="amount" class="col-sm-3 text-right control-label col-form-label">Amount</label>
 										<div class="col-sm-9">
-											<input type="text" class="form-control" name="amount" id="amount" placeholder="Enter Booking Amount" required>
+											<input type="text" class="form-control" name="amount" id="amount" placeholder="Enter Amount" required>
 										</div>
 									</div>
 									<div class="form-group row">
