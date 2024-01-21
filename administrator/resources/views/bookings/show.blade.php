@@ -141,17 +141,7 @@
 										@endif
 										</div>
 									</div>
-									
-									<div class="form-group row">
-										<label for="gender" class="col-sm-3 text-right control-label col-form-label">Gender</label>
-										<div class="col-sm-9">
-											<select name="gender" id="gender" class="select2 form-control custom-select" style="width: 100%; height:36px;">	
-												<option value="male" {{ ( 'male' ==  $booking->gender )? 'selected' : '' }}> Male </option>
-												<option value="female" {{ ( 'female' ==  $booking->gender )? 'selected' : '' }}> Female </option>
-												<option value="other" {{ ( 'other' ==  $booking->gender )? 'selected' : '' }}> Other </option>
-											<select>
-										</div>
-									</div>
+								
 									<div class="form-group row">
 										<label for="amount" class="col-sm-3 text-right control-label col-form-label">Booking Amount</label>
 										<div class="col-sm-9">

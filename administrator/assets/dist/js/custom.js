@@ -287,7 +287,76 @@ $(function() {
         $(this).parent().children(".form-control").attr('type','file')
     })
 
+    // $(document).on('keyup',"#bookingMobile",function(){
+    //     console.log("here");
+    // })
+
 });
+
+;(function($){
+    
+    $.fn.extend({
+        donetyping: function(callback,timeout){
+           
+            timeout = timeout || 1e3; // 1 second default timeout
+            var timeoutReference,
+                doneTyping = function(el){
+                    
+                    if (!timeoutReference) return;
+                    timeoutReference = null;
+                    callback.call(el);
+                };
+            return this.each(function(i,el){
+                var $el = $(el);
+                // Chrome Fix (Use keyup over keypress to detect backspace)
+                // thank you @palerdot
+                $el.is(':input') && $el.on('keyup keypress paste',function(e){
+                    $(".loading").show();
+                    // This catches the backspace button in chrome, but also prevents
+                    // the event from triggering too preemptively. Without this line,
+                    // using tab/shift+tab will make the focused element fire the callback.
+                    if (e.type=='keyup' && e.keyCode!=8) return;
+                    
+                    // Check if timeout has been set. If it has, "reset" the clock and
+                    // start over again.
+                    if (timeoutReference) clearTimeout(timeoutReference);
+                    timeoutReference = setTimeout(function(){
+                        // if we made it here, our timeout has elapsed. Fire the
+                        // callback
+                        doneTyping(el);
+                    }, timeout);
+                }).on('blur',function(){
+                    // If we can, fire the event since we're leaving the field
+                    doneTyping(el);
+                });
+            });
+        }
+    });
+
+
+})(jQuery);
+
+$('#bookingMobile').donetyping(function(){
+    $(".loading").hide();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: `${globalUrl}administrator/get-customer-info`,
+        type: "post",
+        data: {
+            mobile: $(this).val(),
+        },
+        success: function(result) {
+            console.log(result);
+            $("#bookingName").val(result.name);
+            $("#bookingEmail").val(result.email);
+        }
+    });
+});
+  
 
 function setMedia(){
     $("#"+fieldId).val(imageId);

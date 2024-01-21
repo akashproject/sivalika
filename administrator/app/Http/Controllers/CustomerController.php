@@ -47,6 +47,21 @@ class CustomerController extends Controller
         }        
     }
 
+    
+    public function getCustomerInfo(Request $request) {
+        try {
+            $data = $request->all();
+            $validatedData = $request->validate([
+                'mobile' => 'required',
+            ]);
+
+            $customer = Customer::where('mobile',$data['mobile'])->first();
+            return response()->json($customer,$this->_statusOK);
+        } catch(\Illuminate\Database\QueryException $e){
+            var_dump($e->getMessage()); 
+        }
+    }
+
     public function save(Request $request) {
         try {
             $data = $request->all();

@@ -1,6 +1,11 @@
 @extends('layouts.admin')
 
 @section('content')
+<style>
+	.loading {
+    display: none;
+}
+</style>
 <div class="col-12">
 	<div class="card">
 		<form class="form-horizontal" method="post" action="{{ url('check-availability') }}" enctype="multipart/form-data">
@@ -151,31 +156,37 @@
 										</div>
 									</div>
 									<div class="form-group row">
-										<label for="name" class="col-sm-3 text-right control-label col-form-label">User Name</label>
-										<div class="col-sm-9">
-											<input type="text" class="form-control" name="name" id="name" placeholder="Enter Guest Here" required>
-										</div>
-									</div>
-									<div class="form-group row">
 										<label for="mobile" class="col-sm-3 text-right control-label col-form-label">User Mobile</label>
 										<div class="col-sm-9">
-											<input type="number" class="form-control" name="mobile" id="mobile" placeholder="Enter Guest Mobile Number" required>
+											<input type="number" class="form-control" name="mobile" id="bookingMobile" placeholder="Enter Guest Mobile Number" required>
+										</div>
+										<div class="loading" style="display: none;">
+											HOLD! Loading user data...
 										</div>
 									</div>
-									<div class="form-group row">
-										<label for="email" class="col-sm-3 text-right control-label col-form-label">User Email</label>
-										<div class="col-sm-9">
-											<input type="text" class="form-control" name="email" id="email" placeholder="Enter Guest Email Address" >
+									<div class="userinfo">
+										<div class="form-group row">
+											<label for="name" class="col-sm-3 text-right control-label col-form-label">User Name</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" name="name" id="bookingName" placeholder="Enter Guest Here" required>
+											</div>
 										</div>
-									</div>
-									<div class="form-group row">
-										<label for="gender" class="col-sm-3 text-right control-label col-form-label">Gender</label>
-										<div class="col-sm-9">
-											<select name="gender" id="gender" class="select2 form-control custom-select" style="width: 100%; height:36px;">	
-												<option value="male" > Male </option>
-												<option value="female" > Female </option>
-												<option value="other" > Other </option>
-											<select>
+										
+										<div class="form-group row">
+											<label for="email" class="col-sm-3 text-right control-label col-form-label">User Email</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" name="email" id="bookingEmail" placeholder="Enter Guest Email Address" >
+											</div>
+										</div>
+										<div class="form-group row">
+											<label for="gender" class="col-sm-3 text-right control-label col-form-label">Gender</label>
+											<div class="col-sm-9">
+												<select name="gender" id="bookingGender" class="select2 form-control custom-select" style="width: 100%; height:36px;">	
+													<option value="male" > Male </option>
+													<option value="female" > Female </option>
+													<option value="undisclosed" > Undisclosed </option>
+												<select>
+											</div>
 										</div>
 									</div>
 									<div class="form-group row">
