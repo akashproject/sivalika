@@ -353,6 +353,7 @@ $('#bookingMobile').donetyping(function(){
             console.log(result);
             $("#bookingName").val(result.name);
             $("#bookingEmail").val(result.email);
+            $("#bookingEmail").val(result.gender);
         }
     });
 });
@@ -403,7 +404,8 @@ function changeBookingStatus(event,booking_id){
         },
         success: function(result) {
            alert(result.message);
-            //location.reload();
+           console.log(result);
+            location.reload();
         },
     });
 }

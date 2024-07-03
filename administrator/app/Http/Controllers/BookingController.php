@@ -298,6 +298,7 @@ class BookingController extends Controller
                 $customerData = array(
                     'name'=>$data['name'],
                     'mobile'=>$data['mobile'],
+                    'email'=>($data['email'])?$data['email']:'',
                 );
                 $customer = Customer::create($customerData);
             }
