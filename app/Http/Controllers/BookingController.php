@@ -218,11 +218,13 @@ class BookingController extends Controller
                 'customer_name' => $customer->name,
             ];
 
-            $mail = Mail::send('emails.booking', $bookingData, function ($m) use ($user) {
-                $m->from('bookings@sivalikagroup.com', 'Sivalika Group');
-                $m->to($user['email'], $user['name'])->subject('Reservation Confirmed at '.get_hotel_by_id($user['hotel_id'])->name.'. Booking ID: '.$user['booking_id']);
-            });
-            
+            if($user['email']){
+                $mail = Mail::send('emails.booking', $bookingData, function ($m) use ($user) {
+                    $m->from('bookings@sivalikagroup.com', 'Sivalika Group');
+                    $m->to($user['email'], $user['name'])->subject('Reservation Confirmed at '.get_hotel_by_id($user['hotel_id'])->name.'. Booking ID: '.$user['booking_id']);
+                });
+            }
+
             return redirect('/thank-you');
         } catch(\Illuminate\Database\QueryException $e){
             var_dump($e);
@@ -264,6 +266,14 @@ class BookingController extends Controller
             $booking->update($paymentData);
             $booking = Booking::where('order_id', $payment['order_id'])->first();
             return redirect('/confirm-booking/'.$booking->booking_id);
+        } catch(\Illuminate\Database\QueryException $e){
+            var_dump($e);
+        }
+    }
+
+    public function paymentFailed(Request $request){
+        try {
+            return view('customer.payment-failed');
         } catch(\Illuminate\Database\QueryException $e){
             var_dump($e);
         }

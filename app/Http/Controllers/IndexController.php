@@ -17,8 +17,8 @@ class IndexController extends Controller
 
     public function __construct()
     {
-        echo "Website is under Maintaince"; exit;
-       // $this->layout = (check_device('mobile'))?"mobile.":'';
+       // echo "Website is under Maintaince"; exit;
+       $this->layout = (check_device('mobile'))?"mobile.":'';
     }
 
     public function index(Request $request) {

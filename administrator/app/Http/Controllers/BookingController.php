@@ -298,6 +298,7 @@ class BookingController extends Controller
                 $customerData = array(
                     'name'=>$data['name'],
                     'mobile'=>$data['mobile'],
+                    'email'=>($data['email'])?$data['email']:'',
                 );
                 $customer = Customer::create($customerData);
             }
@@ -468,6 +469,12 @@ class BookingController extends Controller
                 DB::table('reserved_rooms')->where('booking_id', $id)->delete();
             }
             $data = ['status'=>$status];
+            if ($status == 'arrvied') {
+                if(strtotime($booking->checkout) >= strtotime(date('Y-m-d'))){
+                    return response()->json(['status'=>false,'message' => "Arriving can not possible after checkout date"], 200);
+                }
+            }
+
             if ($status == 'completed') {
                 $diningMeta = get_booking_meta_row($id,'dining');
                 $additionalCharge = get_booking_meta_row($id,'additionalCharge');

@@ -31,7 +31,9 @@ Route::get('/logout',  [App\Http\Controllers\Auth\LoginController::class, 'logou
 
 
 Route::get('/payment-process/{booking_id}',  [App\Http\Controllers\BookingController::class, 'payment'])->name('payment');
-Route::get('/payment-success/{payment_id}',  [App\Http\Controllers\BookingController::class, 'paymentSuccess'])->name('payment');
+Route::get('/payment-success/{payment_id}',  [App\Http\Controllers\BookingController::class, 'paymentSuccess'])->name('payment-success');
+Route::get('/payment-failed',  [App\Http\Controllers\BookingController::class, 'paymentFailed'])->name('payment-failed');
+
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/profile', [App\Http\Controllers\CustomerController::class, 'profile'])->name('profile');

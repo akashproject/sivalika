@@ -21,7 +21,7 @@ class CustomerController extends Controller
     {
         try {
             $user = Auth::user();
-            $bookings = Booking::where("user_id",$user->id)->get();
+            $bookings = Booking::where("user_id",$user->id)->orderby('id','desc')->get();
             return view('customer.booking',compact('bookings'));
         } catch(\Illuminate\Database\QueryException $e){
         }
