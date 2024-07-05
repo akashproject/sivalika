@@ -43,6 +43,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/view-customer/{id}', [App\Http\Controllers\CustomerController::class, 'show'])->name('view-customer');
     Route::post('/save-customer', [App\Http\Controllers\CustomerController::class, 'save'])->name('save-customer');
     Route::get('/deactivate-customer/{id}', [App\Http\Controllers\CustomerController::class, 'delete'])->name('deactivate-customer');
+    Route::post('/get-customer-info', [App\Http\Controllers\CustomerController::class, 'getCustomerInfo'])->name('get-customer-info');
+    
 
     //Page
     Route::get('/pages', [App\Http\Controllers\PageController::class, 'index'])->name('pages');
