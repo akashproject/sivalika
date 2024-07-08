@@ -196,10 +196,10 @@
 										</div>
 									</div>
 									<div class="form-group row">
-										<label for="purpose" class="col-sm-3 text-right control-label col-form-label">Visit Purpose</label>
+										<label for="purpose" class="col-sm-3 text-right control-label col-form-label">Select Visit Reason</label>
 										<div class="col-sm-9">
 											<select name="purpose" id="purpose" class="select2 form-control custom-select">	
-												<option value="" > Select Payment Type</option>
+												<option value="" > Select Visit Reason</option>
 												<option value="Official" > Official</option>
 												<option value="Tour" > Tour </option>
 												<option value="Personal" > Personal </option>

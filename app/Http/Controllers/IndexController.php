@@ -33,7 +33,6 @@ class IndexController extends Controller
 
     public function dashboard()
     {
-        // Middleware will check if the user is authenticated
         return view('dashboard');
     }
 

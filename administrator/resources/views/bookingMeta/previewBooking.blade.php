@@ -25,8 +25,8 @@
         <div class="col-sm-6 text-left control-label col-form-label">
             <p style="margin:0"> Invoice No : {{ rand(111111,999999) }} </p>
             <p style="margin:0"> Booking No : {{ $booking->booking_id}} </p>
-            <p style="margin:0"> Customer Name : Akash Dutta </p>
-            <p> Customer Mobile : 9836555023 </p>
+            <p style="margin:0"> Customer Name : {{$customer->name}} </p>
+            <p> Customer Mobile : {{$customer->mobile}} </p>
         </div>
         <div class="col-sm-6 text-right control-label col-form-label">
             <p style="margin:0"> Invoice Date : {{ date("d/m/Y") }} </p>
@@ -106,8 +106,8 @@
     @endif
     <div class="form-group row">
         <div class="col-sm-4 text-left control-label col-form-label">
-            <p style="margin:0">GST NO : 19AEMPJ0819C2ZN</p>
-            <p style="margin:0">Prepered by : SISIR</p>
+            <!-- <p style="margin:0">GST NO : 19AEMPJ0819C2ZN</p>
+            <p style="margin:0">Prepered by : SISIR</p> -->
         </div>
         <div class="col-sm-4 text-left control-label col-form-label">
         </div>

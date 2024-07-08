@@ -84,11 +84,13 @@ class BookingMetaController extends Controller
     public function previewBooking($id,Request $request){
         try {
             $booking = Booking::find($id); 
+            $customer = Customer::findOrFail($booking->user_id);
+            //dd($customer);
             $hotel = Hotel::find($booking->hotel_id)->name;
             $diningMeta = get_booking_meta_row($id,'dining');
             $additionalCharge = get_booking_meta_row($id,'additionalCharge');
             $paidAmount = Payment::where('payment', '=', 'success')->where('booking_id', $id)->sum('amount');
-            return view('bookingMeta.previewBooking',compact('booking','diningMeta','additionalCharge','hotel','paidAmount'));
+            return view('bookingMeta.previewBooking',compact('booking','customer','diningMeta','additionalCharge','hotel','paidAmount'));
         } catch(\Illuminate\Database\QueryException $e){
             //throw $th;
         }
